@@ -15,6 +15,14 @@ class player_job():
         \n NAME - {}\n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
         """.format(self.name, self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
 
+    def hp_boost(self):
+        self.hp += 100
+
+def story_arc_1():
+    print(stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
+    stats.hp_boost()
+    print(stats.hp)
+
 def player_job_selection():
     """
     player choice of class and name input
@@ -40,6 +48,8 @@ def player_job_selection():
         pjob = "Mage"
         stats = player_job(pname, pjob, 100, 300, 1, 1, 5, 5, 1)
         print(stats.full_stats())
+
+    story_arc_1()
 
 while True:
     player_job_selection()
