@@ -1,81 +1,46 @@
-def player_details():
+class player_job():
+    def __init__(self, name, job, hp, mp, atk, blk, matk, mblk, spd):
+        self.name = name
+        self.job = job
+        self.hp = hp
+        self.mp = mp
+        self.atk = atk
+        self.blk = blk
+        self.matk = matk
+        self.mblk = mblk
+        self.spd = spd
+
+    def full_stats(self):
+        return """
+        \n NAME - {}\n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
+        """.format(self.name, self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
+
+def player_job_selection():
     """
-    prompts the user to select their class and enter name and age
+    player choice of class and name input
     """
-    pclass = input("What are you? (Warrior / Mage / Assassin) ")
+    global stats
 
-    if pclass == "Warrior":
+    player_choice = input("What class would you like to be? (warrior / assassin / mage) ")
 
-        class Warrior:
-            def __init__(self, name, age):
-                self.name = name
-                self.age = age
-            HP = 300
-            ST = 5
-            DF = 5
-            MA = 1
-            MD = 1
-            SP = 3
+    if player_choice == "warrior":
+        pname = input("What is your name, warrior? ")
+        pjob = "Warrior"
+        stats = player_job(pname, pjob, 300, 100, 5, 5, 1, 1, 3)
+        print(stats.full_stats())
 
-        p1 = Warrior(input("Your name: "), int(input("Your age: ")))
+    elif player_choice == "assassin":
+        pname = input("What is your name, assassin? ")
+        pjob = "Assassin"
+        stats = player_job(pname, pjob, 200, 200, 3, 1, 3, 1, 5)
+        print(stats.full_stats())
 
-        print("Name:..." + p1.name)
-        print("Age:...." + str(p1.age))
-        print("HP:....." + str(p1.HP))
-        print("ST:....." + str(p1.ST))
-        print("DF:....." + str(p1.DF))
-        print("MA:....." + str(p1.MA))
-        print("MD:....." + str(p1.MD))
-        print("SP:....." + str(p1.SP))
+    elif player_choice == "mage":
+        pname = input("What is your name, mage? ")
+        pjob = "Mage"
+        stats = player_job(pname, pjob, 100, 300, 1, 1, 5, 5, 1)
+        print(stats.full_stats())
 
-
-    elif pclass == "Mage":
-
-        class Mage:
-            def __init__(self, name, age):
-                self.name = name
-                self.age = age
-            HP = 100
-            ST = 1
-            DF = 3
-            MA = 5
-            MD = 5
-            SP = 1
-
-        p1 = Mage(input("Your name: "), int(input("Your age: ")))
-
-        print("Name:..." + p1.name)
-        print("Age:...." + str(p1.age))
-        print("HP:....." + str(p1.HP))
-        print("ST:....." + str(p1.ST))
-        print("DF:....." + str(p1.DF))
-        print("MA:....." + str(p1.MA))
-        print("MD:....." + str(p1.MD))
-        print("SP:....." + str(p1.SP))
-
-
-    elif pclass == "Assassin":
-
-        class Assassin:
-            def __init__(self, name, age):
-                self.name = name
-                self.age = age
-            HP = 200
-            ST = 3
-            DF = 1
-            MA = 3
-            MD = 1
-            SP = 5
-
-        p1 = Assassin(input("Your name: "), int(input("Your age: ")))
-
-        print("Name:..." + p1.name)
-        print("Age:...." + str(p1.age))
-        print("HP:....." + str(p1.HP))
-        print("ST:....." + str(p1.ST))
-        print("DF:....." + str(p1.DF))
-        print("MA:....." + str(p1.MA))
-        print("MD:....." + str(p1.MD))
-        print("SP:....." + str(p1.SP))
-
-player_details()
+while True:
+    player_job_selection()
+    
