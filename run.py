@@ -16,7 +16,6 @@ class enemy_type():
         \n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
         """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
 
-
 class player_job():
     def __init__(self, name, job, hp, mp, atk, blk, matk, mblk, spd):
         self.name = name
@@ -37,27 +36,71 @@ class player_job():
     def hp_boost(self):
         self.hp += 100
 
+
+
+def enemy_action():
+    
+    enemy_choice = random.randint(1,4)
+
+    if enemy_choice == 1:
+        print("The enemy performed a physical attack!")
+    elif enemy_choice == 2:
+        print("The enemy braced itself for a physical attack!")    
+    elif enemy_choice == 3:
+        print("The enemy performed a magical attack!")
+    elif enemy_choice == 4:
+        print("The enemy braced itself for a magical attack!")
+
+def player_action():
+
+    print(
+        """
+        1 - Physical Attack
+        2 - Defend Against Physical Attacks
+        3 - Magical Attack
+        4 - Defend Against Magical Attacks
+        """
+    )
+
+    player_choice = input("What will you do?")
+
+    if enemy_choice == 1:
+        print("The enemy performed a physical attack!")
+    elif enemy_choice == 2:
+        print("The enemy braced itself for a physical attack!")    
+    elif enemy_choice == 3:
+        print("The enemy performed a magical attack!")
+    elif enemy_choice == 4:
+        print("The enemy braced itself for a magical attack!")
+
+def combat():
+    if enemy_stats.spd < stats.spd:
+        print("player goes first")
+    else:
+        print("enemy goes first")
+
 def enemy_approaches():
     """
     randomly generates 1, 2 or 3 and pushes forward an enemy type
     """
 
-    global goblin
-    global witch
-    global striga
+    global enemy_stats
 
     global ENEMY
     ENEMY = random.randint(1,3)
 
     if ENEMY == 1:
-        goblin = enemy_type("Goblin", 300, 100, 5, 5, 1, 1, 3)
-        print(goblin.full_stats())
+        enemy_stats = enemy_type("Goblin", 300, 100, 5, 5, 1, 1, 3)
+        print(enemy_stats.full_stats())
+        combat()
     elif ENEMY == 2:
-        witch = enemy_type("Witch", 100, 300, 1, 1, 5, 5, 3)
-        print(witch.full_stats())
+        enemy_stats = enemy_type("Witch", 100, 300, 1, 1, 5, 5, 3)
+        print(enemy_stats.full_stats())
+        combat()
     elif ENEMY == 3:
-        striga = enemy_type("Striga", 200, 200, 3, 3, 3, 3, 3)
-        print(striga.full_stats())
+        enemy_stats = enemy_type("Striga", 200, 200, 3, 3, 3, 3, 3)
+        print(enemy_stats.full_stats())
+        combat()
 
 def enemy_encounter():
     """
