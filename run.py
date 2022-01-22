@@ -35,21 +35,28 @@ class player_job():
 
     def hp_boost(self):
         self.hp += 100
+    
+    def attack(self):
+        enemy_stats.hp -= self.atk
 
 
 
 def enemy_action():
-    
+  
     enemy_choice = random.randint(1,4)
 
     if enemy_choice == 1:
         print("The enemy performed a physical attack!")
+        player_action()
     elif enemy_choice == 2:
-        print("The enemy braced itself for a physical attack!")    
+        print("The enemy braced itself for a physical attack!")
+        player_action()    
     elif enemy_choice == 3:
         print("The enemy performed a magical attack!")
+        player_action()
     elif enemy_choice == 4:
         print("The enemy braced itself for a magical attack!")
+        player_action()
 
 def player_action():
 
@@ -62,22 +69,31 @@ def player_action():
         """
     )
 
-    player_choice = input("What will you do?")
+    while enemy_stats.hp > 0:
 
-    if enemy_choice == 1:
-        print("The enemy performed a physical attack!")
-    elif enemy_choice == 2:
-        print("The enemy braced itself for a physical attack!")    
-    elif enemy_choice == 3:
-        print("The enemy performed a magical attack!")
-    elif enemy_choice == 4:
-        print("The enemy braced itself for a magical attack!")
+        player_choice = input("What will you do?")
+
+        if player_choice == "1":
+            print("Remaining enemy health: " + str(enemy_stats.hp))
+            print("You performed a physical attack!")
+            stats.attack()
+            enemy_action()
+        elif player_choice == "2":
+            print("You braced yourself for a physical attack!")    
+        elif player_choice == "3":
+            print("You performed a magical attack!")
+        elif player_choice == "4":
+            print("You braced yourself for a magical attack!")
+
+        
 
 def combat():
     if enemy_stats.spd < stats.spd:
         print("player goes first")
+        player_action()
     else:
         print("enemy goes first")
+        enemy_action()
 
 def enemy_approaches():
     """
@@ -108,7 +124,7 @@ def enemy_encounter():
     """
 
     global ENCOUNTER
-    ENCOUNTER = random.randint(1,2)
+    ENCOUNTER = random.randint(2,2)
 
     if ENCOUNTER == 2:
         print("you encountered an ememy")
