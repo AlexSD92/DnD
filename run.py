@@ -168,12 +168,12 @@ def story_arc_1():
     inital story setup; currently a test function
     """
 
-    print("\n\n" + stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
-    print("You look around and can't see anything...or for that matter...remember anything...")
-    print("...except: ")
+    print("\n\n" + stats.name + ", you wake up next to a dying fire.")
+    print("It's cold, wet and dark. You look around and can't see anything...")
+    print("...or for that matter...remember anything...except...")
     print(stats.full_stats())
     print("Your mind is as clouded as the dense fog that is surrounding you.")
-    print("In the distance you hear the noises of the night, muffled by the thick fog.")
+    print("You hear the noises of the night, muffled by the thick fog.")
     print("You stand up and decide the following: ")
     print("""
     1. Decide to keep the fire alive.
