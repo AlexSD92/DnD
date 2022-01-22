@@ -1,3 +1,5 @@
+import random
+
 class player_job():
     def __init__(self, name, job, hp, mp, atk, blk, matk, mblk, spd):
         self.name = name
@@ -18,10 +20,31 @@ class player_job():
     def hp_boost(self):
         self.hp += 100
 
+def enemy_encounter():
+    """
+    randomly generates 1 or 2 as an integer; will be used to determine if there is an enemy encounter
+    """
+
+    global ENCOUNTER
+    ENCOUNTER = random.randint(1,2)
+
+    if ENCOUNTER == 2:
+        print("you encountered an ememy")
+        print(ENCOUNTER)
+    else:
+        print("no enemy encounter")
+        print(ENCOUNTER)
+    
+
 def story_arc_1():
+    """
+    inital story setup; currently a test function
+    """
     print(stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
     stats.hp_boost()
     print(stats.hp)
+    enemy_encounter()
+
 
 def player_job_selection():
     """
