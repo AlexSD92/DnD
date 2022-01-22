@@ -55,6 +55,9 @@ class player_job():
         
 
 def enemy_action():
+    """
+    produces enemy attack as either a magic or physical attack from random integer
+    """
   
     enemy_choice = random.randint(1,2)
 
@@ -153,17 +156,41 @@ def enemy_encounter():
     else:
         print("no enemy encounter")
         print(ENCOUNTER)
-    
+
+def story_arc_2v2():
+    print("story arc 2")
+
+def story_arc_2v1():
+    print("story arc 2")
 
 def story_arc_1():
     """
     inital story setup; currently a test function
     """
 
-    print(stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
-    # stats.hp_boost()
-    print(stats.hp)
-    enemy_encounter()
+    print("\n\n" + stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
+    print("You look around and can't see anything...or for that matter...remember anything...")
+    print("...except: ")
+    print(stats.full_stats())
+    print("Your mind is as clouded as the dense fog that is surrounding you.")
+    print("In the distance you hear the noises of the night, muffled by the thick fog.")
+    print("You stand up and decide the following: ")
+    print("""
+    1. Decide to keep the fire alive.
+    2. Follow the noises you hear in the distance.
+    """)
+
+    path = input("Please input '1' or '2' to decide: ")
+
+    if path == "1":
+        story_arc_2v1()
+    elif path == "2":
+        story_arc_2v2()
+    else:
+        print("Please make a valid choice.")
+
+
+
 
 
 def player_job_selection():
@@ -178,19 +205,19 @@ def player_job_selection():
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
         stats = player_job(pname, pjob, 300, 100, 5, 5, 1, 1, 3)
-        print(stats.full_stats())
+        # print(stats.full_stats())
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
         stats = player_job(pname, pjob, 200, 200, 3, 1, 3, 1, 5)
-        print(stats.full_stats())
+        # print(stats.full_stats())
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
         stats = player_job(pname, pjob, 100, 300, 1, 1, 5, 5, 1)
-        print(stats.full_stats())
+        # print(stats.full_stats())
 
     story_arc_1()
 
