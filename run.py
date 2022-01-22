@@ -16,6 +16,12 @@ class enemy_type():
         \n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
         """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
 
+    def attack(self):
+        stats.hp -= self.atk - stats.blk
+
+    def magic_attack(self):
+        stats.hp -= self.matk - stats.mblk
+
 class player_job():
     def __init__(self, name, job, hp, mp, atk, blk, matk, mblk, spd):
         self.name = name
@@ -37,25 +43,28 @@ class player_job():
         self.hp += 100
     
     def attack(self):
-        enemy_stats.hp -= self.atk
+        enemy_stats.hp -= self.atk - enemy_stats.blk
 
+    def magic_attack(self):
+        enemy_stats.hp -= self.matk - enemy_stats.mblk
 
+    def heal(self):
+        if self.mp > 0:
+            self.mp -= 50
+            self.hp += 50
+        
 
 def enemy_action():
   
-    enemy_choice = random.randint(1,4)
+    enemy_choice = random.randint(1,2)
 
     if enemy_choice == 1:
         print("The enemy performed a physical attack!")
+        enemy_stats.attack()
         player_action()
     elif enemy_choice == 2:
-        print("The enemy braced itself for a physical attack!")
-        player_action()    
-    elif enemy_choice == 3:
         print("The enemy performed a magical attack!")
-        player_action()
-    elif enemy_choice == 4:
-        print("The enemy braced itself for a magical attack!")
+        enemy_stats.magic_attack()
         player_action()
 
 def player_action():
@@ -63,31 +72,42 @@ def player_action():
     print(
         """
         1 - Physical Attack
-        2 - Defend Against Physical Attacks
-        3 - Magical Attack
-        4 - Defend Against Magical Attacks
+        2 - Magical Attack
+        3 - Heal
+        4 - Boon
         """
     )
 
     while enemy_stats.hp > 0:
 
         player_choice = input("What will you do?")
-
+        
         if player_choice == "1":
-            print("Remaining enemy health: " + str(enemy_stats.hp))
             print("You performed a physical attack!")
             stats.attack()
+            print("Remaining enemy health: " + str(enemy_stats.hp))
             enemy_action()
         elif player_choice == "2":
-            print("You braced yourself for a physical attack!")    
+            print("You performed a magical attack!")    
+            stats.magic_attack()
+            enemy_action()
         elif player_choice == "3":
-            print("You performed a magical attack!")
+            print("You healed 50 HP!")
+            stats.heal()
+            enemy_action()
         elif player_choice == "4":
-            print("You braced yourself for a magical attack!")
-
-        
+            print("You unleashed your inner strength!")
+            enemy_action()
+        elif player_choice == "5":
+            print(stats.full_stats())
+        elif enemy_stats.hp <= 0:
+            print("You defeated the enemy!")
+            break        
 
 def combat():
+    """
+    decides who takes the turn first based on the speed object
+    """
     if enemy_stats.spd < stats.spd:
         print("player goes first")
         player_action()
@@ -106,15 +126,15 @@ def enemy_approaches():
     ENEMY = random.randint(1,3)
 
     if ENEMY == 1:
-        enemy_stats = enemy_type("Goblin", 300, 100, 5, 5, 1, 1, 3)
+        enemy_stats = enemy_type("Goblin", 300, 100, 50, 5, 1, 1, 3)
         print(enemy_stats.full_stats())
         combat()
     elif ENEMY == 2:
-        enemy_stats = enemy_type("Witch", 100, 300, 1, 1, 5, 5, 3)
+        enemy_stats = enemy_type("Witch", 100, 300, 50, 1, 5, 5, 3)
         print(enemy_stats.full_stats())
         combat()
     elif ENEMY == 3:
-        enemy_stats = enemy_type("Striga", 200, 200, 3, 3, 3, 3, 3)
+        enemy_stats = enemy_type("Striga", 200, 200, 50, 3, 3, 3, 3)
         print(enemy_stats.full_stats())
         combat()
 
@@ -141,7 +161,7 @@ def story_arc_1():
     """
 
     print(stats.name + ", you wake up next to a dying fire. It's cold, wet and dark.")
-    stats.hp_boost()
+    # stats.hp_boost()
     print(stats.hp)
     enemy_encounter()
 
