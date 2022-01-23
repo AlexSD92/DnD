@@ -4,30 +4,6 @@ import os
 # https://www.delftstack.com/howto/python/python-clear-console/
 clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
-class boss_type():
-    def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
-        self.job = job
-        self.hp = hp
-        self.mp = mp
-        self.atk = atk
-        self.blk = blk
-        self.matk = matk
-        self.mblk = mblk
-        self.spd = spd  
-
-    def full_stats(self):
-        return """
-        \n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
-        """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
-
-    def attack(self):
-        stats.hp -= self.atk - stats.blk
-
-    def magic_attack(self):
-        stats.hp -= self.matk - stats.mblk
-
-DRAGON = boss_type("Seath the Scaleless Dragon", 2000, 2000, 200, 1, 1, 1, 1)
-
 class enemy_type():
     def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
         self.job = job
@@ -186,7 +162,29 @@ def enemy_approaches():
         print(enemy_stats.full_stats())
         combat()
 
+def boss_approaches(boss):
+    """
+    randomly generates 1, 2 or 3 and pushes forward an enemy type
+    """
+
+    global enemy_stats
+
+    if boss == 1:
+        enemy_stats = enemy_type("Dragon", 300, 100, 50, 5, 1, 1, 3)
+        print(enemy_stats.full_stats())
+        combat()
+    elif boss == 2:
+        enemy_stats = enemy_type("Titan", 100, 300, 50, 1, 5, 5, 3)
+        print(enemy_stats.full_stats())
+        combat()
+    elif boss == 3:
+        enemy_stats = enemy_type("Demon", 200, 200, 50, 3, 3, 3, 3)
+        print(enemy_stats.full_stats())
+        combat()
+
+
 def enemy_encounter():
+
     """
     randomly generates 1 or 2 as an integer; will be used to determine if there is an enemy encounter
     """
@@ -204,7 +202,8 @@ def enemy_encounter():
 
 def story_arc_2v2():
     clearConsole()
-    enemy_encounter()
+    boss_approaches(1)
+    # enemy_encounter()
     print("story arc 2")
 
 def story_arc_2v1():
