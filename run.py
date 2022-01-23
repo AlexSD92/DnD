@@ -1,5 +1,29 @@
 import random
 
+class boss_type():
+    def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
+        self.job = job
+        self.hp = hp
+        self.mp = mp
+        self.atk = atk
+        self.blk = blk
+        self.matk = matk
+        self.mblk = mblk
+        self.spd = spd  
+
+    def full_stats(self):
+        return """
+        \n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
+        """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
+
+    def attack(self):
+        stats.hp -= self.atk - stats.blk
+
+    def magic_attack(self):
+        stats.hp -= self.matk - stats.mblk
+
+DRAGON = boss_type("Seath the Scaleless Dragon", 2000, 2000, 200, 1, 1, 1, 1)
+
 class enemy_type():
     def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
         self.job = job
