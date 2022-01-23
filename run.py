@@ -23,9 +23,10 @@ class enemy_type():
         stats.hp -= self.matk - stats.mblk
 
 class player_job():
-    def __init__(self, name, job, hp, mp, atk, blk, matk, mblk, spd):
+    def __init__(self, name, job, itm, hp, mp, atk, blk, matk, mblk, spd):
         self.name = name
         self.job = job
+        self.itm = itm
         self.hp = hp
         self.mp = mp
         self.atk = atk
@@ -36,8 +37,8 @@ class player_job():
 
     def full_stats(self):
         return """
-        \n NAME - {}\n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
-        """.format(self.name, self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
+        \n NAME - {}\n JOB - {}\n WEAPON - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
+        """.format(self.name, self.job, self.itm, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
 
     def hp_boost(self):
         self.hp += 100
@@ -51,7 +52,18 @@ class player_job():
     def heal(self):
         if self.mp > 0:
             self.mp -= 50
-            self.hp += 50     
+            self.hp += 50
+
+    def sword(self):
+        stats.atk += 5
+
+    def staff(self):
+        stats.matk += 5
+
+    def dagger(self):
+        stats.atk += 1
+        stats.matk += 1
+        stats.spd += 1
 
 def enemy_action():
     """
@@ -207,19 +219,19 @@ def player_job_selection():
     if player_choice == "warrior":
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
-        stats = player_job(pname, pjob, 300, 100, 100, 5, 1, 1, 3)
+        stats = player_job(pname, pjob, "None", 300, 100, 100, 5, 1, 1, 3)
         # print(stats.full_stats())
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        stats = player_job(pname, pjob, 200, 200, 100, 1, 3, 1, 5)
+        stats = player_job(pname, pjob, "None", 200, 200, 100, 1, 3, 1, 5)
         # print(stats.full_stats())
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        stats = player_job(pname, pjob, 100, 300, 100, 1, 5, 5, 1)
+        stats = player_job(pname, pjob, "None", 100, 300, 100, 1, 5, 5, 1)
         # print(stats.full_stats())
 
     story_arc_1()
