@@ -1,4 +1,5 @@
 import random
+import time
 import os
 
 # https://www.delftstack.com/howto/python/python-clear-console/
@@ -220,6 +221,7 @@ def story_arc_1():
     print("It's cold, wet and dark. You look around and can't see anything...")
     print("...or for that matter...remember anything...except...")
     print(stats.full_stats())
+    time.sleep(1)
     print("Your mind is as clouded as the dense fog that is surrounding you.")
     print("You hear the noises of the night, muffled by the thick fog.")
     print("You stand up and decide the following: ")
