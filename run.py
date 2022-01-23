@@ -1,4 +1,8 @@
 import random
+import os
+
+# https://www.delftstack.com/howto/python/python-clear-console/
+clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
 class boss_type():
     def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
@@ -199,10 +203,12 @@ def enemy_encounter():
         print(ENCOUNTER)
 
 def story_arc_2v2():
+    clearConsole()
     enemy_encounter()
     print("story arc 2")
 
 def story_arc_2v1():
+    clearConsole()
     enemy_encounter()
     print("story arc 2")
 
