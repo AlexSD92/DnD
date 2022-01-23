@@ -2,10 +2,11 @@ import random
 import time
 import os
 
-# https://www.delftstack.com/howto/python/python-clear-console/
-clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
-class enemy_type():
+class EnemyType():
+    """
+    template for enemy types, object methods for attack
+    """
     def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
         self.job = job
         self.hp = hp
@@ -14,20 +15,41 @@ class enemy_type():
         self.blk = blk
         self.matk = matk
         self.mblk = mblk
-        self.spd = spd  
+        self.spd = spd
 
     def full_stats(self):
+        """
+        prints full enemy stats
+        """
         return """
-        \n JOB - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
-        """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
+        JOB - {}
+        HEALTH - {}
+        MAGIC - {}
+        ATTACK - {}
+        BLOCK - {}
+        M. ATTACK - {}
+        M. DEFENSE - {}
+        SPEED - {}
+        """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk,
+                   self.mblk, self.spd)
 
     def attack(self):
-        stats.hp -= self.atk - stats.blk
+        """
+        calculation for physical attack
+        """
+        STATS.hp -= self.atk - STATS.blk
 
     def magic_attack(self):
-        stats.hp -= self.matk - stats.mblk
+        """
+        calculation for magical attack
+        """
+        STATS.hp -= self.matk - STATS.mblk
+
 
 class player_job():
+    """
+    template for player types, object methods for attack
+    """
     def __init__(self, name, job, itm, hp, mp, atk, blk, matk, mblk, spd):
         self.name = name
         self.job = job
@@ -41,58 +63,105 @@ class player_job():
         self.spd = spd
 
     def full_stats(self):
+        """
+        prints full player stats
+        """
         return """
-        \n NAME - {}\n JOB - {}\n WEAPON - {}\n HEALTH - {}\n MAGIC - {}\n ATTACK - {}\n BLOCK - {}\n M. ATTACK - {}\n M. DEFENSE - {}\n SPEED - {}\n
-        """.format(self.name, self.job, self.itm, self.hp, self.mp, self.atk, self.blk, self.matk, self.mblk, self.spd)
+        NAME - {}
+        JOB - {}
+        WEAPON - {}
+        HEALTH - {}
+        MAGIC - {}
+        ATTACK - {}
+        BLOCK - {}
+        M. ATTACK - {}
+        M. DEFENSE - {}
+        SPEED - {}
+        """.format(self.name, self.job, self.itm, self.hp, self.mp, self.atk,
+                   self.blk, self.matk, self.mblk, self.spd)
 
-    def hp_boost(self):
-        self.hp += 100
-    
     def attack(self):
-        enemy_stats.hp -= self.atk - enemy_stats.blk
+        """
+        calculation for physical attack
+        """
+        _ENEMY_STATS.hp -= self.atk - _ENEMY_STATS.blk
 
     def magic_attack(self):
-        enemy_stats.hp -= self.matk - enemy_stats.mblk
+        """
+        calculation for magical attack
+        """
+        _ENEMY_STATS.hp -= self.matk - _ENEMY_STATS.mblk
 
     def heal(self):
+        """
+        calculation and condition for healing
+        """
         if self.mp > 0:
             self.mp -= 50
             self.hp += 50
 
     def sword(self):
-        stats.atk += 5
+        """
+        what happens when user selects sword
+        """
+        STATS.atk += 5
 
     def staff(self):
-        stats.matk += 5
+        """
+        what happens when user selects staff
+        """
+        STATS.matk += 5
 
     def dagger(self):
-        stats.atk += 1
-        stats.matk += 1
-        stats.spd += 1
+        """
+        what happens when user selects dagger
+        """
+        STATS.atk += 1
+        STATS.matk += 1
+        STATS.spd += 1
+
+
+def clear_console():
+    """
+    clears the console when called
+    https://www.delftstack.com/howto/python/python-clear-console/
+    """
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
 
 def enemy_action():
     """
-    produces enemy attack as either a magic or physical attack from random integer
+    randomly selects enemy attack as object method
     """
-    if enemy_stats.hp > 0:
-  
-        enemy_choice = random.randint(1,2)
+
+    global _ENEMY_STATS
+
+    if _ENEMY_STATS.hp > 0:
+
+        enemy_choice = random.randint(1, 2)
 
         if enemy_choice == 1:
             print("The enemy performed a physical attack!")
-            enemy_stats.attack()
+            _ENEMY_STATS.attack()
             player_action()
         elif enemy_choice == 2:
             print("The enemy performed a magical attack!")
-            enemy_stats.magic_attack()
+            _ENEMY_STATS.magic_attack()
             player_action()
 
-    else: 
-        print("You defeated the enemy!")   
+    else:
+        print("You defeated the enemy!")
+
 
 def player_action():
+    """
+    allows for user input during combat, calls object methods
+    """
 
-    if stats.hp > 0:
+    if STATS.hp > 0:
 
         print(
             """
@@ -104,94 +173,94 @@ def player_action():
         )
 
         player_choice = input("What will you do?")
-        
+
         if player_choice == "1":
             print("You performed a physical attack!")
-            stats.attack()
-            print("Remaining enemy health: " + str(enemy_stats.hp))
+            STATS.attack()
+            print("Remaining enemy health: " + str(_ENEMY_STATS.hp))
             enemy_action()
         elif player_choice == "2":
-            print("You performed a magical attack!")    
-            stats.magic_attack()
+            print("You performed a magical attack!")
+            STATS.magic_attack()
             enemy_action()
         elif player_choice == "3":
             print("You healed 50 HP!")
-            stats.heal()
+            STATS.heal()
             enemy_action()
         elif player_choice == "4":
             print("You unleashed your inner strength!")
             enemy_action()
         elif player_choice == "5":
-            print(stats.full_stats())
+            print(STATS.full_stats())
 
     else:
         print("You were felled by the enemy!")
         print("GAME OVER")
 
+
 def combat():
     """
     decides who takes the turn first based on the speed object
     """
-    while enemy_stats.hp > 0 and stats.hp > 0:
-        if enemy_stats.spd < stats.spd:
+    while _ENEMY_STATS.hp > 0 and STATS.hp > 0:
+        if _ENEMY_STATS.spd < STATS.spd:
             print("player goes first")
             player_action()
         else:
             print("enemy goes first")
             enemy_action()
 
+
 def enemy_approaches():
     """
     randomly generates 1, 2 or 3 and pushes forward an enemy type
     """
 
-    global enemy_stats
+    global _ENEMY_STATS
 
-    global ENEMY
-    ENEMY = random.randint(1,3)
+    ENEMY = random.randint(1, 3)
 
     if ENEMY == 1:
-        enemy_stats = enemy_type("Goblin", 300, 100, 50, 5, 1, 1, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Goblin", 300, 100, 50, 5, 1, 1, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
     elif ENEMY == 2:
-        enemy_stats = enemy_type("Witch", 100, 300, 50, 1, 5, 5, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Witch", 100, 300, 50, 1, 5, 5, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
     elif ENEMY == 3:
-        enemy_stats = enemy_type("Striga", 200, 200, 50, 3, 3, 3, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Striga", 200, 200, 50, 3, 3, 3, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
+
 
 def boss_approaches(boss):
     """
     randomly generates 1, 2 or 3 and pushes forward an enemy type
     """
 
-    global enemy_stats
+    global _ENEMY_STATS
 
     if boss == 1:
-        enemy_stats = enemy_type("Dragon", 300, 100, 50, 5, 1, 1, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Dragon", 300, 100, 50, 5, 1, 1, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
     elif boss == 2:
-        enemy_stats = enemy_type("Titan", 100, 300, 50, 1, 5, 5, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Titan", 100, 300, 50, 1, 5, 5, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
     elif boss == 3:
-        enemy_stats = enemy_type("Demon", 200, 200, 50, 3, 3, 3, 3)
-        print(enemy_stats.full_stats())
+        _ENEMY_STATS = EnemyType("Demon", 200, 200, 50, 3, 3, 3, 3)
+        print(_ENEMY_STATS.full_stats())
         combat()
 
 
 def enemy_encounter():
-
     """
-    randomly generates 1 or 2 as an integer; will be used to determine if there is an enemy encounter
+    randomly generates 1 or 2 as an integer; determines enemy encounter
     """
 
-    global ENCOUNTER
-    ENCOUNTER = random.randint(2,2)
+    ENCOUNTER = random.randint(2, 2)
 
     if ENCOUNTER == 2:
         print("you encountered an ememy")
@@ -201,26 +270,35 @@ def enemy_encounter():
         print("no enemy encounter")
         print(ENCOUNTER)
 
+
 def story_arc_2v2():
-    clearConsole()
+    """
+    story arc 2.2
+    """
+    clear_console()
     boss_approaches(1)
     # enemy_encounter()
     print("story arc 2")
 
+
 def story_arc_2v1():
-    clearConsole()
+    """
+    story arc 2.1
+    """
+    clear_console()
     enemy_encounter()
-    print("story arc 2")
+    print("story arc 1")
+
 
 def story_arc_1():
     """
     inital story setup; currently a test function
     """
 
-    print("\n\n" + stats.name + ", you wake up next to a dying fire.")
+    print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
     print("It's cold, wet and dark. You look around and can't see anything...")
     print("...or for that matter...remember anything...except...")
-    print(stats.full_stats())
+    print(STATS.full_stats())
     time.sleep(1)
     print("Your mind is as clouded as the dense fog that is surrounding you.")
     print("You hear the noises of the night, muffled by the thick fog.")
@@ -239,34 +317,44 @@ def story_arc_1():
     else:
         print("Please make a valid choice.")
 
+
 def player_job_selection():
     """
     player choice of class and name input
     """
-    global stats
+    global STATS
 
-    player_choice = input("What class would you like to be? (warrior / assassin / mage) ")
+    print("What class would you like to be?")
+    player_choice = input("(warrior / assassin / mage) ")
 
     if player_choice == "warrior":
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
-        stats = player_job(pname, pjob, "None", 300, 100, 100, 5, 1, 1, 3)
-        # print(stats.full_stats())
+        STATS = player_job(pname, pjob, "None", 300, 100, 100, 5, 1, 1, 3)
+        story_arc_1()
+        # print(STATS.full_stats())
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        stats = player_job(pname, pjob, "None", 200, 200, 100, 1, 3, 1, 5)
-        # print(stats.full_stats())
+        STATS = player_job(pname, pjob, "None", 200, 200, 100, 1, 3, 1, 5)
+        story_arc_1()
+        # print(STATS.full_stats())
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        stats = player_job(pname, pjob, "None", 100, 300, 100, 1, 5, 5, 1)
-        # print(stats.full_stats())
+        STATS = player_job(pname, pjob, "None", 100, 300, 100, 1, 5, 5, 1)
+        story_arc_1()
+        # print(STATS.full_stats())
 
-    story_arc_1()
+    else:
+        print("Please make a valid choice: \n")
+        player_job_selection()
 
-while True:
-    player_job_selection()
-    
+
+# while True:
+
+#     player_job_selection()
+
+player_job_selection()
