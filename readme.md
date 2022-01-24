@@ -170,11 +170,36 @@ To develop your project locally, do the following:
 
 1. Follow the above steps to either clone or fork the repository. 
 2. Download the gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
+    - Feel free to use your IDE of choice, such as Atom, Gitbucket, etc.
 3. Once in your own copy of the repository, click the green gitpod button to launch the project. 
 4. Once loaded, head to the terminal and type 'python3 run.py' and press enter. 
 5. The programme will now run. 
 
 ## Remote Deployment via Heroku
+
+1. Follow the above steps to either clone or fork the repository.
+2. Download the gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
+    - Feel free to use your IDE of choice, such as Atom, Gitbucket, etc.
+3. Once in your own copy of the repository, click the green gitpod button to launch the project. 
+4. If you add any dependencies to the project, make sure that you create a requirements file. 
+    - 'use the pip3 freeze > requirements.txt' command to create this file.
+5. Commit and push your changes to your repository. 
+6. Head over to [Heroku](heroku.com) and create an account. 
+    - Fill in the details on the form, for role you can select 'student'.
+7. Once created, confirm your account by email and set your password.
+8. Now that you have an account, click 'Create New App' and give it a name, and then select your region.
+9. Head over to the 'Settings' tab and set up some Config Vars.
+    - If you have any sensitive data, such as API credentials, you're going to need to specify that in your Config Vars. Create a config var and in the field, place your sensitive file information, for example, 'credentails.json'. Copy your entire file and past it into the field value and click 'Add'.
+    - You can skip the the config vars step if you have no sensitive info to protect.
+10. Within 'Settings' click on 'Add buildpack'.
+    - Python is the first buildpack you need, so select that and click 'Save changes'.
+    - Node.js is the second buildpack that you need, so select that and click 'Save changes'.
+11. Click on the 'Deployment' section and then click on 'Github' to connect to Github.
+    - Search for your repository and click 'connect' once you have found it. 
+12. Set up automatic deploys so that Heroku will rebuild your app every time you push a new change to Github. 
+    - You can choose to manually deploy if you wish.
+13. Once the app is built, click the button to view your deployed app.
+14. Happy testing.
 
 # Credits
 
