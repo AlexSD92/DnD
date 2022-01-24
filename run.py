@@ -133,6 +133,27 @@ class player_job():
         STATS.spd += 1
 
 
+def combi_table():
+
+    c_s = PrettyTable(["Player Attr", "Player Value", "     ", "Enemy Attr", "Enemy Value"])
+
+    c_s.add_row(["NAME", STATS.name, "     ", " ", " "])
+    c_s.add_row(["JOB", STATS.job, "     ", "JOB", _ENEMY_STATS.job])
+    c_s.add_row(['WEAPON', STATS.itm, "     ", " ", " "])
+    c_s.add_row(['HEALTH', STATS.hp, "     ", 'HEALTH', _ENEMY_STATS.hp])
+    c_s.add_row(['MAGIC', STATS.mp, "     ", 'MAGIC', _ENEMY_STATS.mp])
+    c_s.add_row(['ATTACK', STATS.atk, "     ", 'ATTACK', _ENEMY_STATS.atk])
+    c_s.add_row(['BLOCK', STATS.blk, "     ", 'BLOCK', _ENEMY_STATS.blk])
+    c_s.add_row(['M. ATTACK', STATS.matk, "     ", 'M. ATTACK', _ENEMY_STATS.matk])
+    c_s.add_row(['M. DEFENSE', STATS.mblk, "     ", 'M. DEFENSE', _ENEMY_STATS.mblk])
+    c_s.add_row(['SPEED', STATS.spd, "     ", 'SPEED', _ENEMY_STATS.spd])
+
+    c_s.align["Player Attr"] = "l"
+    c_s.align["Player Value"] = "r"
+
+    print(c_s)
+
+
 def clear_console():
     """
     clears the console when called
@@ -189,7 +210,9 @@ def player_action():
         if player_choice == "1":
             print("You performed a physical attack!")
             STATS.attack()
-            print("Remaining enemy health: " + str(_ENEMY_STATS.hp))
+            combi_table()
+            # print("{} {}".format(STATS.full_stats(), _ENEMY_STATS.full_stats()))
+            # print("Remaining enemy health: " + str(_ENEMY_STATS.hp))
             enemy_action()
         elif player_choice == "2":
             print("You performed a magical attack!")
