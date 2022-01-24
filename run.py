@@ -1,6 +1,10 @@
 import random
 import time
 import os
+# https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
+# https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
+# https://pypi.org/project/prettytable/
+from prettytable import PrettyTable
 
 
 class EnemyType():
@@ -21,17 +25,21 @@ class EnemyType():
         """
         prints full enemy stats
         """
-        return """
-        JOB - {}
-        HEALTH - {}
-        MAGIC - {}
-        ATTACK - {}
-        BLOCK - {}
-        M. ATTACK - {}
-        M. DEFENSE - {}
-        SPEED - {}
-        """.format(self.job, self.hp, self.mp, self.atk, self.blk, self.matk,
-                   self.mblk, self.spd)
+        table = PrettyTable(["Attribute", "Value"])
+
+        table.add_row(["JOB", self.job])
+        table.add_row(['HEALTH', self.hp])
+        table.add_row(['MAGIC', self.mp])
+        table.add_row(['ATTACK', self.atk])
+        table.add_row(['BLOCK', self.blk])
+        table.add_row(['M. ATTACK', self.matk])
+        table.add_row(['M. DEFENSE', self.mblk])
+        table.add_row(['SPEED', self.spd])
+
+        table.align["Attribute"] = "l"
+        table.align["Value"] = "r"
+
+        print(table)
 
     def attack(self):
         """
@@ -66,20 +74,24 @@ class player_job():
         """
         prints full player stats
         """
-        return """
-        NAME - {}
-        JOB - {}
-        WEAPON - {}
-        HEALTH - {}
-        MAGIC - {}
-        ATTACK - {}
-        BLOCK - {}
-        M. ATTACK - {}
-        M. DEFENSE - {}
-        SPEED - {}
-        """.format(self.name, self.job, self.itm, self.hp, self.mp, self.atk,
-                   self.blk, self.matk, self.mblk, self.spd)
+        table = PrettyTable(["Attribute", "Value"])
 
+        table.add_row(["NAME", self.name])
+        table.add_row(["JOB", self.job])
+        table.add_row(['WEAPON', self.itm])
+        table.add_row(['HEALTH', self.hp])
+        table.add_row(['MAGIC', self.mp])
+        table.add_row(['ATTACK', self.atk])
+        table.add_row(['BLOCK', self.blk])
+        table.add_row(['M. ATTACK', self.matk])
+        table.add_row(['M. DEFENSE', self.mblk])
+        table.add_row(['SPEED', self.spd])
+
+        table.align["Attribute"] = "l"
+        table.align["Value"] = "r"
+
+        print(table)
+        
     def attack(self):
         """
         calculation for physical attack
@@ -295,6 +307,8 @@ def story_arc_1():
     inital story setup; currently a test function
     """
 
+    clear_console()
+
     print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
     print("It's cold, wet and dark. You look around and can't see anything...")
     print("...or for that matter...remember anything...except...")
@@ -353,8 +367,8 @@ def player_job_selection():
         player_job_selection()
 
 
-# while True:
+while True:
 
-#     player_job_selection()
+    player_job_selection()
 
-player_job_selection()
+# player_job_selection()
