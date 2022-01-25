@@ -91,7 +91,7 @@ class player_job():
         table.align["Value"] = "r"
 
         print(table)
-        
+
     def attack(self):
         """
         calculation for physical attack
@@ -306,9 +306,25 @@ def enemy_encounter():
         print(ENCOUNTER)
 
 
-def story_arc_2v2():
+def story_arc_4():
     """
-    story arc 2.2
+    story arc 4
+    """
+    clear_console()
+    print("story arc 4")
+
+
+def story_arc_3():
+    """
+    story arc 3
+    """
+    clear_console()
+    print("story arc 3")
+
+
+def story_arc_2():
+    """
+    story arc 2
     """
     clear_console()
     boss_approaches(1)
@@ -316,16 +332,16 @@ def story_arc_2v2():
     print("story arc 2")
 
 
-def story_arc_2v1():
+def story_arc_1():
     """
-    story arc 2.1
+    story arc 1
     """
     clear_console()
     enemy_encounter()
     print("story arc 1")
 
 
-def story_arc_1():
+def story_arc_0():
     """
     inital story setup; currently a test function
     """
@@ -339,18 +355,24 @@ def story_arc_1():
     time.sleep(1)
     print("Your mind is as clouded as the dense fog that is surrounding you.")
     print("You hear the noises of the night, muffled by the thick fog.")
-    print("You stand up and decide the following: ")
+    print("You stand up, look around and decide the following: ")
     print("""
-    1. Decide to keep the fire alive.
-    2. Follow the noises you hear in the distance.
+    1. Follow the dirt path into the thick fog.
+    2. Go through the tall grass and investigate the shiny object.
+    3. Go down the steps to your right.
+    4. Throw a stone at whatever is making that noise.
     """)
 
     path = input("Please input '1' or '2' to decide: ")
 
     if path == "1":
-        story_arc_2v1()
+        story_arc_1()
     elif path == "2":
-        story_arc_2v2()
+        story_arc_2()
+    elif path == "3"
+        story_arc_3()
+    elif path == "4"
+        story_arc_4()
     else:
         print("Please make a valid choice.")
 
@@ -368,21 +390,21 @@ def player_job_selection():
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
         STATS = player_job(pname, pjob, "None", 300, 100, 100, 5, 1, 1, 3)
-        story_arc_1()
+        story_arc_0()
         # print(STATS.full_stats())
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
         STATS = player_job(pname, pjob, "None", 200, 200, 100, 1, 3, 1, 5)
-        story_arc_1()
+        story_arc_0()
         # print(STATS.full_stats())
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
         STATS = player_job(pname, pjob, "None", 100, 300, 100, 1, 5, 5, 1)
-        story_arc_1()
+        story_arc_0()
         # print(STATS.full_stats())
 
     else:
