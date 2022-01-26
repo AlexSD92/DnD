@@ -139,6 +139,20 @@ def clear_console():
     os.system(command)
 
 
+def store_front():
+    """
+    store / shop
+    """
+    clear_console()
+    print("Hello, " + STATS.name + " how can we be of service?")
+
+    merch = PrettyTable(["Item", "Description", "Cost"])
+
+    merch.add_row(['Sword', 'A fine blade', '$75'])
+    merch.add_row(['Potion', 'Heals you good', '$25'])
+    merch.add_row(['Ether', 'Gives you magic', '$35'])
+
+
 def enemy_action():
     """
     randomly selects enemy attack as object method
@@ -275,32 +289,6 @@ def enemy_encounter():
     else:
         print("no enemy encounter")
         print(ENCOUNTER)
-        
-
-def story_arc_4():
-    """
-    story arc 4
-    """
-    clear_console()
-    print("story arc 4")
-
-
-def story_arc_3():
-    """
-    story arc 3
-    """
-    clear_console()
-    print("story arc 3")
-
-
-def story_arc_2():
-    """
-    story arc 2
-    """
-    clear_console()
-    boss_approaches(1)
-    # enemy_encounter()
-    print("story arc 2")
 
 
 def story_arc_1v3():
@@ -350,7 +338,7 @@ def story_arc_1v1():
         elif path == "3":
             enemy_approaches()
         elif path == "4":
-            shop()
+            store_front()
         else:
             print("Please make a valid choice.")
 
@@ -374,47 +362,31 @@ def story_arc_1():
 
           1. Sword
           2. Axe
-          3. Spear          
-    """)
+          3. Spear
+          """)
 
 
 def story_arc_0():
     """
     inital story setup; currently a test function
     """
+    print("Your mind is as clouded as the dense fog that surrounds you.")
+    print("You hear the noises of the night, muffled by the thick fog.")
+    print("You stand up, look around and decide the following: ")
+    print("""
+    1. Follow the dirt path into the thick fog.
+    2. Go through the tall grass and investigate the shiny object.
+    3. Go down the steps to your right.
+    4. Throw a stone at whatever is making that noise.
+    5. Hunt for enemies.
+    """)
+
     while True:
 
-        clear_console()
-
-        print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
-        print("It's cold and dark. You look around and can't see anything...")
-        print("...or for that matter...remember anything...except...")
-        print(STATS.full_stats())
-        time.sleep(1)
-        print("Your mind is as clouded as the dense fog that surrounds you.")
-        print("You hear the noises of the night, muffled by the thick fog.")
-        print("You stand up, look around and decide the following: ")
-        print("""
-        1. Follow the dirt path into the thick fog.
-        2. Go through the tall grass and investigate the shiny object.
-        3. Go down the steps to your right.
-        4. Throw a stone at whatever is making that noise.
-        5. Hunt for enemies.
-        """)
-
-        path = input("Please input '1' or '2' to decide: ")
+        path = input("Please input '1' or '5' to decide: ")
 
         if path == "1":
             story_arc_1()
-            break
-        elif path == "2":
-            story_arc_2()
-            break
-        elif path == "3":
-            story_arc_3()
-            break
-        elif path == "4":
-            story_arc_4()
             break
         elif path == "5":
             enemy_approaches()
@@ -422,10 +394,42 @@ def story_arc_0():
             print("Please make a valid choice.")
 
 
+def confirm_choice():
+    """
+    checks if player is happy with thir choice
+    """
+    clear_console()
+
+    print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
+    time.sleep(1)
+    print("It's cold and dark. You look around and can't see anything...")
+    time.sleep(1)
+    print("...or for that matter...remember anything...except...")
+    time.sleep(2)
+
+    while True:
+
+        STATS.full_stats()
+        confirm = input("Is this how your story begins? ")
+
+        if confirm == "yes":
+            story_arc_0()
+            break
+        elif confirm == "no":
+            player_job_selection()
+            break
+        else:
+            clear_console()
+            print("Please make a valid choice.")
+
+
 def player_job_selection():
     """
     player choice of class and name input
     """
+
+    clear_console()
+
     global STATS
 
     print("What class would you like to be?")
@@ -435,22 +439,19 @@ def player_job_selection():
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
         STATS = player_job(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
-        story_arc_0()
-        # print(STATS.full_stats())
+        confirm_choice()
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
         STATS = player_job(pname, 1, 0, 0, pjob, "None", 200, 200, 100, 1, 5)
-        story_arc_0()
-        # print(STATS.full_stats())
+        confirm_choice()
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
         STATS = player_job(pname, 1, 0, 0, pjob, "None", 100, 300, 100, 1, 1)
-        story_arc_0()
-        # print(STATS.full_stats())
+        confirm_choice()
 
     else:
         print("Please make a valid choice: \n")
