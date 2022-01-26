@@ -11,14 +11,12 @@ class EnemyType():
     """
     template for enemy types, object methods for attack
     """
-    def __init__(self, job, hp, mp, atk, blk, matk, mblk, spd):
+    def __init__(self, job, hp, mp, atk, blk, spd):
         self.job = job
         self.hp = hp
         self.mp = mp
         self.atk = atk
         self.blk = blk
-        self.matk = matk
-        self.mblk = mblk
         self.spd = spd
 
     def full_stats(self):
@@ -32,8 +30,6 @@ class EnemyType():
         table.add_row(['MAGIC', self.mp])
         table.add_row(['ATTACK', self.atk])
         table.add_row(['BLOCK', self.blk])
-        table.add_row(['M. ATTACK', self.matk])
-        table.add_row(['M. DEFENSE', self.mblk])
         table.add_row(['SPEED', self.spd])
 
         table.align["Attribute"] = "l"
@@ -47,27 +43,22 @@ class EnemyType():
         """
         STATS.hp -= self.atk - STATS.blk
 
-    def magic_attack(self):
-        """
-        calculation for magical attack
-        """
-        STATS.hp -= self.matk - STATS.mblk
-
 
 class player_job():
     """
     template for player types, object methods for attack
     """
-    def __init__(self, name, job, itm, hp, mp, atk, blk, matk, mblk, spd):
+    def __init__(self, name, lvl, exp, mny, job, itm, hp, mp, atk, blk, spd):
         self.name = name
         self.job = job
+        self.lvl = lvl
+        self.exp = exp
+        self.mny = mny
         self.itm = itm
         self.hp = hp
         self.mp = mp
         self.atk = atk
         self.blk = blk
-        self.matk = matk
-        self.mblk = mblk
         self.spd = spd
 
     def full_stats(self):
@@ -83,8 +74,6 @@ class player_job():
         table.add_row(['MAGIC', self.mp])
         table.add_row(['ATTACK', self.atk])
         table.add_row(['BLOCK', self.blk])
-        table.add_row(['M. ATTACK', self.matk])
-        table.add_row(['M. DEFENSE', self.mblk])
         table.add_row(['SPEED', self.spd])
 
         table.align["Attribute"] = "l"
@@ -97,12 +86,6 @@ class player_job():
         calculation for physical attack
         """
         _ENEMY_STATS.hp -= self.atk - _ENEMY_STATS.blk
-
-    def magic_attack(self):
-        """
-        calculation for magical attack
-        """
-        _ENEMY_STATS.hp -= self.matk - _ENEMY_STATS.mblk
 
     def heal(self):
         """
@@ -118,35 +101,26 @@ class player_job():
         """
         STATS.atk += 5
 
-    def staff(self):
-        """
-        what happens when user selects staff
-        """
-        STATS.matk += 5
-
     def dagger(self):
         """
         what happens when user selects dagger
         """
         STATS.atk += 1
-        STATS.matk += 1
         STATS.spd += 1
 
 
 def combi_table():
 
-    c_s = PrettyTable(["Player Attr", "Player Value", "     ", "Enemy Attr", "Enemy Value"])
+    c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
 
-    c_s.add_row(["NAME", STATS.name, "     ", " ", " "])
-    c_s.add_row(["JOB", STATS.job, "     ", "JOB", _ENEMY_STATS.job])
-    c_s.add_row(['WEAPON', STATS.itm, "     ", " ", " "])
-    c_s.add_row(['HEALTH', STATS.hp, "     ", 'HEALTH', _ENEMY_STATS.hp])
-    c_s.add_row(['MAGIC', STATS.mp, "     ", 'MAGIC', _ENEMY_STATS.mp])
-    c_s.add_row(['ATTACK', STATS.atk, "     ", 'ATTACK', _ENEMY_STATS.atk])
-    c_s.add_row(['BLOCK', STATS.blk, "     ", 'BLOCK', _ENEMY_STATS.blk])
-    c_s.add_row(['M. ATTACK', STATS.matk, "     ", 'M. ATTACK', _ENEMY_STATS.matk])
-    c_s.add_row(['M. DEFENSE', STATS.mblk, "     ", 'M. DEFENSE', _ENEMY_STATS.mblk])
-    c_s.add_row(['SPEED', STATS.spd, "     ", 'SPEED', _ENEMY_STATS.spd])
+    c_s.add_row(["NAME", STATS.name, "     ", " "])
+    c_s.add_row(["JOB", STATS.job, "     ", _ENEMY_STATS.job])
+    c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
+    c_s.add_row(['HEALTH', STATS.hp, "     ", _ENEMY_STATS.hp])
+    c_s.add_row(['MAGIC', STATS.mp, "     ", _ENEMY_STATS.mp])
+    c_s.add_row(['ATTACK', STATS.atk, "     ", _ENEMY_STATS.atk])
+    c_s.add_row(['BLOCK', STATS.blk, "     ", _ENEMY_STATS.blk])
+    c_s.add_row(['SPEED', STATS.spd, "     ", _ENEMY_STATS.spd])
 
     c_s.align["Player Attr"] = "l"
     c_s.align["Player Value"] = "r"
@@ -182,7 +156,7 @@ def enemy_action():
             player_action()
         elif enemy_choice == 2:
             print("The enemy performed a magical attack!")
-            _ENEMY_STATS.magic_attack()
+            # _ENEMY_STATS.magic_attack()
             player_action()
 
     else:
@@ -211,12 +185,9 @@ def player_action():
             print("You performed a physical attack!")
             STATS.attack()
             combi_table()
-            # print("{} {}".format(STATS.full_stats(), _ENEMY_STATS.full_stats()))
-            # print("Remaining enemy health: " + str(_ENEMY_STATS.hp))
             enemy_action()
         elif player_choice == "2":
             print("You performed a magical attack!")
-            STATS.magic_attack()
             enemy_action()
         elif player_choice == "3":
             print("You healed 50 HP!")
@@ -256,15 +227,15 @@ def enemy_approaches():
     ENEMY = random.randint(1, 3)
 
     if ENEMY == 1:
-        _ENEMY_STATS = EnemyType("Goblin", 300, 100, 50, 5, 1, 1, 3)
+        _ENEMY_STATS = EnemyType("Goblin", 300, 100, 50, 5, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
     elif ENEMY == 2:
-        _ENEMY_STATS = EnemyType("Witch", 100, 300, 50, 1, 5, 5, 3)
+        _ENEMY_STATS = EnemyType("Witch", 100, 300, 50, 1, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
     elif ENEMY == 3:
-        _ENEMY_STATS = EnemyType("Striga", 200, 200, 50, 3, 3, 3, 3)
+        _ENEMY_STATS = EnemyType("Striga", 200, 200, 50, 3, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
 
@@ -277,15 +248,15 @@ def boss_approaches(boss):
     global _ENEMY_STATS
 
     if boss == 1:
-        _ENEMY_STATS = EnemyType("Dragon", 300, 100, 50, 5, 1, 1, 3)
+        _ENEMY_STATS = EnemyType("Dragon", 300, 100, 50, 5, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
     elif boss == 2:
-        _ENEMY_STATS = EnemyType("Titan", 100, 300, 50, 1, 5, 5, 3)
+        _ENEMY_STATS = EnemyType("Titan", 100, 300, 50, 1, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
     elif boss == 3:
-        _ENEMY_STATS = EnemyType("Demon", 200, 200, 50, 3, 3, 3, 3)
+        _ENEMY_STATS = EnemyType("Demon", 200, 200, 50, 3, 3)
         print(_ENEMY_STATS.full_stats())
         combat()
 
@@ -369,9 +340,9 @@ def story_arc_0():
         story_arc_1()
     elif path == "2":
         story_arc_2()
-    elif path == "3"
+    elif path == "3":
         story_arc_3()
-    elif path == "4"
+    elif path == "4":
         story_arc_4()
     else:
         print("Please make a valid choice.")
@@ -389,21 +360,21 @@ def player_job_selection():
     if player_choice == "warrior":
         pname = input("What is your name, warrior? ")
         pjob = "Warrior"
-        STATS = player_job(pname, pjob, "None", 300, 100, 100, 5, 1, 1, 3)
+        STATS = player_job(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
         story_arc_0()
         # print(STATS.full_stats())
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        STATS = player_job(pname, pjob, "None", 200, 200, 100, 1, 3, 1, 5)
+        STATS = player_job(pname, 1, 0, 0, pjob, "None", 200, 200, 100, 1, 5)
         story_arc_0()
         # print(STATS.full_stats())
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        STATS = player_job(pname, pjob, "None", 100, 300, 100, 1, 5, 5, 1)
+        STATS = player_job(pname, 1, 0, 0, pjob, "None", 100, 300, 100, 1, 1)
         story_arc_0()
         # print(STATS.full_stats())
 
