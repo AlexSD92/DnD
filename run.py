@@ -275,7 +275,7 @@ def enemy_encounter():
     else:
         print("no enemy encounter")
         print(ENCOUNTER)
-
+        
 
 def story_arc_4():
     """
@@ -303,49 +303,123 @@ def story_arc_2():
     print("story arc 2")
 
 
+def story_arc_1v3():
+    """
+    story arc 1v3
+    """
+    print("you have arrived at 1v3")
+
+
+def story_arc_1v2():
+    """
+    story arc 1v2
+    """
+    print("you have arrived at 1v2")
+
+
+def story_arc_1v1():
+    """
+    story arc 1v1
+    """
+
+    clear_console()
+    print("""
+          You continue down the dirt path.
+          After a few minutes in to your journey,
+          you come across an entrance to a cave.
+
+          You decide to:
+
+          1. Enter the cave.
+          2. Continue on the path.
+          3. Hunt for enemies.
+          4. Shop
+
+    """)
+
+    path = input("What would you like to do? ")
+
+    while True:
+
+        if path == "1":
+            story_arc_1v2()
+            break
+        elif path == "2":
+            story_arc_1v3()
+            break
+        elif path == "3":
+            enemy_approaches()
+        elif path == "4":
+            shop()
+        else:
+            print("Please make a valid choice.")
+
+
 def story_arc_1():
     """
     story arc 1
     """
     clear_console()
     enemy_encounter()
-    print("story arc 1")
+    print("- - - STORY ARC 1 - - -")
+    print("""
+          You begin to progress on the dirt path.
+          Though you're wearing boots, you can feel the unnaturally cold earth.
+          You can't help but feel that through the thick fog...something...
+          ...or someone...is watching you.
+
+          You trip on something in the dark and you can feel your heart skip.
+          You look to see what it was and you find human remains.
+          You pick through the remains and decide to take one of the following:
+
+          1. Sword
+          2. Axe
+          3. Spear          
+    """)
 
 
 def story_arc_0():
     """
     inital story setup; currently a test function
     """
+    while True:
 
-    clear_console()
+        clear_console()
 
-    print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
-    print("It's cold, wet and dark. You look around and can't see anything...")
-    print("...or for that matter...remember anything...except...")
-    print(STATS.full_stats())
-    time.sleep(1)
-    print("Your mind is as clouded as the dense fog that is surrounding you.")
-    print("You hear the noises of the night, muffled by the thick fog.")
-    print("You stand up, look around and decide the following: ")
-    print("""
-    1. Follow the dirt path into the thick fog.
-    2. Go through the tall grass and investigate the shiny object.
-    3. Go down the steps to your right.
-    4. Throw a stone at whatever is making that noise.
-    """)
+        print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
+        print("It's cold and dark. You look around and can't see anything...")
+        print("...or for that matter...remember anything...except...")
+        print(STATS.full_stats())
+        time.sleep(1)
+        print("Your mind is as clouded as the dense fog that surrounds you.")
+        print("You hear the noises of the night, muffled by the thick fog.")
+        print("You stand up, look around and decide the following: ")
+        print("""
+        1. Follow the dirt path into the thick fog.
+        2. Go through the tall grass and investigate the shiny object.
+        3. Go down the steps to your right.
+        4. Throw a stone at whatever is making that noise.
+        5. Hunt for enemies.
+        """)
 
-    path = input("Please input '1' or '2' to decide: ")
+        path = input("Please input '1' or '2' to decide: ")
 
-    if path == "1":
-        story_arc_1()
-    elif path == "2":
-        story_arc_2()
-    elif path == "3":
-        story_arc_3()
-    elif path == "4":
-        story_arc_4()
-    else:
-        print("Please make a valid choice.")
+        if path == "1":
+            story_arc_1()
+            break
+        elif path == "2":
+            story_arc_2()
+            break
+        elif path == "3":
+            story_arc_3()
+            break
+        elif path == "4":
+            story_arc_4()
+            break
+        elif path == "5":
+            enemy_approaches()
+        else:
+            print("Please make a valid choice.")
 
 
 def player_job_selection():
