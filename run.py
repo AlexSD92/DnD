@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 import os
 # https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
 # https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
@@ -11,8 +12,9 @@ class EnemyType():
     """
     template for enemy types, object methods for attack
     """
-    def __init__(self, job, hp, mp, atk, blk, spd):
+    def __init__(self, job, lvl, hp, mp, atk, blk, spd):
         self.job = job
+        self.lvl = lvl
         self.hp = hp
         self.mp = mp
         self.atk = atk
@@ -26,6 +28,7 @@ class EnemyType():
         table = PrettyTable(["Attribute", "Value"])
 
         table.add_row(["JOB", self.job])
+        table.add_row(['LEVEL', self.lvl])
         table.add_row(['HEALTH', self.hp])
         table.add_row(['MAGIC', self.mp])
         table.add_row(['ATTACK', self.atk])
@@ -119,9 +122,9 @@ def combi_table():
 
     c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
 
-    c_s.add_row(["NAME", STATS.name, "     ", " "])
-    c_s.add_row(["JOB", STATS.job, "     ", _ENEMY_STATS.job])
+    c_s.add_row(["NAME", STATS.name, "     ", _ENEMY_STATS.job])
     c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
+    c_s.add_row(['LEVEL', STATS.lvl, "     ", _ENEMY_STATS.lvl])
     c_s.add_row(['HEALTH', STATS.hp, "     ", _ENEMY_STATS.hp])
     c_s.add_row(['MAGIC', STATS.mp, "     ", _ENEMY_STATS.mp])
     c_s.add_row(['ATTACK', STATS.atk, "     ", _ENEMY_STATS.atk])
@@ -192,6 +195,8 @@ def enemy_action():
     randomly selects enemy attack as object method
     """
 
+    time.sleep(1)
+
     clear_console()
 
     global _ENEMY_STATS
@@ -200,25 +205,33 @@ def enemy_action():
 
         combi_table()
 
-        enemy_choice = random.randint(1, 2)
+        print(
+            """
+            1 - Physical Attack
+            2 - Magical Attack
+            3 - Heal
+            4 - Boon
+            """
+        )
+
+        enemy_choice = random.randint(1, 1)
 
         if enemy_choice == 1:
             print("The enemy performed a physical attack!")
             _ENEMY_STATS.attack()
             player_action()
-        elif enemy_choice == 2:
-            print("The enemy performed a magical attack!")
-            # _ENEMY_STATS.magic_attack()
-            player_action()
 
     else:
         print("\nYou defeated the enemy!")
-
+        break
+        
 
 def player_action():
     """
     allows for user input during combat, calls object methods
     """
+
+    time.sleep(1)
 
     clear_console()
 
@@ -235,28 +248,45 @@ def player_action():
             """
         )
 
-        player_choice = input("What will you do?")
+        while True:
 
-        if player_choice == "1":
-            print("You performed a physical attack!")
-            STATS.attack()
-            enemy_action()
-        elif player_choice == "2":
-            print("You performed a magical attack!")
-            enemy_action()
-        elif player_choice == "3":
-            print("You healed 50 HP!")
-            STATS.heal()
-            enemy_action()
-        elif player_choice == "4":
-            print("You unleashed your inner strength!")
-            enemy_action()
-        elif player_choice == "5":
-            print(STATS.full_stats())
+            player_choice = input("What will you do?")
+
+            if player_choice == "1":
+                print("You performed a physical attack!")
+                STATS.attack()
+                enemy_action()
+            elif player_choice == "2":
+                print("You performed a magical attack!")
+                enemy_action()
+            elif player_choice == "3":
+                print("You healed 50 HP!")
+                STATS.heal()
+                enemy_action()
+            elif player_choice == "4":
+                print("You unleashed your inner strength!")
+                enemy_action()
+            else:
+                print("\nPlease make a valid choice.")
 
     else:
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
+
+        while True:
+
+            play_again = input("\nPlay again? (Yes / No) ").lower()
+            if play_again == "yes":
+                player_job_selection()
+            elif play_again == "no":
+                clear_console()
+                print("Exiting program...")
+                time.sleep(2)
+                clear_console()
+                sys.exit()
+            else:
+                clear_console()
+                print("\nPlease make a valid choice.")
 
 
 def combat():
@@ -265,16 +295,16 @@ def combat():
     """
 
     clear_console()
-    
-    while _ENEMY_STATS.hp > 0 and STATS.hp > 0:
-        if _ENEMY_STATS.spd < STATS.spd:
-            print("You reflexively attack first!")
-            time.sleep(2)
-            player_action()
-        else:
-            print("The enemy attacks first!")
-            time.sleep(2)
-            enemy_action()
+
+    # while _ENEMY_STATS.hp > 0 and STATS.hp > 0:
+    if _ENEMY_STATS.spd < STATS.spd:
+        print("You reflexively attack first!")
+        time.sleep(2)
+        player_action()
+    else:
+        print("The enemy attacks first!")
+        time.sleep(2)
+        enemy_action()
 
 
 def enemy_approaches():
@@ -285,17 +315,20 @@ def enemy_approaches():
     global _ENEMY_STATS
 
     ENEMY = random.randint(1, 3)
+    L = STATS.lvl + random.randint(-3, 2)
+    if L < 0:
+        L = 1
 
     if ENEMY == 1:
-        _ENEMY_STATS = EnemyType("Goblin", 300, 100, 50, 5, 3)
+        _ENEMY_STATS = EnemyType("Goblin", L, 300*L, 100*L, 50*L, 5*L, 3*L)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 2:
-        _ENEMY_STATS = EnemyType("Witch", 100, 300, 50, 1, 3)
+        _ENEMY_STATS = EnemyType("Witch", L, 100*L, 300*L, 50*L, 1*L, 3*L)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 3:
-        _ENEMY_STATS = EnemyType("Striga", 200, 200, 50, 3, 3)
+        _ENEMY_STATS = EnemyType("Striga", L, 200*L, 200*L, 50*L, 3*L, 3*L)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
 
@@ -308,15 +341,15 @@ def boss_approaches(boss):
     global _ENEMY_STATS
 
     if boss == 1:
-        _ENEMY_STATS = EnemyType("Dragon", 300, 100, 50, 5, 3)
+        _ENEMY_STATS = EnemyType("Dragon", 25, 300, 100, 50, 5, 3)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif boss == 2:
-        _ENEMY_STATS = EnemyType("Titan", 100, 300, 50, 1, 3)
+        _ENEMY_STATS = EnemyType("Titan", 50, 100, 300, 50, 1, 3)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif boss == 3:
-        _ENEMY_STATS = EnemyType("Demon", 200, 200, 50, 3, 3)
+        _ENEMY_STATS = EnemyType("Demon", 75, 200, 200, 50, 3, 3)
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
 
@@ -432,7 +465,8 @@ def story_arc_0():
             story_arc_1()
             break
         elif path == "2":
-            enemy_approaches()
+            while True:
+                enemy_approaches()
             print("\nWhat would you like to do? ")
         elif path == "3":
             scavenge()
