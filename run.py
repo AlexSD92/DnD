@@ -164,6 +164,8 @@ def scavenge():
     1/4 chance of finding coin
     """
 
+    clear_console()
+
     chance = random.randint(0, 1)
 
     if chance == 0:
@@ -190,9 +192,13 @@ def enemy_action():
     randomly selects enemy attack as object method
     """
 
+    clear_console()
+
     global _ENEMY_STATS
 
     if _ENEMY_STATS.hp > 0:
+
+        combi_table()
 
         enemy_choice = random.randint(1, 2)
 
@@ -206,7 +212,7 @@ def enemy_action():
             player_action()
 
     else:
-        print("You defeated the enemy!")
+        print("\nYou defeated the enemy!")
 
 
 def player_action():
@@ -214,7 +220,11 @@ def player_action():
     allows for user input during combat, calls object methods
     """
 
+    clear_console()
+
     if STATS.hp > 0:
+
+        combi_table()
 
         print(
             """
@@ -230,7 +240,6 @@ def player_action():
         if player_choice == "1":
             print("You performed a physical attack!")
             STATS.attack()
-            combi_table()
             enemy_action()
         elif player_choice == "2":
             print("You performed a magical attack!")
@@ -246,20 +255,25 @@ def player_action():
             print(STATS.full_stats())
 
     else:
-        print("You were felled by the enemy!")
-        print("GAME OVER")
+        print("\nYou were felled by the enemy!")
+        print("\nGAME OVER")
 
 
 def combat():
     """
     decides who takes the turn first based on the speed object
     """
+
+    clear_console()
+    
     while _ENEMY_STATS.hp > 0 and STATS.hp > 0:
         if _ENEMY_STATS.spd < STATS.spd:
-            print("player goes first")
+            print("You reflexively attack first!")
+            time.sleep(2)
             player_action()
         else:
-            print("enemy goes first")
+            print("The enemy attacks first!")
+            time.sleep(2)
             enemy_action()
 
 
@@ -274,15 +288,15 @@ def enemy_approaches():
 
     if ENEMY == 1:
         _ENEMY_STATS = EnemyType("Goblin", 300, 100, 50, 5, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 2:
         _ENEMY_STATS = EnemyType("Witch", 100, 300, 50, 1, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 3:
         _ENEMY_STATS = EnemyType("Striga", 200, 200, 50, 3, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
 
 
@@ -295,15 +309,15 @@ def boss_approaches(boss):
 
     if boss == 1:
         _ENEMY_STATS = EnemyType("Dragon", 300, 100, 50, 5, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif boss == 2:
         _ENEMY_STATS = EnemyType("Titan", 100, 300, 50, 1, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif boss == 3:
         _ENEMY_STATS = EnemyType("Demon", 200, 200, 50, 3, 3)
-        print(_ENEMY_STATS.full_stats())
+        print("You encountered a " + _ENEMY_STATS.job)
         combat()
 
 
@@ -315,12 +329,7 @@ def enemy_encounter():
     ENCOUNTER = random.randint(2, 2)
 
     if ENCOUNTER == 2:
-        print("you encountered an ememy")
-        print(ENCOUNTER)
         enemy_approaches()
-    else:
-        print("no enemy encounter")
-        print(ENCOUNTER)
 
 
 def story_arc_1v3():
@@ -424,12 +433,17 @@ def story_arc_0():
             break
         elif path == "2":
             enemy_approaches()
+            print("\nWhat would you like to do? ")
         elif path == "3":
             scavenge()
+            print("\nWhat would you like to do? ")
         elif path == "4":
+            clear_console()
             STATS.full_stats()
+            print("\nWhat would you like to do? ")
         else:
-            print("Please make a valid choice.")
+            clear_console()
+            print("\nPlease make a valid choice.")
 
 
 def confirm_choice():
@@ -438,17 +452,17 @@ def confirm_choice():
     """
     clear_console()
 
-    print("\n\n" + STATS.name + ", you wake up next to a dying fire.")
+    print(STATS.name + ", you wake up next to a dying fire.")
     time.sleep(1)
     print("It's cold and dark. You look around and can't see anything...")
     time.sleep(1)
-    print("...or for that matter...remember anything...except...")
+    print("...or for that matter...remember anything...except...\n")
     time.sleep(1)
 
     while True:
 
         STATS.full_stats()
-        confirm = input("Is this how your story begins? (Yes / No) ").lower()
+        confirm = input("\nIs this how your story begins? (Yes / No) ").lower()
 
         if confirm == "yes":
             story_arc_0()
@@ -474,7 +488,7 @@ def player_job_selection():
     player_choice = input("(warrior / assassin / mage) ").lower()
 
     if player_choice == "warrior":
-        pname = input("What is your name, warrior? ")
+        pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
         STATS = player_job(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
         confirm_choice()
