@@ -69,6 +69,9 @@ class player_job():
 
         table.add_row(["NAME", self.name])
         table.add_row(["JOB", self.job])
+        table.add_row(['Level', self.lvl])
+        table.add_row(['Exp', self.exp])
+        table.add_row(['Money', self.mny])
         table.add_row(['WEAPON', self.itm])
         table.add_row(['HEALTH', self.hp])
         table.add_row(['MAGIC', self.mp])
@@ -370,26 +373,32 @@ def story_arc_0():
     """
     inital story setup; currently a test function
     """
+    clear_console()
+
     print("Your mind is as clouded as the dense fog that surrounds you.")
     print("You hear the noises of the night, muffled by the thick fog.")
     print("You stand up, look around and decide the following: ")
-    print("""
-    1. Follow the dirt path into the thick fog.
-    2. Go through the tall grass and investigate the shiny object.
-    3. Go down the steps to your right.
-    4. Throw a stone at whatever is making that noise.
-    5. Hunt for enemies.
-    """)
 
     while True:
 
-        path = input("Please input '1' or '5' to decide: ")
+        print("""
+        1. Follow the dirt path into the thick fog.
+        2. Hunt for enemies.
+        3. Scavenge.
+        4. View your stats.
+        """)
+        
+        path = input("(1 / 2 / 3 / 4) ")
 
         if path == "1":
             story_arc_1()
             break
-        elif path == "5":
+        elif path == "2":
             enemy_approaches()
+        elif path == "3":
+            scavenge()
+        elif path == "4":
+            STATS.full_stats()
         else:
             print("Please make a valid choice.")
 
@@ -405,12 +414,12 @@ def confirm_choice():
     print("It's cold and dark. You look around and can't see anything...")
     time.sleep(1)
     print("...or for that matter...remember anything...except...")
-    time.sleep(2)
+    time.sleep(1)
 
     while True:
 
         STATS.full_stats()
-        confirm = input("Is this how your story begins? ")
+        confirm = input("Is this how your story begins? (Yes / No) ").lower()
 
         if confirm == "yes":
             story_arc_0()
@@ -433,7 +442,7 @@ def player_job_selection():
     global STATS
 
     print("What class would you like to be?")
-    player_choice = input("(warrior / assassin / mage) ")
+    player_choice = input("(warrior / assassin / mage) ").lower()
 
     if player_choice == "warrior":
         pname = input("What is your name, warrior? ")
