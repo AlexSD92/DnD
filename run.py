@@ -156,6 +156,29 @@ def store_front():
     merch.add_row(['Ether', 'Gives you magic', '$35'])
 
 
+def scavenge():
+
+    chance = random.randint(0, 1)
+
+    if chance == 0:
+
+        coin = random.randint(0, 10)
+
+        if coin == 0:
+            print("\nYou found nothing.")
+
+        elif coin == 1:
+            print("\nYou found 1 coin!")
+            STATS.mny += coin
+
+        else:
+            print("\nYou found " + str(coin) + " coins!")
+            STATS.mny += coin
+
+    else:
+        print("\nYou found nothing!")
+
+
 def enemy_action():
     """
     randomly selects enemy attack as object method
@@ -387,7 +410,7 @@ def story_arc_0():
         3. Scavenge.
         4. View your stats.
         """)
-        
+
         path = input("(1 / 2 / 3 / 4) ")
 
         if path == "1":
