@@ -113,6 +113,9 @@ class player_job():
 
 
 def combi_table():
+    """
+    combined table for combat so player can compare user stats and enemy stats
+    """
 
     c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
 
@@ -157,6 +160,9 @@ def store_front():
 
 
 def scavenge():
+    """
+    1/4 chance of finding coin
+    """
 
     chance = random.randint(0, 1)
 
