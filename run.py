@@ -223,7 +223,9 @@ def enemy_action():
 
     elif _ENEMY_STATS.hp < 0 and STATS.hp > 0:
         print("\nYou defeated the enemy!")
-        story_arc_0()
+        input("\nPress Enter to continue...")
+        clear_console()
+        player_controls("4")
 
 
 def player_action():
@@ -293,7 +295,7 @@ def combat():
     """
 
     clear_console()
-    
+
     if _ENEMY_STATS.spd < STATS.spd:
         print("You spotted the enemy before they spotted you!")
         print("You attack first!")
@@ -346,42 +348,78 @@ def enemy_encounter():
         print("\nYou did not encounter an enemy.")
 
 
-def story_arc_0():
+def story_arc_2():
     """
-    user controls
+    story arc 2
     """
+    clear_console()
+
+    print("- - - STORY ARC 1 - - -")
+    print("""
+          You begin to progress on the dirt path.
+          Though you're wearing boots, you can feel the unnaturally cold earth.
+          You can't help but feel that through the thick fog...something...
+          ...or someone...is watching you.
+
+          You trip on something in the dark and you can feel your heart skip.
+          You look to see what it was and you find human remains.
+          You pick through the remains and decide to take one of the following:
+
+          1. Sword
+          2. Axe
+          3. Spear
+          """)
+
+    path = input("What weapon will you select? ")
+
+
+def story_arc_1():
+    """
+    story arc 1
+    """
+
     clear_console()
 
     print("Your mind is as clouded as the dense fog that surrounds you.")
     print("You hear the noises of the night, muffled by the thick fog.")
     print("You stand up, look around and decide the following: ")
 
-    while True:
+    print("""
+    1. Follow the dirt path into the thick fog.
+    2. Hunt for enemies.
+    3. Scavenge.
+    4. View your stats.
+    """)
 
-        print("""
-        1. Follow the dirt path into the thick fog.
-        2. Hunt for enemies.
-        3. Scavenge.
-        4. View your stats.
-        """)
+    path = input("(1 / 2 / 3 / 4) ")
 
-        path = input("(1 / 2 / 3 / 4) ")
+    if path == "1":
+        story_arc_2()
+    else:
+        player_controls(path)
+        story_arc_1()
 
-        if path == "1":
-            story_arc_1()
-            break
-        elif path == "2":
-            enemy_encounter()
-        elif path == "3":
-            scavenge()
-            print("\nWhat would you like to do? ")
-        elif path == "4":
-            clear_console()
-            STATS.full_stats()
-            print("\nWhat would you like to do? ")
-        else:
-            clear_console()
-            print("\nPlease make a valid choice.")
+
+def player_controls(path):
+    """
+    player controls
+    """
+
+    if path == "2":
+        enemy_encounter()
+    elif path == "3":
+        scavenge()
+        input("\nPress Enter to continue...")
+        print("\nWhat would you like to do? ")
+    elif path == "4":
+        clear_console()
+        STATS.full_stats()
+        input("\nPress Enter to continue...")
+        print("\nWhat would you like to do? ")
+    else:
+        clear_console()
+        print("\nPlease make a valid choice.")
+        input("\nPress Enter to continue...")
 
 
 def confirm_choice():
@@ -403,7 +441,7 @@ def confirm_choice():
         confirm = input("\nIs this how your story begins? (Yes / No) ").lower()
 
         if confirm == "yes":
-            story_arc_0()
+            story_arc_1()
             break
         elif confirm == "no":
             player_job_selection()
