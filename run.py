@@ -46,6 +46,12 @@ class EnemyType():
         """
         STATS.hp -= self.atk - STATS.blk
 
+    def experience(self):
+        """
+        determines how much experience the enemy is worth and adds to player
+        """
+        STATS.exp += (self.hp + self.mp + self.atk + self.blk + self.spd)
+
 
 class player_job():
     """
@@ -220,7 +226,10 @@ def enemy_action():
             player_action()
 
     elif _ENEMY_STATS.hp < 0 and STATS.hp > 0:
+        exp_gained = (_ENEMY_STATS.hp + _ENEMY_STATS.mp + _ENEMY_STATS.atk + _ENEMY_STATS.blk + _ENEMY_STATS.spd)
         print("\nYou defeated the enemy!")
+        print("You gained " + str(exp_gained) + " exp.")
+        _ENEMY_STATS.experience()
         input("\nPress Enter to continue...")
         clear_console()
         player_controls("4")
@@ -265,7 +274,7 @@ def player_action():
         else:
             print("\nPlease make a valid choice.")
 
-    elif STATS.hp < 0 and _ENEMY_STATS.hp > 0:
+    elif STATS.hp < 0:
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
 
@@ -311,20 +320,19 @@ def enemy_approaches():
     global _ENEMY_STATS
 
     ENEMY = random.randint(1, 3)
-    L = STATS.lvl + random.randint(-3, 1)
-    if L < 0:
-        L = 1
+    L = STATS.lvl + random.randint(1, 5)
+    M = (L - (L * .95)) + 1
 
     if ENEMY == 1:
-        _ENEMY_STATS = EnemyType("Goblin", L, 300*L, 100*L, 50*L, 5*L, 3*L)
+        _ENEMY_STATS = EnemyType("Goblin", L, round(300*M), round(100*M), round(50*M), round(5*M), round(3*M))
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 2:
-        _ENEMY_STATS = EnemyType("Witch", L, 100*L, 300*L, 50*L, 1*L, 3*L)
+        _ENEMY_STATS = EnemyType("Witch", L, round(100*M), round(300*M), round(50*M), round(1*M), round(3*M))
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
     elif ENEMY == 3:
-        _ENEMY_STATS = EnemyType("Striga", L, 200*L, 200*L, 50*L, 3*L, 3*L)
+        _ENEMY_STATS = EnemyType("Striga", L, round(200*M), round(200*M), round(50*M), round(3*M), round(3*M))
         print("You encountered a " + _ENEMY_STATS.job)
         combat()
 
@@ -400,21 +408,42 @@ def player_controls(path):
     player controls
     """
 
-    if path == "2":
-        enemy_encounter()
-    elif path == "3":
-        scavenge()
-        input("\nPress Enter to continue...")
-        print("\nWhat would you like to do? ")
-    elif path == "4":
-        clear_console()
-        STATS.full_stats()
-        input("\nPress Enter to continue...")
-        print("\nWhat would you like to do? ")
-    else:
-        clear_console()
-        print("\nPlease make a valid choice.")
-        input("\nPress Enter to continue...")
+    if STATS.hp > 0:
+
+        if path == "2":
+            enemy_encounter()
+        elif path == "3":
+            scavenge()
+            input("\nPress Enter to continue...")
+            print("\nWhat would you like to do? ")
+        elif path == "4":
+            clear_console()
+            STATS.full_stats()
+            input("\nPress Enter to continue...")
+            print("\nWhat would you like to do? ")
+        else:
+            clear_console()
+            print("\nPlease make a valid choice.")
+            input("\nPress Enter to continue...")
+
+    elif STATS.hp < 0:
+        print("\nYou were felled by the enemy!")
+        print("\nGAME OVER")
+
+        while True:
+
+            play_again = input("\nPlay again? (Yes / No) ").lower()
+            if play_again == "yes":
+                player_job_selection()
+            elif play_again == "no":
+                clear_console()
+                print("Exiting program...")
+                time.sleep(2)
+                clear_console()
+                sys.exit()
+            else:
+                clear_console()
+                print("\nPlease make a valid choice.")
 
 
 def confirm_choice():
