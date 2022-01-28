@@ -201,7 +201,7 @@ def enemy_action():
 
     global _ENEMY_STATS
 
-    if _ENEMY_STATS.hp > 0:
+    if _ENEMY_STATS.hp > 0 and STATS.hp > 0:
 
         combi_table()
 
@@ -221,10 +221,10 @@ def enemy_action():
             _ENEMY_STATS.attack()
             player_action()
 
-    else:
+    elif _ENEMY_STATS.hp < 0 and STATS.hp > 0:
         print("\nYou defeated the enemy!")
-        break
-        
+        story_arc_0()
+
 
 def player_action():
     """
@@ -235,7 +235,7 @@ def player_action():
 
     clear_console()
 
-    if STATS.hp > 0:
+    if STATS.hp > 0 and _ENEMY_STATS.hp > 0:
 
         combi_table()
 
@@ -248,28 +248,26 @@ def player_action():
             """
         )
 
-        while True:
+        player_choice = input("What will you do?")
 
-            player_choice = input("What will you do?")
+        if player_choice == "1":
+            print("You performed a physical attack!")
+            STATS.attack()
+            enemy_action()
+        elif player_choice == "2":
+            print("You performed a magical attack!")
+            enemy_action()
+        elif player_choice == "3":
+            print("You healed 50 HP!")
+            STATS.heal()
+            enemy_action()
+        elif player_choice == "4":
+            print("You unleashed your inner strength!")
+            enemy_action()
+        else:
+            print("\nPlease make a valid choice.")
 
-            if player_choice == "1":
-                print("You performed a physical attack!")
-                STATS.attack()
-                enemy_action()
-            elif player_choice == "2":
-                print("You performed a magical attack!")
-                enemy_action()
-            elif player_choice == "3":
-                print("You healed 50 HP!")
-                STATS.heal()
-                enemy_action()
-            elif player_choice == "4":
-                print("You unleashed your inner strength!")
-                enemy_action()
-            else:
-                print("\nPlease make a valid choice.")
-
-    else:
+    elif STATS.hp < 0 and _ENEMY_STATS.hp > 0:
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
 
@@ -295,10 +293,10 @@ def combat():
     """
 
     clear_console()
-
-    # while _ENEMY_STATS.hp > 0 and STATS.hp > 0:
+    
     if _ENEMY_STATS.spd < STATS.spd:
-        print("You reflexively attack first!")
+        print("You spotted the enemy before they spotted you!")
+        print("You attack first!")
         time.sleep(2)
         player_action()
     else:
@@ -315,7 +313,7 @@ def enemy_approaches():
     global _ENEMY_STATS
 
     ENEMY = random.randint(1, 3)
-    L = STATS.lvl + random.randint(-3, 2)
+    L = STATS.lvl + random.randint(-3, 1)
     if L < 0:
         L = 1
 
@@ -333,116 +331,24 @@ def enemy_approaches():
         combat()
 
 
-def boss_approaches(boss):
-    """
-    randomly generates 1, 2 or 3 and pushes forward an enemy type
-    """
-
-    global _ENEMY_STATS
-
-    if boss == 1:
-        _ENEMY_STATS = EnemyType("Dragon", 25, 300, 100, 50, 5, 3)
-        print("You encountered a " + _ENEMY_STATS.job)
-        combat()
-    elif boss == 2:
-        _ENEMY_STATS = EnemyType("Titan", 50, 100, 300, 50, 1, 3)
-        print("You encountered a " + _ENEMY_STATS.job)
-        combat()
-    elif boss == 3:
-        _ENEMY_STATS = EnemyType("Demon", 75, 200, 200, 50, 3, 3)
-        print("You encountered a " + _ENEMY_STATS.job)
-        combat()
-
-
 def enemy_encounter():
     """
     randomly generates 1 or 2 as an integer; determines enemy encounter
     """
 
+    global ENCOUNTER
     ENCOUNTER = random.randint(2, 2)
 
     if ENCOUNTER == 2:
         enemy_approaches()
-
-
-def story_arc_1v3():
-    """
-    story arc 1v3
-    """
-    print("you have arrived at 1v3")
-
-
-def story_arc_1v2():
-    """
-    story arc 1v2
-    """
-    print("you have arrived at 1v2")
-
-
-def story_arc_1v1():
-    """
-    story arc 1v1
-    """
-
-    clear_console()
-    print("""
-          You continue down the dirt path.
-          After a few minutes in to your journey,
-          you come across an entrance to a cave.
-
-          You decide to:
-
-          1. Enter the cave.
-          2. Continue on the path.
-          3. Hunt for enemies.
-          4. Shop
-
-    """)
-
-    path = input("What would you like to do? ")
-
-    while True:
-
-        if path == "1":
-            story_arc_1v2()
-            break
-        elif path == "2":
-            story_arc_1v3()
-            break
-        elif path == "3":
-            enemy_approaches()
-        elif path == "4":
-            store_front()
-        else:
-            print("Please make a valid choice.")
-
-
-def story_arc_1():
-    """
-    story arc 1
-    """
-    clear_console()
-    enemy_encounter()
-    print("- - - STORY ARC 1 - - -")
-    print("""
-          You begin to progress on the dirt path.
-          Though you're wearing boots, you can feel the unnaturally cold earth.
-          You can't help but feel that through the thick fog...something...
-          ...or someone...is watching you.
-
-          You trip on something in the dark and you can feel your heart skip.
-          You look to see what it was and you find human remains.
-          You pick through the remains and decide to take one of the following:
-
-          1. Sword
-          2. Axe
-          3. Spear
-          """)
+    elif ENCOUNTER == 1:
+        clear_console()
+        print("\nYou did not encounter an enemy.")
 
 
 def story_arc_0():
     """
-    inital story setup; currently a test function
+    user controls
     """
     clear_console()
 
@@ -465,9 +371,7 @@ def story_arc_0():
             story_arc_1()
             break
         elif path == "2":
-            while True:
-                enemy_approaches()
-            print("\nWhat would you like to do? ")
+            enemy_encounter()
         elif path == "3":
             scavenge()
             print("\nWhat would you like to do? ")
