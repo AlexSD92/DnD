@@ -195,8 +195,6 @@ def enemy_action():
     randomly selects enemy attack as object method
     """
 
-    time.sleep(1)
-
     clear_console()
 
     global _ENEMY_STATS
@@ -232,8 +230,6 @@ def player_action():
     """
     allows for user input during combat, calls object methods
     """
-
-    time.sleep(1)
 
     clear_console()
 
@@ -299,11 +295,11 @@ def combat():
     if _ENEMY_STATS.spd < STATS.spd:
         print("You spotted the enemy before they spotted you!")
         print("You attack first!")
-        time.sleep(2)
+        input("\nPress Enter to continue...")
         player_action()
     else:
         print("The enemy attacks first!")
-        time.sleep(2)
+        input("\nPress Enter to continue...")
         enemy_action()
 
 
@@ -338,7 +334,6 @@ def enemy_encounter():
     randomly generates 1 or 2 as an integer; determines enemy encounter
     """
 
-    global ENCOUNTER
     ENCOUNTER = random.randint(2, 2)
 
     if ENCOUNTER == 2:
