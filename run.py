@@ -79,7 +79,7 @@ class player_job():
         table.add_row(["NAME", self.name])
         table.add_row(["JOB", self.job])
         table.add_row(['Level', self.lvl])
-        table.add_row(['Exp', self.exp])
+        table.add_row(['Exp', round(self.exp)])
         table.add_row(['Money', self.mny])
         table.add_row(['WEAPON', self.itm])
         table.add_row(['HEALTH', round(self.hp)])
@@ -97,7 +97,7 @@ class player_job():
         """
         calculation for physical attack
         """
-        ESTAT.hp -= self.atk - ESTAT.blk
+        EST.hp -= self.atk - EST.blk
 
     def heal(self):
         """
@@ -128,14 +128,14 @@ def combi_table():
 
     c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
 
-    c_s.add_row(["NAME", STATS.name, "     ", ESTAT.job])
+    c_s.add_row(["NAME", STATS.name, "     ", EST.job])
     c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
-    c_s.add_row(['LEVEL', STATS.lvl, "     ", ESTAT.lvl])
-    c_s.add_row(['HEALTH', round(STATS.hp), "     ", round(ESTAT.hp)])
-    c_s.add_row(['MAGIC', round(STATS.mp), "     ", round(ESTAT.mp)])
-    c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(ESTAT.atk)])
-    c_s.add_row(['BLOCK', round(STATS.blk), "     ", round(ESTAT.blk)])
-    c_s.add_row(['SPEED', round(STATS.spd), "     ", round(ESTAT.spd)])
+    c_s.add_row(['LEVEL', STATS.lvl, "     ", EST.lvl])
+    c_s.add_row(['HEALTH', round(STATS.hp), "     ", round(EST.hp)])
+    c_s.add_row(['MAGIC', round(STATS.mp), "     ", round(EST.mp)])
+    c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(EST.atk)])
+    c_s.add_row(['BLOCK', round(STATS.blk), "     ", round(EST.blk)])
+    c_s.add_row(['SPEED', round(STATS.spd), "     ", round(EST.spd)])
 
     c_s.align["Player Attr"] = "l"
     c_s.align["Player Value"] = "r"
@@ -203,9 +203,9 @@ def enemy_action():
 
     clear_console()
 
-    global ESTAT
+    global EST
 
-    if ESTAT.hp > 0 and STATS.hp > 0:
+    if EST.hp > 0 and STATS.hp > 0:
 
         combi_table()
 
@@ -222,15 +222,14 @@ def enemy_action():
 
         if enemy_choice == 1:
             print("The enemy performed a physical attack!")
-            ESTAT.attack()
+            EST.attack()
             player_action()
 
-    elif ESTAT.hp < 0 and STATS.hp > 0:
-        exp_gained = (ESTAT.hp + ESTAT.mp + ESTAT.atk + ESTAT.blk + ESTAT.spd)
-        round(exp_gained)
+    elif EST.hp < 0 and STATS.hp > 0:
+        exp_gained = round((EST.hp + EST.mp + EST.atk + EST.blk + EST.spd))
         print("\nYou defeated the enemy!")
         print("You gained " + str(exp_gained) + " exp.")
-        ESTAT.experience()
+        EST.experience()
         input("\nPress Enter to continue...")
         clear_console()
         player_controls("4")
@@ -243,7 +242,7 @@ def player_action():
 
     clear_console()
 
-    if STATS.hp > 0 and ESTAT.hp > 0:
+    if STATS.hp > 0 and EST.hp > 0:
 
         combi_table()
 
@@ -302,7 +301,7 @@ def combat():
 
     clear_console()
 
-    if ESTAT.spd < STATS.spd:
+    if EST.spd < STATS.spd:
         print("You spotted the enemy before they spotted you!")
         print("You attack first!")
         input("\nPress Enter to continue...")
@@ -318,23 +317,23 @@ def enemy_approaches():
     randomly generates 1, 2 or 3 and pushes forward an enemy type
     """
 
-    global ESTAT
+    global EST
 
     ENEMY = random.randint(1, 3)
     L = STATS.lvl + random.randint(1, 5)
     M = (L - (L * .95)) + 1
 
     if ENEMY == 1:
-        ESTAT = EnemyType("Goblin", L, 300*M, 100*M, 50*M, 5*M, 3*M)
-        print("You encountered a " + ESTAT.job)
+        EST = EnemyType("Goblin", L, 300*M, 100*M, 50*M, 5*M, 3*M)
+        print("You encountered a " + EST.job)
         combat()
     elif ENEMY == 2:
-        ESTAT = EnemyType("Witch", L, 100*M, 300*M, 50*M, 1*M, 3*M)
-        print("You encountered a " + ESTAT.job)
+        EST = EnemyType("Witch", L, 100*M, 300*M, 50*M, 1*M, 3*M)
+        print("You encountered a " + EST.job)
         combat()
     elif ENEMY == 3:
-        ESTAT = EnemyType("Striga", L, 200*M, 200*M, 50*M, 3*M, 3*M)
-        print("You encountered a " + ESTAT.job)
+        EST = EnemyType("Striga", L, 200*M, 200*M, 50*M, 3*M, 3*M)
+        print("You encountered a " + EST.job)
         combat()
 
 
