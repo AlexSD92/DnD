@@ -126,18 +126,6 @@ class PlayerJob():
             self.m_p -= 1
             self.h_p += 200
 
-    def player_inventory(self):
-        """
-        pushes items bought from the shop in to a dictionery for the player
-        """
-        items_inventory = {"Potion": 0, "Ether": 0}
-
-        player_inv_tbl = PrettyTable(["Item", "Quantity"])
-        player_inv_tbl.add_row(["Potion",  items_inventory.get("Ptn")])
-        player_inv_tbl.add_row(["Ether",  items_inventory.get("Eth")])
-
-        print(player_inv_tbl)
-
 
 def shop():
     """
@@ -170,9 +158,13 @@ def shop():
 
         if choice == "1":
             print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
+            STATS.mny -= 100
+            player_inventory(choice)
             input("\nPress Enter to continue...")
         elif choice == "2":
             print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
+            STATS.mny -= 200
+            player_inventory(choice)
             input("\nPress Enter to continue...")
         elif choice == "0":
             print("\nExiting the store...")
@@ -182,6 +174,32 @@ def shop():
         else:
             print("\nPlease make a valid choice.")
             input("\nPress Enter to continue...")
+
+
+player_itm_inv = {"Potion": 0, "Ether": 0}
+
+
+def player_inventory(choice):
+    """
+    pushes items bought from the shop in to a dictionery for the player
+    """
+
+    if choice == "1":
+        player_itm_inv["Potion"] += 1
+    elif choice == "2":
+        player_itm_inv["Ether"] += 1
+
+
+def display_inventory():
+    """
+    prints table information
+    """
+
+    player_inv_tbl = PrettyTable(["Item", "Quantity"])
+    player_inv_tbl.add_row(["Potion",  player_itm_inv.get("Potion")])
+    player_inv_tbl.add_row(["Ether",  player_itm_inv.get("Ether")])
+
+    print(player_inv_tbl)
 
 
 def combi_table():
@@ -518,6 +536,7 @@ def player_controls(path):
         elif path == "6":
             clear_console()
             print("\nYou viewed your inventory.")
+            display_inventory()
             input("\nPress Enter to continue...")
             print("\nWhat would you like to do? ")
         else:
@@ -589,7 +608,7 @@ def player_job_selection():
     if player_choice == "warrior":
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
-        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
+        STATS = PlayerJob(pname, 1, 0, 600, pjob, "None", 300, 100, 100, 5, 3)
         confirm_choice()
 
     elif player_choice == "assassin":
