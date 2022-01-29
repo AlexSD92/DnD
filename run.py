@@ -12,9 +12,10 @@ class EnemyType():
     """
     template for enemy types, object methods for attack
     """
-    def __init__(self, job, lvl, hp, mp, atk, blk, spd):
+    def __init__(self, job, lvl, exp, hp, mp, atk, blk, spd):
         self.job = job
         self.lvl = lvl
+        self.exp = exp
         self.hp = hp
         self.mp = mp
         self.atk = atk
@@ -29,6 +30,7 @@ class EnemyType():
 
         table.add_row(["JOB", round(self.job)])
         table.add_row(['LEVEL', round(self.lvl)])
+        table.add_row(['EXP', round(self.exp)])
         table.add_row(['HEALTH', round(self.hp)])
         table.add_row(['MAGIC', round(self.mp)])
         table.add_row(['ATTACK', round(self.atk)])
@@ -45,12 +47,6 @@ class EnemyType():
         calculation for physical attack
         """
         STATS.hp -= self.atk - STATS.blk
-
-    def experience(self):
-        """
-        determines how much experience the enemy is worth and adds to player
-        """
-        STATS.exp += (self.hp + self.mp + self.atk + self.blk + self.spd)
 
 
 class player_job():
@@ -97,10 +93,14 @@ class player_job():
         """
         calculation for the player to level up
         """
+
+        self.exp += EST.exp
         experience_required = 500 * self.lvl
         M = (self.lvl - (self.lvl * .975)) + 1
         
         if self.exp > experience_required:
+
+            print("You levelled up!")
 
             self.lvl += 1
             self.hp = self.hp * M
@@ -242,10 +242,9 @@ def enemy_action():
             player_action()
 
     elif EST.hp < 0 and STATS.hp > 0:
-        exp_gained = round((EST.hp + EST.mp + EST.atk + EST.blk + EST.spd))
         print("\nYou defeated the enemy!")
-        print("You gained " + str(exp_gained) + " exp.")
-        EST.experience()
+        print("You gained " + str(EST.exp) + " exp.")
+        STATS.levelup()
         input("\nPress Enter to continue...")
         clear_console()
         player_controls("4")
@@ -340,15 +339,15 @@ def enemy_approaches():
     M = (L - (L * .95)) + 1
 
     if ENEMY == 1:
-        EST = EnemyType("Goblin", L, 300*M, 100*M, 50*M, 5*M, 3*M)
+        EST = EnemyType("Goblin", L, 458*M, 300*M, 100*M, 50*M, 5*M, 3*M)
         print("You encountered a " + EST.job)
         combat()
     elif ENEMY == 2:
-        EST = EnemyType("Witch", L, 100*M, 300*M, 50*M, 1*M, 3*M)
+        EST = EnemyType("Witch", L, 454*M, 100*M, 300*M, 50*M, 1*M, 3*M)
         print("You encountered a " + EST.job)
         combat()
     elif ENEMY == 3:
-        EST = EnemyType("Striga", L, 200*M, 200*M, 50*M, 3*M, 3*M)
+        EST = EnemyType("Striga", L, 456*M, 200*M, 200*M, 50*M, 3*M, 3*M)
         print("You encountered a " + EST.job)
         combat()
 
