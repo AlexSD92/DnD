@@ -145,14 +145,16 @@ def shop():
 
         clear_console()
 
+        print(store_front)
+
         print("\nWelcome to the store, what would you like to buy? ")
-        print("""\n
+        print("""
         1. Potion
         2. Ether
         0. Exit
         """)
 
-        choice = input("\n(1 / 2) ")
+        choice = input("1 / 2:\n\n")
 
         if choice == "1":
             print("\nYou bought a potion.")
@@ -163,13 +165,11 @@ def shop():
         elif choice == "0":
             print("\nExiting the store...")
             input("\nPress Enter to continue...")
-            player_controls()
+            player_controls("6")
             break
         else:
             print("\nPlease make a valid choice.")
             input("\nPress Enter to continue...")
-
-    print(store_front)
 
 
 def combi_table():
@@ -426,18 +426,19 @@ def story_arc_2():
     3. Heal
     4. Shop
     5. View your stats
-    6. Select the Sword
-    7. Select the Axe
-    8. Select the Spear
+    6. View your inventory
+    7. Select the Sword
+    8. Select the Axe
+    9. Select the Spear
     """)
 
-    path = input("(1 / 2 / 3 / 4 / 5 / 6 / 7 / 8) ")
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:znzn")
 
-    if path == "6":
-        story_arc_3()
-    elif path == "7":
+    if path == "7":
         story_arc_3()
     elif path == "8":
+        story_arc_3()
+    elif path == "9":
         story_arc_3()
     else:
         player_controls(path)
@@ -461,10 +462,11 @@ def story_arc_1():
     3. Heal
     4. Shop
     5. View your stats
-    6. Follow the dirt path into the thick fog
+    6. View your inventory
+    7. Follow the dirt path into the thick fog
     """)
 
-    path = input("(1 / 2 / 3 / 4 / 5 / 6) ")
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
 
     if path == "6":
         story_arc_2()
@@ -493,12 +495,14 @@ def player_controls(path):
             print("\nWhat would you like to do? ")
         elif path == "4":
             shop()
-            print("\nYou accessed the shop.")
-            input("\nPress Enter to continue...")
-            print("\nWhat would you like to do? ")
         elif path == "5":
             clear_console()
             STATS.full_stats()
+            input("\nPress Enter to continue...")
+            print("\nWhat would you like to do? ")
+        elif path == "6":
+            clear_console()
+            print("\nYou viewed your inventory.")
             input("\nPress Enter to continue...")
             print("\nWhat would you like to do? ")
         else:
