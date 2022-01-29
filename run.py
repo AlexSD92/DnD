@@ -97,7 +97,7 @@ class player_job():
         self.exp += EST.exp
         experience_required = 500 * self.lvl
         M = (self.lvl - (self.lvl * .975)) + 1
-        
+
         if self.exp > experience_required:
 
             print("You levelled up!")
@@ -120,21 +120,8 @@ class player_job():
         calculation and condition for healing
         """
         if self.mp > 0:
-            self.mp -= 50
-            self.hp += 50
-
-    def sword(self):
-        """
-        what happens when user selects sword
-        """
-        STATS.atk += 5
-
-    def dagger(self):
-        """
-        what happens when user selects dagger
-        """
-        STATS.atk += 1
-        STATS.spd += 1
+            self.mp -= 1
+            self.hp += 200
 
 
 def combi_table():
@@ -147,6 +134,7 @@ def combi_table():
     c_s.add_row(["NAME", STATS.name, "     ", EST.job])
     c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
     c_s.add_row(['LEVEL', STATS.lvl, "     ", EST.lvl])
+    c_s.add_row(['LEVEL', STATS.exp, "     ", EST.exp])
     c_s.add_row(['HEALTH', round(STATS.hp), "     ", round(EST.hp)])
     c_s.add_row(['MAGIC', round(STATS.mp), "     ", round(EST.mp)])
     c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(EST.atk)])
@@ -168,20 +156,6 @@ def clear_console():
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
     os.system(command)
-
-
-def store_front():
-    """
-    store / shop
-    """
-    clear_console()
-    print("Hello, " + STATS.name + " how can we be of service?")
-
-    merch = PrettyTable(["Item", "Description", "Cost"])
-
-    merch.add_row(['Sword', 'A fine blade', '$75'])
-    merch.add_row(['Potion', 'Heals you good', '$25'])
-    merch.add_row(['Ether', 'Gives you magic', '$35'])
 
 
 def scavenge():
