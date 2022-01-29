@@ -74,9 +74,9 @@ class player_job():
 
         table.add_row(["NAME", self.name])
         table.add_row(["JOB", self.job])
-        table.add_row(['Level', self.lvl])
-        table.add_row(['Exp', round(self.exp)])
-        table.add_row(['Money', self.mny])
+        table.add_row(['LEVEL', self.lvl])
+        table.add_row(['EXP', round(self.exp)])
+        table.add_row(['MONEY', self.mny])
         table.add_row(['WEAPON', self.itm])
         table.add_row(['HEALTH', round(self.hp)])
         table.add_row(['MAGIC', round(self.mp)])
@@ -121,6 +121,7 @@ class player_job():
         """
         calculation and condition for healing
         """
+
         if self.mp > 0:
             self.mp -= 1
             self.hp += 200
@@ -382,7 +383,8 @@ def story_arc_1():
     1. Follow the dirt path into the thick fog.
     2. Hunt for enemies.
     3. Scavenge.
-    4. View your stats.
+    4. Heal
+    5. View your stats.
     """)
 
     path = input("(1 / 2 / 3 / 4) ")
@@ -408,6 +410,11 @@ def player_controls(path):
             input("\nPress Enter to continue...")
             print("\nWhat would you like to do? ")
         elif path == "4":
+            STATS.heal()
+            print("\nYou healed hp.")
+            input("\nPress Enter to continue...")
+            print("\nWhat would you like to do? ")
+        elif path == "5":
             clear_console()
             STATS.full_stats()
             input("\nPress Enter to continue...")
