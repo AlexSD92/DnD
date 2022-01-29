@@ -126,6 +126,18 @@ class PlayerJob():
             self.m_p -= 1
             self.h_p += 200
 
+    def player_inventory(self):
+        """
+        pushes items bought from the shop in to a dictionery for the player
+        """
+        items_inventory = {"Potion": 0, "Ether": 0}
+
+        player_inv_tbl = PrettyTable(["Item", "Quantity"])
+        player_inv_tbl.add_row(["Potion",  items_inventory.get("Ptn")])
+        player_inv_tbl.add_row(["Ether",  items_inventory.get("Eth")])
+
+        print(player_inv_tbl)
+
 
 def shop():
     """
