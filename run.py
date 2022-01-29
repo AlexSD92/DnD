@@ -12,12 +12,12 @@ class EnemyType():
     """
     template for enemy types, object methods for attack
     """
-    def __init__(self, job, lvl, exp, hp, mp, atk, blk, spd):
+    def __init__(self, job, lvl, exp, h_p, m_p, atk, blk, spd):
         self.job = job
         self.lvl = lvl
         self.exp = exp
-        self.hp = hp
-        self.mp = mp
+        self.h_p = h_p
+        self.m_p = m_p
         self.atk = atk
         self.blk = blk
         self.spd = spd
@@ -31,8 +31,8 @@ class EnemyType():
         table.add_row(["JOB", round(self.job)])
         table.add_row(['LEVEL', round(self.lvl)])
         table.add_row(['EXP', round(self.exp)])
-        table.add_row(['HEALTH', round(self.hp)])
-        table.add_row(['MAGIC', round(self.mp)])
+        table.add_row(['HEALTH', round(self.h_p)])
+        table.add_row(['MAGIC', round(self.m_p)])
         table.add_row(['ATTACK', round(self.atk)])
         table.add_row(['BLOCK', round(self.blk)])
         table.add_row(['SPEED', round(self.spd)])
@@ -46,22 +46,22 @@ class EnemyType():
         """
         calculation for physical attack
         """
-        STATS.hp -= self.atk - STATS.blk
+        STATS.h_p -= self.atk - STATS.blk
 
 
-class player_job():
+class PlayerJob():
     """
     template for player types, object methods for attack
     """
-    def __init__(self, name, lvl, exp, mny, job, itm, hp, mp, atk, blk, spd):
+    def __init__(self, name, lvl, exp, mny, job, itm, h_p, m_p, atk, blk, spd):
         self.name = name
         self.job = job
         self.lvl = lvl
         self.exp = exp
         self.mny = mny
         self.itm = itm
-        self.hp = hp
-        self.mp = mp
+        self.h_p = h_p
+        self.m_p = m_p
         self.atk = atk
         self.blk = blk
         self.spd = spd
@@ -78,8 +78,8 @@ class player_job():
         table.add_row(['EXP', round(self.exp)])
         table.add_row(['MONEY', self.mny])
         table.add_row(['WEAPON', self.itm])
-        table.add_row(['HEALTH', round(self.hp)])
-        table.add_row(['MAGIC', round(self.mp)])
+        table.add_row(['HEALTH', round(self.h_p)])
+        table.add_row(['MAGIC', round(self.m_p)])
         table.add_row(['ATTACK', round(self.atk)])
         table.add_row(['BLOCK', round(self.blk)])
         table.add_row(['SPEED', round(self.spd)])
@@ -97,7 +97,7 @@ class player_job():
         self.exp += EST.exp
         experience_required = 500 * self.lvl
         current_experience = self.exp - experience_required
-        M = (self.lvl - (self.lvl * .975)) + 1
+        mult = (self.lvl - (self.lvl * .975)) + 1
 
         if self.exp > experience_required:
 
@@ -105,26 +105,26 @@ class player_job():
 
             self.lvl += 1
             self.exp = current_experience
-            self.hp = self.hp * M
-            self.mp = self.mp * M
-            self.atk = self.atk * M
-            self.blk = self.blk * M
-            self.spd = self.spd * M
+            self.h_p = self.h_p * mult
+            self.m_p = self.m_p * mult
+            self.atk = self.atk * mult
+            self.blk = self.blk * mult
+            self.spd = self.spd * mult
 
     def attack(self):
         """
         calculation for physical attack
         """
-        EST.hp -= self.atk - EST.blk
+        EST.h_p -= self.atk - EST.blk
 
     def heal(self):
         """
         calculation and condition for healing
         """
 
-        if self.mp > 0:
-            self.mp -= 1
-            self.hp += 200
+        if self.m_p > 0:
+            self.m_p -= 1
+            self.h_p += 200
 
 
 def shop():
@@ -183,8 +183,8 @@ def combi_table():
     c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
     c_s.add_row(['LEVEL', STATS.lvl, "     ", EST.lvl])
     c_s.add_row(['EXP', round(STATS.exp), "     ", round(EST.exp)])
-    c_s.add_row(['HEALTH', round(STATS.hp), "     ", round(EST.hp)])
-    c_s.add_row(['MAGIC', round(STATS.mp), "     ", round(EST.mp)])
+    c_s.add_row(['HEALTH', round(STATS.h_p), "     ", round(EST.h_p)])
+    c_s.add_row(['MAGIC', round(STATS.m_p), "     ", round(EST.m_p)])
     c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(EST.atk)])
     c_s.add_row(['BLOCK', round(STATS.blk), "     ", round(EST.blk)])
     c_s.add_row(['SPEED', round(STATS.spd), "     ", round(EST.spd)])
@@ -243,7 +243,7 @@ def enemy_action():
 
     global EST
 
-    if EST.hp > 0 and STATS.hp > 0:
+    if EST.h_p > 0 and STATS.h_p > 0:
 
         combi_table()
 
@@ -263,7 +263,7 @@ def enemy_action():
             EST.attack()
             player_action()
 
-    elif EST.hp < 0 and STATS.hp > 0:
+    elif EST.h_p < 0 and STATS.h_p > 0:
         print("\nYou defeated the enemy!")
         print("You gained " + str(round(EST.exp)) + " exp.")
         STATS.levelup()
@@ -279,7 +279,7 @@ def player_action():
 
     clear_console()
 
-    if STATS.hp > 0 and EST.hp > 0:
+    if STATS.h_p > 0 and EST.h_p > 0:
 
         combi_table()
 
@@ -311,7 +311,7 @@ def player_action():
         else:
             print("\nPlease make a valid choice.")
 
-    elif STATS.hp < 0:
+    elif STATS.h_p < 0:
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
 
@@ -356,20 +356,23 @@ def enemy_approaches():
 
     global EST
 
-    ENEMY = random.randint(1, 3)
-    L = STATS.lvl + random.randint(1, 5)
-    M = (L - (L * .95)) + 1
+    enemy_type = random.randint(1, 3)
+    level = STATS.lvl + random.randint(1, 5)
+    mult = (level - (level * .95)) + 1
 
-    if ENEMY == 1:
-        EST = EnemyType("Goblin", L, 458*M, 300*M, 100*M, 50*M, 5*M, 3*M)
+    if enemy_type == 1:
+        EST = EnemyType("Goblin", level, 458*mult, 300*mult, 100*mult,
+                        50*mult, 5*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
-    elif ENEMY == 2:
-        EST = EnemyType("Witch", L, 454*M, 100*M, 300*M, 50*M, 1*M, 3*M)
+    elif enemy_type == 2:
+        EST = EnemyType("Witch", level, 454*mult, 100*mult, 300*mult,
+                        50*mult, 1*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
-    elif ENEMY == 3:
-        EST = EnemyType("Striga", L, 456*M, 200*M, 200*M, 50*M, 3*M, 3*M)
+    elif enemy_type == 3:
+        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult,
+                        50*mult, 3*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
 
@@ -379,11 +382,11 @@ def enemy_encounter():
     randomly generates 1 or 2 as an integer; determines enemy encounter
     """
 
-    ENCOUNTER = random.randint(2, 2)
+    encounter_true = random.randint(2, 2)
 
-    if ENCOUNTER == 2:
+    if encounter_true == 2:
         enemy_approaches()
-    elif ENCOUNTER == 1:
+    elif encounter_true == 1:
         clear_console()
         print("\nYou did not encounter an enemy.")
 
@@ -480,7 +483,7 @@ def player_controls(path):
     player controls
     """
 
-    if STATS.hp > 0:
+    if STATS.h_p > 0:
 
         if path == "1":
             enemy_encounter()
@@ -510,7 +513,7 @@ def player_controls(path):
             print("\nPlease make a valid choice.")
             input("\nPress Enter to continue...")
 
-    elif STATS.hp < 0:
+    elif STATS.h_p < 0:
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
 
@@ -574,19 +577,19 @@ def player_job_selection():
     if player_choice == "warrior":
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
-        STATS = player_job(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
+        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 300, 100, 100, 5, 3)
         confirm_choice()
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        STATS = player_job(pname, 1, 0, 0, pjob, "None", 200, 200, 100, 1, 5)
+        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 200, 200, 100, 1, 5)
         confirm_choice()
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        STATS = player_job(pname, 1, 0, 0, pjob, "None", 100, 300, 100, 1, 1)
+        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 100, 300, 100, 1, 1)
         confirm_choice()
 
     else:
