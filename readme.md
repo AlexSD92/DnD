@@ -136,6 +136,10 @@ Wireframes for the site can be viewed [here](assets/images/readme/wireframes).
 
 ## Bugs and Fixes
 
+- 29/01/2022 - The player can heal over their original hp amount. There is no hp cap, so the player could give themselves infinit amounts of hp over the original hp level.
+
+- 29/01/2022 - The player would gain a level after each battle. Resolved by setting the exp back to 0 at each level and adding the difference. 
+
 ## Observations
 
 # Deployment
