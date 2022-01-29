@@ -128,24 +128,24 @@ class player_job():
 
 
 def shop():
-
-    clear_console()
-
-    inv = {
-        "Potion": [5, 100],
-        "Ether": [5, 200],
-        "Money": 500
-    }
-
-    store_front = PrettyTable(["Item", "Stock", "Price"])
-    store_front.add_row(["Potion", inv.get("Potion")[0], inv.get("Potion")[1]])
-    store_front.add_row(["Ether", inv.get("Ether")[0], inv.get("Ether")[1]])
+    """
+    function determining store, stock and cost
+    """
 
     while True:
 
+        inv = {
+            "Ptn": 100,
+            "Eth": 200
+        }
+
+        store = PrettyTable(["Item", "Price"])
+        store.add_row(["Potion", inv.get("Ptn")])
+        store.add_row(["Ether", inv.get("Eth")])
+
         clear_console()
 
-        print(store_front)
+        print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
         print("""
@@ -157,10 +157,10 @@ def shop():
         choice = input("1 / 2:\n\n")
 
         if choice == "1":
-            print("\nYou bought a potion.")
+            print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
             input("\nPress Enter to continue...")
         elif choice == "2":
-            print("\nYou bought an ether.")
+            print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
             input("\nPress Enter to continue...")
         elif choice == "0":
             print("\nExiting the store...")
