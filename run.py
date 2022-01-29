@@ -93,6 +93,22 @@ class player_job():
 
         print(table)
 
+    def levelup(self):
+        """
+        calculation for the player to level up
+        """
+        experience_required = 500 * self.lvl
+        M = (self.lvl - (self.lvl * .975)) + 1
+        
+        if self.exp > experience_required:
+
+            self.lvl += 1
+            self.hp = self.hp * M
+            self.mp = self.mp * M
+            self.atk = self.atk * M
+            self.blk = self.blk * M
+            self.spd = self.spd * M
+
     def attack(self):
         """
         calculation for physical attack
