@@ -96,6 +96,7 @@ class player_job():
 
         self.exp += EST.exp
         experience_required = 500 * self.lvl
+        current_experience = self.exp - experience_required
         M = (self.lvl - (self.lvl * .975)) + 1
 
         if self.exp > experience_required:
@@ -103,6 +104,7 @@ class player_job():
             print("You levelled up!")
 
             self.lvl += 1
+            self.exp = current_experience
             self.hp = self.hp * M
             self.mp = self.mp * M
             self.atk = self.atk * M
@@ -134,7 +136,7 @@ def combi_table():
     c_s.add_row(["NAME", STATS.name, "     ", EST.job])
     c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
     c_s.add_row(['LEVEL', STATS.lvl, "     ", EST.lvl])
-    c_s.add_row(['LEVEL', STATS.exp, "     ", EST.exp])
+    c_s.add_row(['EXP', round(STATS.exp), "     ", round(EST.exp)])
     c_s.add_row(['HEALTH', round(STATS.hp), "     ", round(EST.hp)])
     c_s.add_row(['MAGIC', round(STATS.mp), "     ", round(EST.mp)])
     c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(EST.atk)])
@@ -217,7 +219,7 @@ def enemy_action():
 
     elif EST.hp < 0 and STATS.hp > 0:
         print("\nYou defeated the enemy!")
-        print("You gained " + str(EST.exp) + " exp.")
+        print("You gained " + str(round(EST.exp)) + " exp.")
         STATS.levelup()
         input("\nPress Enter to continue...")
         clear_console()
