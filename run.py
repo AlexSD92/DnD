@@ -468,7 +468,7 @@ def story_arc_1():
 
     path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
 
-    if path == "6":
+    if path == "7":
         story_arc_2()
     else:
         player_controls(path)
