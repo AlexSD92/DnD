@@ -127,6 +127,51 @@ class player_job():
             self.hp += 200
 
 
+def shop():
+
+    clear_console()
+
+    inv = {
+        "Potion": [5, 100],
+        "Ether": [5, 200],
+        "Money": 500
+    }
+
+    store_front = PrettyTable(["Item", "Stock", "Price"])
+    store_front.add_row(["Potion", inv.get("Potion")[0], inv.get("Potion")[1]])
+    store_front.add_row(["Ether", inv.get("Ether")[0], inv.get("Ether")[1]])
+
+    while True:
+
+        clear_console()
+
+        print("\nWelcome to the store, what would you like to buy? ")
+        print("""\n
+        1. Potion
+        2. Ether
+        0. Exit
+        """)
+
+        choice = input("\n(1 / 2) ")
+
+        if choice == "1":
+            print("\nYou bought a potion.")
+            input("\nPress Enter to continue...")
+        elif choice == "2":
+            print("\nYou bought an ether.")
+            input("\nPress Enter to continue...")
+        elif choice == "0":
+            print("\nExiting the store...")
+            input("\nPress Enter to continue...")
+            player_controls()
+            break
+        else:
+            print("\nPlease make a valid choice.")
+            input("\nPress Enter to continue...")
+
+    print(store_front)
+
+
 def combi_table():
     """
     combined table for combat so player can compare user stats and enemy stats
@@ -444,6 +489,11 @@ def player_controls(path):
         elif path == "3":
             STATS.heal()
             print("\nYou healed hp.")
+            input("\nPress Enter to continue...")
+            print("\nWhat would you like to do? ")
+        elif path == "4":
+            shop()
+            print("\nYou accessed the shop.")
             input("\nPress Enter to continue...")
             print("\nWhat would you like to do? ")
         elif path == "5":
