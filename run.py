@@ -345,6 +345,26 @@ def scavenge():
         print("\nYou found nothing!")
 
 
+def item_drop():
+    """
+    chance of an enemy dropping either an ether or potion
+    """
+    
+    chance = random.randint(0, 1)
+
+    if chance == 0:
+
+        item_type = random.randint(0, 1)
+
+        if item_type == 0:
+            print("\nThe enemy dropped a potion!")
+            player_itm_inv["Potion"] += 1
+
+        elif item_type == 1:
+            print("\nThe enemy dropped an ether!")
+            player_itm_inv["Ether"] += 1
+
+
 def enemy_action():
     """
     randomly selects enemy attack as object method
@@ -378,6 +398,7 @@ def enemy_action():
         print("\nYou defeated the enemy!")
         print("You gained " + str(round(EST.exp)) + " exp.")
         STATS.levelup()
+        item_drop()
         input("\nPress Enter to continue...")
         clear_console()
         player_controls("5")
