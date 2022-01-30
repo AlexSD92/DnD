@@ -53,7 +53,8 @@ class PlayerJob():
     """
     template for player types, object methods for attack
     """
-    def __init__(self, name, lvl, exp, mny, job, itm, h_p, m_p, atk, blk, spd):
+    def __init__(self, name, lvl, exp, mny, job, itm,
+                 h_p, mhp, m_p, mmp, atk, blk, spd):
         self.name = name
         self.job = job
         self.lvl = lvl
@@ -61,7 +62,9 @@ class PlayerJob():
         self.mny = mny
         self.itm = itm
         self.h_p = h_p
+        self.mhp = mhp
         self.m_p = m_p
+        self.mmp = mmp
         self.atk = atk
         self.blk = blk
         self.spd = spd
@@ -386,7 +389,7 @@ def enemy_action():
             4 - Boon
             """
         )
-        
+
         print("+-----------+--------------+-------+-------------+\n")
 
         enemy_choice = random.randint(1, 1)
@@ -718,19 +721,22 @@ def player_job_selection():
     if player_choice == "warrior":
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
-        STATS = PlayerJob(pname, 1, 0, 600, pjob, "None", 300, 100, 100, 5, 3)
+        STATS = PlayerJob(pname, 1, 0, 600, pjob, "None",
+                          300, 300, 100, 100, 100, 5, 3)
         confirm_choice()
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 200, 200, 100, 1, 5)
+        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None",
+                          200, 200, 200, 200, 100, 1, 5)
         confirm_choice()
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None", 100, 300, 100, 1, 1)
+        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None",
+                          100, 100, 300, 300, 100, 1, 1)
         confirm_choice()
 
     else:
