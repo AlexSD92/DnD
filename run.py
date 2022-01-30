@@ -131,6 +131,9 @@ class PlayerJob():
             self.m_p -= 1
             self.h_p += 200
 
+            if self.h_p > self.mhp:
+                self.h_p = self.mhp
+
 
 def shop():
     """
@@ -376,8 +379,6 @@ def enemy_action():
     """
 
     clear_console()
-
-    global EST
 
     if EST.h_p > 0 and STATS.h_p > 0:
 
