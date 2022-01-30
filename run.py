@@ -228,6 +228,8 @@ def player_inventory_use():
             print("\nYou used a potion, hp restored by 200.")
             player_itm_inv["Potion"] -= 1
             STATS.h_p += 200
+            if STATS.h_p > STATS.mhp:
+                STATS.h_p = STATS.mhp
             input("\nPress Enter to continue...")
             player_inventory_use()
         else:
