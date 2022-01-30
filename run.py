@@ -443,21 +443,16 @@ def player_action():
             input("\nPress Enter to wait for the enemy's turn...")
             STATS.attack()
             enemy_action()
-        elif player_choice == "2":
-            print("You performed a magical attack!")
-            input("\nPress Enter to wait for the enemy's turn...")
-            enemy_action()
         elif player_choice == "3":
             print("You healed 50 HP!")
             input("\nPress Enter to wait for the enemy's turn...")
             STATS.heal()
             enemy_action()
-        elif player_choice == "4":
-            print("You unleashed your inner strength!")
-            input("\nPress Enter to wait for the enemy's turn...")
-            enemy_action()
         else:
-            print("\nPlease make a valid choice.")
+            clear_console()
+            print("Please make a valid choice.")
+            input("\nPress Enter to continue...")
+            player_action()
 
     elif STATS.h_p < 0:
         print("\nYou were felled by the enemy!")
