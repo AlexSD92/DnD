@@ -109,7 +109,9 @@ class PlayerJob():
             self.lvl += 1
             self.exp = current_experience
             self.h_p = self.h_p * mult
+            self.mhp = self.mhp * mult
             self.m_p = self.m_p * mult
+            self.mmp = self.mmp * mult
             self.atk = self.atk * mult
             self.blk = self.blk * mult
             self.spd = self.spd * mult
