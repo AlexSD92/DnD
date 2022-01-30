@@ -244,6 +244,8 @@ def player_inventory_use():
             print("\nYou used an ether, mp restored by 100.")
             player_itm_inv["Ether"] -= 1
             STATS.m_p += 100
+            if STATS.m_p > STATS.mmp:
+                STATS.m_p = STATS.mmp
             input("\nPress Enter to continue...")
             player_inventory_use()
         else:
