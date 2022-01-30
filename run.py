@@ -349,7 +349,7 @@ def item_drop():
     """
     chance of an enemy dropping either an ether or potion
     """
-    
+
     chance = random.randint(0, 1)
 
     if chance == 0:
@@ -386,11 +386,15 @@ def enemy_action():
             4 - Boon
             """
         )
+        
+        print("+-----------+--------------+-------+-------------+\n")
 
         enemy_choice = random.randint(1, 1)
 
         if enemy_choice == 1:
             print("The enemy performed a physical attack!")
+            print("You took " + str(round(EST.atk)) + " damage.")
+            input("\nPress Enter to take action...")
             EST.attack()
             player_action()
 
@@ -424,21 +428,30 @@ def player_action():
             """
         )
 
-        player_choice = input("What will you do?")
+        print("+-----------+--------------+-------+-------------+\n")
+
+        print("1 / 2 / 3 / 4")
+
+        player_choice = input("\nWhat will you do? \n")
 
         if player_choice == "1":
             print("You performed a physical attack!")
+            print("The enemy took " + str(round(STATS.atk)) + " damage.")
+            input("\nPress Enter to wait for the enemy's turn...")
             STATS.attack()
             enemy_action()
         elif player_choice == "2":
             print("You performed a magical attack!")
+            input("\nPress Enter to wait for the enemy's turn...")
             enemy_action()
         elif player_choice == "3":
             print("You healed 50 HP!")
+            input("\nPress Enter to wait for the enemy's turn...")
             STATS.heal()
             enemy_action()
         elif player_choice == "4":
             print("You unleashed your inner strength!")
+            input("\nPress Enter to wait for the enemy's turn...")
             enemy_action()
         else:
             print("\nPlease make a valid choice.")
