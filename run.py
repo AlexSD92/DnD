@@ -101,7 +101,7 @@ class PlayerJob():
 
         if self.exp > experience_required:
 
-            print("You levelled up!")
+            print("You leveled up!")
 
             self.lvl += 1
             self.exp = current_experience
@@ -145,6 +145,7 @@ def shop():
 
         clear_console()
 
+        print("----STORE----\n\n")
         print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
@@ -159,12 +160,12 @@ def shop():
         if choice == "1":
             print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
             STATS.mny -= 100
-            player_inventory(choice)
+            player_inventory_add(choice)
             input("\nPress Enter to continue...")
         elif choice == "2":
             print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
             STATS.mny -= 200
-            player_inventory(choice)
+            player_inventory_add(choice)
             input("\nPress Enter to continue...")
         elif choice == "0":
             print("\nExiting the store...")
@@ -179,7 +180,7 @@ def shop():
 player_itm_inv = {"Potion": 0, "Ether": 0}
 
 
-def player_inventory(choice):
+def player_inventory_add(choice):
     """
     pushes items bought from the shop in to a dictionery for the player
     """
@@ -190,16 +191,75 @@ def player_inventory(choice):
         player_itm_inv["Ether"] += 1
 
 
+def player_inventory_use():
+    """
+    determines what happens when potions and ethers are used
+    """
+
+    clear_console()
+
+    print("""
+          1. Potion
+          2. Ether
+          0. Exit
+    """)
+    decision = input("\nWhich item would you like to use? ")
+
+    if decision == "1":
+        clear_console()
+        print("\nYou used a potion, hp restored by 200.")
+        player_itm_inv["Potion"] -= 1
+        STATS.h_p += 200
+        input("\nPress Enter to continue...")
+        player_inventory_use()
+
+    elif decision == "2":
+        clear_console()
+        print("\nYou used an ether, mp restored by 100.")
+        player_itm_inv["Ether"] -= 1
+        STATS.m_p += 100
+        input("\nPress Enter to continue...")
+        player_inventory_use()
+
+    elif decision == "0":
+        clear_console()
+        display_inventory()
+
+    else:
+        clear_console()
+        print("\nPlease make a valid choice.")
+        input("\nPress Enter to continue...")
+        player_inventory_use()
+
+
 def display_inventory():
     """
     prints table information
     """
+
+    clear_console()
+
+    print("----INVENTORY----\n\n")
 
     player_inv_tbl = PrettyTable(["Item", "Quantity"])
     player_inv_tbl.add_row(["Potion",  player_itm_inv.get("Potion")])
     player_inv_tbl.add_row(["Ether",  player_itm_inv.get("Ether")])
 
     print(player_inv_tbl)
+
+    print("\n\nWould you like to use an item?\n")
+    choice = input("(yes / no) ").lower()
+
+    if choice == "yes":
+        clear_console()
+        player_inventory_use()
+    elif choice == "no":
+        clear_console()
+    else:
+        clear_console()
+        print("Please make a valid choice.")
+        input("Press Enter to continue...")
+        display_inventory()
 
 
 def combi_table():
@@ -520,25 +580,20 @@ def player_controls(path):
         elif path == "2":
             scavenge()
             input("\nPress Enter to continue...")
-            print("\nWhat would you like to do? ")
         elif path == "3":
             STATS.heal()
             print("\nYou healed hp.")
             input("\nPress Enter to continue...")
-            print("\nWhat would you like to do? ")
         elif path == "4":
             shop()
         elif path == "5":
             clear_console()
             STATS.full_stats()
             input("\nPress Enter to continue...")
-            print("\nWhat would you like to do? ")
         elif path == "6":
             clear_console()
-            print("\nYou viewed your inventory.")
+            print("\nYou viewed your inventory.\n")
             display_inventory()
-            input("\nPress Enter to continue...")
-            print("\nWhat would you like to do? ")
         else:
             clear_console()
             print("\nPlease make a valid choice.")
