@@ -159,7 +159,7 @@ def shop():
 
         if choice == "1":
             if STATS.mny >= 100:
-                print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
+                print("\nYou bought a potion for 100 coins.")
                 STATS.mny -= 100
                 player_inventory_add(choice)
                 input("\nPress Enter to continue...")
@@ -169,7 +169,7 @@ def shop():
 
         elif choice == "2":
             if STATS.mny >= 200:
-                print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
+                print("\nYou bought an ether for 200 coins.")
                 STATS.mny -= 200
                 player_inventory_add(choice)
                 input("\nPress Enter to continue...")
@@ -215,20 +215,32 @@ def player_inventory_use():
     decision = input("\nWhich item would you like to use? ")
 
     if decision == "1":
-        clear_console()
-        print("\nYou used a potion, hp restored by 200.")
-        player_itm_inv["Potion"] -= 1
-        STATS.h_p += 200
-        input("\nPress Enter to continue...")
-        player_inventory_use()
+        if player_itm_inv["Potion"] > 0:
+            clear_console()
+            print("\nYou used a potion, hp restored by 200.")
+            player_itm_inv["Potion"] -= 1
+            STATS.h_p += 200
+            input("\nPress Enter to continue...")
+            player_inventory_use()
+        else:
+            clear_console()
+            print("\nYou don't have any potions in stock!")
+            input("\nPress Enter to continue...")
+            player_inventory_use()
 
     elif decision == "2":
-        clear_console()
-        print("\nYou used an ether, mp restored by 100.")
-        player_itm_inv["Ether"] -= 1
-        STATS.m_p += 100
-        input("\nPress Enter to continue...")
-        player_inventory_use()
+        if player_itm_inv["Ether"] > 0:
+            clear_console()
+            print("\nYou used an ether, mp restored by 100.")
+            player_itm_inv["Ether"] -= 1
+            STATS.m_p += 100
+            input("\nPress Enter to continue...")
+            player_inventory_use()
+        else:
+            clear_console()
+            print("\nYou don't have any ether in stock!")
+            input("\nPress Enter to continue...")
+            player_inventory_use()
 
     elif decision == "0":
         clear_console()
