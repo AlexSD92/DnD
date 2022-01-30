@@ -158,15 +158,24 @@ def shop():
         choice = input("1 / 2:\n\n")
 
         if choice == "1":
-            print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
-            STATS.mny -= 100
-            player_inventory_add(choice)
-            input("\nPress Enter to continue...")
+            if STATS.mny >= 100:
+                print("\nYou bought a potion for " + str(inv["Ptn"]) + " coins.")
+                STATS.mny -= 100
+                player_inventory_add(choice)
+                input("\nPress Enter to continue...")
+            else:
+                print("\nYou don't have enough money!")
+                input("\nPress Enter to continue...")
+
         elif choice == "2":
-            print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
-            STATS.mny -= 200
-            player_inventory_add(choice)
-            input("\nPress Enter to continue...")
+            if STATS.mny >= 200:
+                print("\nYou bought an ether for " + str(inv["Eth"]) + " coins.")
+                STATS.mny -= 200
+                player_inventory_add(choice)
+                input("\nPress Enter to continue...")
+            else:
+                print("\nYou don't have enough money!")
+                input("\nPress Enter to continue...")
         elif choice == "0":
             print("\nExiting the store...")
             input("\nPress Enter to continue...")
