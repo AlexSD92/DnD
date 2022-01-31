@@ -541,11 +541,58 @@ def enemy_encounter():
         print("\nYou did not encounter an enemy.")
 
 
-def story_arc_4()
+def story_arc_4_cave():
+    """
+    story_arc_4_cave; dictates what happens in the cave
+    """
+    print("""You're in the cave.""")
+    input("Press Enter to continue...")
+
+
+def story_arc_4_wood():
+    """
+    story_arc_4_wood; dictates what happens in the woods
+    """
+    print("""You're in the woods.""")
+    input("Press Enter to continue...")
+
+
+def story_arc_4():
     """
     story_arc_4()
     """
-    print("story arc 4")
+    clear_console()
+
+    print("""
+    - - - STORY ARC 4 - - -
+    That was a long battle and you're exhausted.
+    Feeling tired, you continue down the path.
+    The path splits in two and you have to decide which path to follow.
+
+    The first path leads to a cave, the second into a forest.
+
+    Which way do you proceed?
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. Path into the cave
+    7. Path through the woods
+
+    """)
+
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7: \n\n")
+
+    if path == "7":
+        story_arc_4_cave()
+        story_arc_4()
+    if path == "8":
+        story_arc_4_wood()
+        story_arc_4()
+    else:
+        player_controls(path)
 
 
 def story_arc_3():
@@ -574,24 +621,7 @@ def story_arc_3():
 
     clear_console()
 
-    print("""
-    That was a long battle and you're exhausted.
-
-    1. Hunt for enemies
-    2. Scavenge
-    3. Heal
-    4. Shop
-    5. View your stats
-    6. View your inventory
-    7. Move to the next area
-    """)
-
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7: \n\n")
-
-    if path == "7":
-        story_arc_4()
-    else:
-        player_controls(path)
+    story_arc_4()
 
 
 def story_arc_2():
