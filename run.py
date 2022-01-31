@@ -559,19 +559,19 @@ def story_arc_2():
     clear_console()
 
     print("""
-          You begin to progress on the dirt path.
-          Though you're wearing boots, you can feel the unnaturally cold earth.
-          You can't help but feel that through the thick fog...something...
-          ...or someone...is watching you.
+    You begin to progress on the dirt path.
+    Though you're wearing boots, you can feel the unnaturally cold earth.
+    You can't help but feel that through the thick fog...something...
+    ...or someone...is watching you.
 
-          You trip on something in the dark and you can feel your heart skip.
-          You look to see what it was and you find human remains.
-          You pick through the remains and decide to take one of the following:
+    You trip on something in the dark and you can feel your heart skip.
+    You look to see what it was and you find human remains.
+    You pick through the remains and decide to take one of the following:
 
-          Sword
-          Axe
-          Spear
-          """)
+    Sword
+    Axe
+    Spear
+    """)
 
     print("""
     1. Hunt for enemies
@@ -586,13 +586,29 @@ def story_arc_2():
     0. Quit the game
     """)
 
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:znzn")
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:\n\n")
 
     if path == "7":
+        STATS.itm = "Sword"
+        STATS.atk += 50
+        print("\nYou picked the sword, your attack improved by 50.")
+        input("\nPress Enter to move to the next area...")
         story_arc_3()
     elif path == "8":
+        STATS.itm = "Axe"
+        STATS.atk += 100
+        STATS.spd -= 2
+        print("\nYou picked up the axe, your attack improves by 100.")
+        print("\nThe axe feels heavy and your speed decreases by 1.")
+        input("\nPress Enter to move to the next area...")
         story_arc_3()
     elif path == "9":
+        STATS.itm = "Spear"
+        STATS.atk += 25
+        STATS.spd += 2
+        print("\nYou picked up the speak, your attack improves by 25.")
+        print("\nThe spear is light and your speed improves by 2.")
+        input("\nPress Enter to move to the next area...")
         story_arc_3()
     else:
         player_controls(path)
