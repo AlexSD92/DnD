@@ -583,6 +583,7 @@ def story_arc_2():
     7. Select the Sword
     8. Select the Axe
     9. Select the Spear
+    0. Quit the game
     """)
 
     path = input("1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:znzn")
@@ -617,6 +618,7 @@ def story_arc_1():
     5. View your stats
     6. View your inventory
     7. Follow the dirt path into the thick fog
+    0. Quit the game
     """)
 
     path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
@@ -654,6 +656,12 @@ def player_controls(path):
             clear_console()
             print("\nYou viewed your inventory.\n")
             display_inventory()
+        elif path == "0":
+            clear_console()
+            print("Exiting program...")
+            time.sleep(2)
+            clear_console()
+            sys.exit()
         else:
             clear_console()
             print("\nPlease make a valid choice.")
