@@ -541,6 +541,13 @@ def enemy_encounter():
         print("\nYou did not encounter an enemy.")
 
 
+def story_arc_4()
+    """
+    story_arc_4()
+    """
+    print("story arc 4")
+
+
 def story_arc_3():
     """
     story arc 3
@@ -557,10 +564,34 @@ def story_arc_3():
     yellow eyes.
 
     Whatever it is, it knows you see it and it decides to attack!
+    """)
+    input("\nYou Enter a defensive stance!")
 
+    global EST
+    EST = EnemyType("Goblin", STATS.lvl, STATS.exp * 1.1, 100,
+                    STATS.m_p * 1.1, STATS.atk * 1.1, STATS.blk * 1.2, 5)
+    combat()
 
+    clear_console()
+
+    print("""
+    That was a long battle and you're exhausted.
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Move to the next area
     """)
 
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7: \n\n")
+
+    if path == "7":
+        story_arc_4()
+    else:
+        player_controls(path)
 
 
 def story_arc_2():
