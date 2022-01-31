@@ -547,8 +547,20 @@ def story_arc_3():
     """
     clear_console()
 
-    print("- - - STORY ARC 3 - - -")
-    input("Press Enter to continue...")
+    print("""
+    - - - STORY ARC 3 - - -
+    You make it to the clearing, but you know you're not alone.
+    You still feel that stare from before...watching you...
+
+    Although the fog is thick, you are focused and vigilant.
+    Hand on your weapon, you catch the glare of a pair of glowing,
+    yellow eyes.
+
+    Whatever it is, it knows you see it and it decides to attack!
+
+
+    """)
+
 
 
 def story_arc_2():
