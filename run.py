@@ -150,6 +150,22 @@ class PlayerJob():
         print("\nYour HP:     {" + remaining_hp + empty_hp + "}")
         # print("     " + percent)
 
+    def magic_bar(self):
+        """
+        prints magic bar
+        https://stackoverflow.com/questions/48035367/python-text-game-health-bar
+        """
+        unit_convert = int(self.mmp/100)
+        current_unit = int(self.m_p/unit_convert)
+        remaining_magic = 100 - current_unit
+
+        remaining_mp = "¦" * current_unit
+        empty_mp = " " * remaining_magic
+        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
+
+        print("\nYour HP:     {" + remaining_mp + empty_mp + "}")
+        # print("     " + percent)
+
     def attack(self):
         """
         calculation for physical attack
@@ -352,7 +368,7 @@ def combi_table():
     print(c_s)
 
     STATS.health_bar()
-    EST.health_bar()
+    STATS.magic_bar()
 
 
 def clear_console():
@@ -553,23 +569,23 @@ def enemy_approaches():
     global EST
 
     enemy_type = random.randint(1, 1)
-    # level = STATS.lvl + random.randint(1, 5)
-    # mult = (level - (level * .95)) + 1
+    level = STATS.lvl + random.randint(1, 5)
+    mult = ((level - (level * .95)) + 1)
 
     if enemy_type == 1:
-        # EST = EnemyType("Goblin", level, 458*mult, 300*mult, 300*mult, 100*mult,
-        #                 100*mult, 50*mult, 5*mult, 3*mult)
-        EST = EnemyType("Goblin", 1, 458, 300, 300, 100, 100, 50, 50, 3)
+        EST = EnemyType("Goblin", level, 458*mult, 300*mult, 300*mult,
+                        100*mult, 100*mult, 50*mult, 5*mult, 3*mult)
+        # EST = EnemyType("Goblin", 1, 458, 300, 300, 100, 100, 50, 50, 3)
         print("You encountered a " + EST.job)
         combat()
     elif enemy_type == 2:
-        EST = EnemyType("Witch", level, 454*mult, 100*mult, 100*mult, 300*mult,
-                        300*mult, 50*mult, 1*mult, 3*mult)
+        EST = EnemyType("Witch", level, 454*mult, 100*mult, 100*mult,
+                        300*mult, 300*mult, 50*mult, 1*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
     elif enemy_type == 3:
-        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult, 200*mult,
-                        200*mult, 50*mult, 3*mult, 3*mult)
+        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult,
+                        200*mult, 200*mult, 50*mult, 3*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
 
