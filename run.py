@@ -139,9 +139,9 @@ class PlayerJob():
         prints health bar
         https://stackoverflow.com/questions/48035367/python-text-game-health-bar
         """
-        unit_convert = int(self.mhp/100)
+        unit_convert = int(self.mhp/25)
         current_unit = int(self.h_p/unit_convert)
-        remaining_health = 100 - current_unit
+        remaining_health = 25 - current_unit
 
         remaining_hp = "¦" * current_unit
         empty_hp = " " * remaining_health
@@ -155,15 +155,15 @@ class PlayerJob():
         prints magic bar
         https://stackoverflow.com/questions/48035367/python-text-game-health-bar
         """
-        unit_convert = int(self.mmp/100)
+        unit_convert = int(self.mmp/25)
         current_unit = int(self.m_p/unit_convert)
-        remaining_magic = 100 - current_unit
+        remaining_magic = 25 - current_unit
 
         remaining_mp = "¦" * current_unit
         empty_mp = " " * remaining_magic
         # percent = str(int((self.h_p/self.mhp)*100)) + "%"
 
-        print("\nYour HP:     {" + remaining_mp + empty_mp + "}")
+        print("\nYour MP:     {" + remaining_mp + empty_mp + "}")
         # print("     " + percent)
 
     def attack(self):
@@ -549,6 +549,8 @@ def combat():
     """
 
     clear_console()
+
+    combat_menu()
 
     if EST.spd < STATS.spd:
         print("You spotted the enemy before they spotted you!")
