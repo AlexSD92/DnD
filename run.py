@@ -12,12 +12,14 @@ class EnemyType():
     """
     template for enemy types, object methods for attack
     """
-    def __init__(self, job, lvl, exp, h_p, m_p, atk, blk, spd):
+    def __init__(self, job, lvl, exp, h_p, mhp, m_p, mmp, atk, blk, spd):
         self.job = job
         self.lvl = lvl
         self.exp = exp
         self.h_p = h_p
+        self.mhp = mhp
         self.m_p = m_p
+        self.mmp = mmp
         self.atk = atk
         self.blk = blk
         self.spd = spd
@@ -41,6 +43,22 @@ class EnemyType():
         table.align["Value"] = "r"
 
         print(table)
+
+    def health_bar(self):
+        """
+        prints health bar
+        https://stackoverflow.com/questions/48035367/python-text-game-health-bar
+        """
+        unit_convert = int(self.mhp/100)
+        current_unit = int(self.h_p/unit_convert)
+        remaining_health = 100 - current_unit
+
+        remaining_hp = "¦" * current_unit
+        empty_hp = " " * remaining_health
+        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
+
+        print("\nEnemy HP:    {" + remaining_hp + empty_hp + "}")
+        # print("     " + percent)
 
     def attack(self):
         """
@@ -119,17 +137,18 @@ class PlayerJob():
     def health_bar(self):
         """
         prints health bar
+        https://stackoverflow.com/questions/48035367/python-text-game-health-bar
         """
-        unit_convert = int(self.mhp/48)
+        unit_convert = int(self.mhp/100)
         current_unit = int(self.h_p/unit_convert)
-        remaining_health = 48 - current_unit
+        remaining_health = 100 - current_unit
 
         remaining_hp = "¦" * current_unit
         empty_hp = " " * remaining_health
-        percent = str(int((self.h_p/self.mhp)*100)) + "%"
+        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
 
-        print("{" + remaining_hp + empty_hp + "}")
-        print("     " + percent)
+        print("\nYour HP:     {" + remaining_hp + empty_hp + "}")
+        # print("     " + percent)
 
     def attack(self):
         """
@@ -333,6 +352,7 @@ def combi_table():
     print(c_s)
 
     STATS.health_bar()
+    EST.health_bar()
 
 
 def clear_console():
@@ -532,23 +552,24 @@ def enemy_approaches():
 
     global EST
 
-    enemy_type = random.randint(1, 3)
-    level = STATS.lvl + random.randint(1, 5)
-    mult = (level - (level * .95)) + 1
+    enemy_type = random.randint(1, 1)
+    # level = STATS.lvl + random.randint(1, 5)
+    # mult = (level - (level * .95)) + 1
 
     if enemy_type == 1:
-        EST = EnemyType("Goblin", level, 458*mult, 300*mult, 100*mult,
-                        50*mult, 5*mult, 3*mult)
+        # EST = EnemyType("Goblin", level, 458*mult, 300*mult, 300*mult, 100*mult,
+        #                 100*mult, 50*mult, 5*mult, 3*mult)
+        EST = EnemyType("Goblin", 1, 458, 300, 300, 100, 100, 50, 50, 3)
         print("You encountered a " + EST.job)
         combat()
     elif enemy_type == 2:
-        EST = EnemyType("Witch", level, 454*mult, 100*mult, 300*mult,
-                        50*mult, 1*mult, 3*mult)
+        EST = EnemyType("Witch", level, 454*mult, 100*mult, 100*mult, 300*mult,
+                        300*mult, 50*mult, 1*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
     elif enemy_type == 3:
-        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult,
-                        50*mult, 3*mult, 3*mult)
+        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult, 200*mult,
+                        200*mult, 50*mult, 3*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
 
@@ -641,8 +662,9 @@ def story_arc_3():
     input("\nYou Enter a defensive stance!")
 
     global EST
-    EST = EnemyType("Goblin", STATS.lvl, STATS.exp * 1.1, 100,
-                    STATS.m_p * 1.1, STATS.atk * 1.1, STATS.blk * 1.2, 5)
+    EST = EnemyType("Goblin", STATS.lvl, STATS.exp * 1.1, 100, EST.h_p,
+                    STATS.m_p * 1.1, EST.m_p, STATS.atk * 1.1,
+                    STATS.blk * 1.2, 5)
     combat()
 
     clear_console()
