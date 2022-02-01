@@ -116,6 +116,21 @@ class PlayerJob():
             self.blk = self.blk * mult
             self.spd = self.spd * mult
 
+    def health_bar(self):
+        """
+        prints health bar
+        """
+        unit_convert = int(self.mhp/48)
+        current_unit = int(self.h_p/unit_convert)
+        remaining_health = 48 - current_unit
+
+        remaining_hp = "¦" * current_unit
+        empty_hp = " " * remaining_health
+        percent = str(int((self.h_p/self.mhp)*100)) + "%"
+
+        print("{" + remaining_hp + empty_hp + "}")
+        print("     " + percent)
+
     def attack(self):
         """
         calculation for physical attack
@@ -317,6 +332,8 @@ def combi_table():
 
     print(c_s)
 
+    STATS.health_bar()
+
 
 def clear_console():
     """
@@ -381,6 +398,11 @@ def combat_menu():
     """
     prints the combat menu
     """
+
+    clear_console()
+
+    combi_table()
+
     print("""
     1 - Physical Attack
     2 - Magical Attack
@@ -396,10 +418,6 @@ def enemy_action():
     randomly selects enemy attack as object method
     """
 
-    clear_console()
-
-    combi_table()
-
     combat_menu()
 
     if EST.h_p > 0 and STATS.h_p > 0:
@@ -409,8 +427,6 @@ def enemy_action():
         if enemy_choice == 1:
             EST.attack()
 
-            clear_console()
-            combi_table()
             combat_menu()
 
             print("The enemy performed a physical attack!")
@@ -434,10 +450,6 @@ def player_action():
     allows for user input during combat, calls object methods
     """
 
-    clear_console()
-
-    combi_table()
-
     combat_menu()
 
     if STATS.h_p > 0 and EST.h_p > 0:
@@ -450,8 +462,6 @@ def player_action():
 
             STATS.attack()
 
-            clear_console()
-            combi_table()
             combat_menu()
 
             print("You performed a physical attack!")
@@ -464,8 +474,6 @@ def player_action():
 
             STATS.heal()
 
-            clear_console()
-            combi_table()
             combat_menu()
 
             print("You healed 50 HP!")
