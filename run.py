@@ -377,6 +377,20 @@ def item_drop():
             player_itm_inv["Ether"] += 1
 
 
+def combat_menu():
+    """
+    prints the combat menu
+    """
+    print("""
+    1 - Physical Attack
+    2 - Magical Attack
+    3 - Heal
+    4 - Boon
+    """)
+
+    print("+-----------+--------------+-------+-------------+\n")
+
+
 def enemy_action():
     """
     randomly selects enemy attack as object method
@@ -384,28 +398,25 @@ def enemy_action():
 
     clear_console()
 
+    combi_table()
+
+    combat_menu()
+
     if EST.h_p > 0 and STATS.h_p > 0:
-
-        combi_table()
-
-        print(
-            """
-            1 - Physical Attack
-            2 - Magical Attack
-            3 - Heal
-            4 - Boon
-            """
-        )
-
-        print("+-----------+--------------+-------+-------------+\n")
 
         enemy_choice = random.randint(1, 1)
 
         if enemy_choice == 1:
-            print("The enemy performed a physical attack!")
-            print("You took " + str(round(EST.atk)) + " damage.")
-            input("\nPress Enter to take action...")
             EST.attack()
+
+            clear_console()
+            combi_table()
+            combat_menu()
+
+            print("The enemy performed a physical attack!")
+            time.sleep(1)
+            print("You took " + str(round(EST.atk)) + " damage.")
+            time.sleep(2)
             player_action()
 
     elif EST.h_p < 0 and STATS.h_p > 0:
@@ -425,37 +436,44 @@ def player_action():
 
     clear_console()
 
+    combi_table()
+
+    combat_menu()
+
     if STATS.h_p > 0 and EST.h_p > 0:
-
-        combi_table()
-
-        print(
-            """
-            1 - Physical Attack
-            2 - Magical Attack
-            3 - Heal
-            4 - Boon
-            """
-        )
-
-        print("+-----------+--------------+-------+-------------+\n")
 
         print("1 / 2 / 3 / 4")
 
         player_choice = input("\nWhat will you do? \n")
 
         if player_choice == "1":
-            print("You performed a physical attack!")
-            print("The enemy took " + str(round(STATS.atk)) + " damage.")
-            input("\nPress Enter to wait for the enemy's turn...")
+
             STATS.attack()
+
+            clear_console()
+            combi_table()
+            combat_menu()
+
+            print("You performed a physical attack!")
+            time.sleep(1)
+            print("The enemy took " + str(round(STATS.atk)) + " damage.")
+            time.sleep(2)
             enemy_action()
+
         elif player_choice == "3":
-            print("You healed 50 HP!")
-            input("\nPress Enter to wait for the enemy's turn...")
+
             STATS.heal()
+
+            clear_console()
+            combi_table()
+            combat_menu()
+
+            print("You healed 50 HP!")
+            time.sleep(2)
             enemy_action()
+
         else:
+
             clear_console()
             print("Please make a valid choice.")
             input("\nPress Enter to continue...")
