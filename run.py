@@ -65,6 +65,8 @@ class EnemyType():
         calculation for physical attack
         """
         STATS.h_p -= self.atk - STATS.blk
+        if STATS.h_p <= 0:
+            STATS.h_p = 0
 
 
 class PlayerJob():
@@ -171,6 +173,8 @@ class PlayerJob():
         calculation for physical attack
         """
         EST.h_p -= self.atk - EST.blk
+        if EST.h_p <= 0:
+            EST.h_p = 0
 
     def heal(self):
         """
