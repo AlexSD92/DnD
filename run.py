@@ -606,25 +606,25 @@ def enemy_encounter():
         print("\nYou did not encounter an enemy.")
 
 
-def story_arc_4_cave():
+def story_arc_5_cave():
     """
-    story_arc_4_cave; dictates what happens in the cave
+    story_arc_5_cave; dictates what happens in the cave
     """
     print("""You're in the cave.""")
     input("Press Enter to continue...")
 
 
-def story_arc_4_wood():
+def story_arc_5_wood():
     """
-    story_arc_4_wood; dictates what happens in the woods
+    story_arc_5_wood; dictates what happens in the woods
     """
     print("""You're in the woods.""")
     input("Press Enter to continue...")
 
 
-def story_arc_4():
+def story_arc_5():
     """
-    story_arc_4()
+    story_arc_5()
     """
     clear_console()
 
@@ -651,16 +651,16 @@ def story_arc_4():
     path = input("1 / 2 / 3 / 4 / 5 / 6 / 7: \n\n")
 
     if path == "7":
-        story_arc_4_cave()
-        story_arc_4()
+        story_arc_5_cave()
+        story_arc_5()
     if path == "8":
-        story_arc_4_wood()
-        story_arc_4()
+        story_arc_5_wood()
+        story_arc_5()
     else:
         player_controls(path)
 
 
-def story_arc_3():
+def story_arc_4():
     """
     story arc 3
     """
@@ -668,26 +668,59 @@ def story_arc_3():
 
     print("""
     - - - STORY ARC 3 - - -
-    You make it to the clearing, but you know you're not alone.
-    You still feel that stare from before...watching you...
+    Focused and vigilant, you look in the direction you feel the stare.
 
-    Although the fog is thick, you are focused and vigilant.
-    Hand on your weapon, you catch the glare of a pair of glowing,
+    Through the thick fog, you catch the glare of a pair of glowing,
     yellow eyes.
 
-    Whatever it is, it knows you see it and it decides to attack!
+    Whatever it is, it knows you've discovered it and it decides to attack!
     """)
     input("\nYou Enter a defensive stance!")
 
     global EST
-    EST = EnemyType("Goblin", STATS.lvl, STATS.exp * 1.1, 100, EST.h_p,
-                    STATS.m_p * 1.1, EST.m_p, STATS.atk * 1.1,
-                    STATS.blk * 1.2, 5)
+    EST = EnemyType("Goblin", 30, 10000, 1000, 1000, 300, 300, 20, 20, 10)
     combat()
 
     clear_console()
 
-    story_arc_4()
+    story_arc_5()
+
+
+def story_arc_3():
+    """
+    story arc 3
+    """
+
+    clear_console()
+
+    print("""You keep moving along the path, but you know you're not alone.
+    The fog is cool on your skin and you still feel the stare from before.
+    You make to to the clearing. You sense you are being hunted.
+
+    If you stay out in the open, a battle is inevitable, but you don't
+    see anywhere to take shelter.
+
+    Knowing a battle is inevitable, you:
+    """)
+
+    print("""
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Look in the direction you feel the stare
+    0. Quit the game
+    """)
+
+    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
+
+    if path == "7":
+        story_arc_4()
+    else:
+        player_controls(path)
+        story_arc_3()
 
 
 def story_arc_2():
@@ -700,8 +733,8 @@ def story_arc_2():
     print("""
     You begin to progress on the dirt path.
     Though you're wearing boots, you can feel the unnaturally cold earth.
-    You can't help but feel that through the thick fog...something...
-    ...or someone...is watching you.
+    You can't help but feel that through the thick fog...someone...
+    ...or something...is watching you.
 
     You trip on something in the dark and you can feel your heart skip.
     You look to see what it was and you find human remains.
@@ -850,9 +883,9 @@ def confirm_choice():
 
     print(STATS.name + ", you wake up next to a dying fire.")
     time.sleep(1)
-    print("It's cold and dark. You look around and can't see anything...")
+    print("\nIt's cold and dark. You look around and can't see anything...")
     time.sleep(1)
-    print("...or for that matter...remember anything...except...\n")
+    print("\n...or for that matter...remember anything...except...\n")
     time.sleep(1)
 
     while True:
