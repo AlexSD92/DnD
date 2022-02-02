@@ -447,7 +447,7 @@ def combat_menu():
     1 - Physical Attack
     2 - Magical Attack
     3 - Heal
-    4 - Boon
+    4 - Use Items
     """)
 
     print("+-----------+--------------+-------+-------------+\n")
@@ -471,13 +471,14 @@ def enemy_action():
 
             print("The enemy performed a physical attack!")
             time.sleep(1)
-            print("You took " + str(round(EST.atk)) + " damage.")
+            print("\nYou took " + str(round(EST.atk)) + " damage.")
             time.sleep(2)
             player_action()
 
-    elif EST.h_p < 0 and STATS.h_p > 0:
+    elif EST.h_p <= 0 and STATS.h_p > 0:
         print("\nYou defeated the enemy!")
-        print("You gained " + str(round(EST.exp)) + " exp.")
+        time.sleep(2)
+        print("\nYou gained " + str(round(EST.exp)) + " exp.\n")
         STATS.levelup()
         item_drop()
         input("\nPress Enter to continue...")
@@ -496,7 +497,7 @@ def player_action():
 
         print("1 / 2 / 3 / 4")
 
-        player_choice = input("\nWhat will you do? \n")
+        player_choice = input("\nWhat will you do? \n\n")
 
         if player_choice == "1":
 
@@ -506,7 +507,7 @@ def player_action():
 
             print("You performed a physical attack!")
             time.sleep(1)
-            print("The enemy took " + str(round(STATS.atk)) + " damage.")
+            print("\nThe enemy took " + str(round(STATS.atk)) + " damage.")
             time.sleep(2)
             enemy_action()
 
@@ -520,6 +521,12 @@ def player_action():
             time.sleep(2)
             enemy_action()
 
+        elif player_choice == "4":
+
+            display_inventory()
+
+            enemy_action()
+
         else:
 
             clear_console()
@@ -527,8 +534,8 @@ def player_action():
             input("\nPress Enter to continue...")
             player_action()
 
-    elif STATS.h_p < 0:
-        print("\nYou were felled by the enemy!")
+    elif STATS.h_p <= 0:
+        print("You were felled by the enemy!")
         print("\nGAME OVER")
 
         while True:
