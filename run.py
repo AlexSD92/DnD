@@ -6,6 +6,7 @@ import os
 # https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
 # https://pypi.org/project/prettytable/
 from prettytable import PrettyTable
+from colorama import Fore, Style
 
 player_itm_inv = {"Potion": 0, "Ether": 0}
 
@@ -209,7 +210,7 @@ def shop():
 
         clear_console()
 
-        print("----STORE----\n\n")
+        print("----STORE----\n")
         print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
@@ -355,29 +356,34 @@ def combi_table():
     combined table for combat so player can compare user stats and enemy stats
     """
 
-    c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
+    c_s = PrettyTable(["Attribute", Fore.GREEN + "Player Value" +
+                       Style.RESET_ALL, "  ", Fore.RED + "Enemy Value"
+                       + Style.RESET_ALL])
 
-    c_s.add_row(["NAME", STATS.name,
-                 "     ", EST.job])
-    c_s.add_row(['WEAPON', STATS.itm,
-                 "     ", "None"])
-    c_s.add_row(['LEVEL', STATS.lvl,
-                 "     ", EST.lvl])
-    c_s.add_row(['EXP', round(STATS.exp),
-                 "     ", round(EST.exp)])
-    c_s.add_row(['HEALTH', round(STATS.h_p),
-                 "     ", round(EST.h_p)])
-    c_s.add_row(['MAGIC', round(STATS.m_p),
-                 "     ", round(EST.m_p)])
-    c_s.add_row(['ATTACK', round(STATS.atk),
-                 "     ", round(EST.atk)])
-    c_s.add_row(['BLOCK', round(STATS.blk),
-                 "     ", round(EST.blk)])
-    c_s.add_row(['SPEED', round(STATS.spd),
-                 "     ", round(EST.spd)])
+    c_s.add_row(["NAME", Fore.GREEN + STATS.name + Style.RESET_ALL,
+                 "     ", Fore.RED + EST.job + Style.RESET_ALL])
+    c_s.add_row(['WEAPON', Fore.GREEN + STATS.itm + Style.RESET_ALL,
+                 "     ", Fore.RED + "None" + Style.RESET_ALL])
+    c_s.add_row(['LEVEL', Fore.GREEN + str(STATS.lvl) + Style.RESET_ALL,
+                 "     ", Fore.RED + str(EST.lvl) + Style.RESET_ALL])
+    c_s.add_row(['EXP', Fore.GREEN + str(round(STATS.exp)) + Style.RESET_ALL,
+                 "     ", Fore.RED + str(round(EST.exp)) + Style.RESET_ALL])
+    c_s.add_row(['HEALTH', Fore.GREEN + str(round(STATS.h_p)) +
+                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.h_p))
+                 + Style.RESET_ALL])
+    c_s.add_row(['MAGIC', Fore.GREEN + str(round(STATS.m_p)) + Style.RESET_ALL,
+                 "     ", Fore.RED + str(round(EST.m_p)) + Style.RESET_ALL])
+    c_s.add_row(['ATTACK', Fore.GREEN + str(round(STATS.atk)) +
+                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.atk))
+                 + Style.RESET_ALL])
+    c_s.add_row(['BLOCK', Fore.GREEN + str(round(STATS.blk)) + Style.RESET_ALL,
+                 "     ", Fore.RED + str(round(EST.blk)) + Style.RESET_ALL])
+    c_s.add_row(['SPEED', Fore.GREEN + str(round(STATS.spd)) + Style.RESET_ALL,
+                 "     ", Fore.RED + str(round(EST.spd)) + Style.RESET_ALL])
 
     c_s.align["Player Attr"] = "l"
     c_s.align["Player Value"] = "r"
+    c_s.align["Enemy Value"] = "r"
 
     print(c_s)
 
