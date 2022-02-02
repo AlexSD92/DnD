@@ -7,6 +7,8 @@ import os
 # https://pypi.org/project/prettytable/
 from prettytable import PrettyTable
 
+player_itm_inv = {"Potion": 0, "Ether": 0}
+
 
 class EnemyType():
     """
@@ -248,9 +250,6 @@ def shop():
             input("\nPress Enter to continue...")
 
 
-player_itm_inv = {"Potion": 0, "Ether": 0}
-
-
 def player_inventory_add(choice):
     """
     pushes items bought from the shop in to a dictionery for the player
@@ -414,14 +413,14 @@ def scavenge():
         print("\nYou found nothing!")
 
 
-def item_drop():
+def item_money_drop():
     """
     chance of an enemy dropping either an ether or potion
     """
 
-    chance = random.randint(0, 1)
+    chance_item = random.randint(0, 1)
 
-    if chance == 0:
+    if chance_item == 0:
 
         item_type = random.randint(0, 1)
 
@@ -432,6 +431,14 @@ def item_drop():
         elif item_type == 1:
             print("\nThe enemy dropped an ether!")
             player_itm_inv["Ether"] += 1
+
+    chance_money = random.randint(0, 1)
+
+    if chance_money == 0:
+
+        money_amount = random.randint(2, 200)
+        print("\nThe enemy dropped " + money_amount + " coins!")
+        STATS.mny += money_amount
 
 
 def combat_menu():
@@ -956,5 +963,3 @@ def player_job_selection():
 while True:
 
     player_job_selection()
-
-# player_job_selection()
