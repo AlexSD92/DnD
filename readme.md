@@ -177,8 +177,13 @@ To deploy your project locally using Gitpod, do the following:
 2. Download the gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
 3. Once in your own copy of the repository, click the green gitpod button to launch the project. 
 4. If you add any dependencies to the project, make sure that you create a requirements file. 
-    - For this particular project, PrettyTable was used. 
+    - For this particular project, PrettyTable and Colorama were used. 
     - 'use the pip3 freeze > requirements.txt' command to create this file.
+    - Colorama won't be included automatically, and you will have to add this manually.
+        - 'pip list' or 'pip freeze' to view installed packages
+        - 'pip show (filename)' to get details, such as the version
+        - For example, if you typed 'pip show colorama' it would show you what version
+        - In the requirements.txt file you created, you would add 'colorama==0.4.4'
 5. Commit and push your changes to your repository. 
 6. Head over to [Heroku](heroku.com) and create an account. 
     - Fill in the details on the form, for role you can select 'student'.
