@@ -219,6 +219,8 @@ def shop():
         0. Exit
         """)
 
+        print("Your Wallet: " + str(STATS.mny) + "\n")
+
         choice = input("1 / 2:\n\n")
 
         if choice == "1":
@@ -355,15 +357,24 @@ def combi_table():
 
     c_s = PrettyTable(["Attribute", "Player Value", "  ", "Enemy Value"])
 
-    c_s.add_row(["NAME", STATS.name, "     ", EST.job])
-    c_s.add_row(['WEAPON', STATS.itm, "     ", " "])
-    c_s.add_row(['LEVEL', STATS.lvl, "     ", EST.lvl])
-    c_s.add_row(['EXP', round(STATS.exp), "     ", round(EST.exp)])
-    c_s.add_row(['HEALTH', round(STATS.h_p), "     ", round(EST.h_p)])
-    c_s.add_row(['MAGIC', round(STATS.m_p), "     ", round(EST.m_p)])
-    c_s.add_row(['ATTACK', round(STATS.atk), "     ", round(EST.atk)])
-    c_s.add_row(['BLOCK', round(STATS.blk), "     ", round(EST.blk)])
-    c_s.add_row(['SPEED', round(STATS.spd), "     ", round(EST.spd)])
+    c_s.add_row(["NAME", STATS.name,
+                 "     ", EST.job])
+    c_s.add_row(['WEAPON', STATS.itm,
+                 "     ", "None"])
+    c_s.add_row(['LEVEL', STATS.lvl,
+                 "     ", EST.lvl])
+    c_s.add_row(['EXP', round(STATS.exp),
+                 "     ", round(EST.exp)])
+    c_s.add_row(['HEALTH', round(STATS.h_p),
+                 "     ", round(EST.h_p)])
+    c_s.add_row(['MAGIC', round(STATS.m_p),
+                 "     ", round(EST.m_p)])
+    c_s.add_row(['ATTACK', round(STATS.atk),
+                 "     ", round(EST.atk)])
+    c_s.add_row(['BLOCK', round(STATS.blk),
+                 "     ", round(EST.blk)])
+    c_s.add_row(['SPEED', round(STATS.spd),
+                 "     ", round(EST.spd)])
 
     c_s.align["Player Attr"] = "l"
     c_s.align["Player Value"] = "r"
@@ -437,7 +448,7 @@ def item_money_drop():
     if chance_money == 0:
 
         money_amount = random.randint(2, 200)
-        print("\nThe enemy dropped " + money_amount + " coins!")
+        print("\nThe enemy dropped " + str(money_amount) + " coins!")
         STATS.mny += money_amount
 
 
@@ -487,7 +498,7 @@ def enemy_action():
         time.sleep(2)
         print("\nYou gained " + str(round(EST.exp)) + " exp.\n")
         STATS.levelup()
-        item_drop()
+        item_money_drop()
         input("\nPress Enter to continue...")
         clear_console()
         player_controls("5")
