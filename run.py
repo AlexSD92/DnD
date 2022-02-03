@@ -969,7 +969,6 @@ def player_job_selection():
     """
     player choice of class and name input
     """
-
     clear_console()
 
     global STATS
@@ -981,21 +980,21 @@ def player_job_selection():
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
         STATS = PlayerJob(pname, 1, 0, 600, pjob, "None",
-                          300, 300, 100, 100, 100, 5, 3)
+                          300, 300, 100, 100, 200, 100, 150)
         confirm_choice()
 
     elif player_choice == "assassin":
         pname = input("What is your name, assassin? ")
         pjob = "Assassin"
-        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None",
-                          200, 200, 200, 200, 100, 1, 5)
+        STATS = PlayerJob(pname, 1, 0, 1000, pjob, "None",
+                          200, 200, 200, 200, 150, 150, 200)
         confirm_choice()
 
     elif player_choice == "mage":
         pname = input("What is your name, mage? ")
         pjob = "Mage"
-        STATS = PlayerJob(pname, 1, 0, 0, pjob, "None",
-                          100, 100, 300, 300, 100, 1, 1)
+        STATS = PlayerJob(pname, 1, 0, 200, pjob, "None",
+                          100, 100, 300, 300, 100, 200, 100)
         confirm_choice()
 
     else:
