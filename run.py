@@ -77,7 +77,7 @@ class EnemyType():
         """
         calculation for attack
         """
-        STATS.h_p -= self.atk - STATS.blk
+        STATS.h_p -= self.atk
         if STATS.h_p <= 0:
             STATS.h_p = 0
 
@@ -185,7 +185,7 @@ class PlayerJob():
         """
         calculation for physical attack
         """
-        EST.h_p -= self.atk - EST.blk
+        EST.h_p -= self.atk
         if EST.h_p <= 0:
             EST.h_p = 0
 
@@ -194,12 +194,16 @@ class PlayerJob():
         calculation and condition for healing
         """
 
-        if self.m_p > 0:
-            self.m_p -= 1
+        if self.m_p > 24:
+            self.m_p -= 25
             self.h_p += 200
+            print("\nYou used 25 MP to heal 200 HP.")
 
             if self.h_p > self.mhp:
                 self.h_p = self.mhp
+
+        else:
+            print("\nYou don't have enough MP!")
 
 
 def shop():
@@ -452,7 +456,7 @@ def item_money_drop():
         item_type = random.randint(0, 1)
 
         if item_type == 0:
-            print("\nThe enemy dropped a potion!")
+            print("The enemy dropped a potion!")
             player_itm_inv["Potion"] += 1
 
         elif item_type == 1:
@@ -479,9 +483,8 @@ def combat_menu():
 
     print("""
     1 - Physical Attack
-    2 - Magical Attack
-    3 - Heal
-    4 - Use Items
+    2 - Heal
+    3 - Use Items
     """)
 
     print("+-----------+--------------+-------+-------------+\n")
@@ -619,7 +622,6 @@ def enemy_approaches():
     if enemy_type == 1:
         EST = EnemyType("Goblin", level, 458*mult, 300*mult, 300*mult,
                         100*mult, 100*mult, 50*mult, 5*mult, 3*mult)
-        # EST = EnemyType("Goblin", 1, 458, 300, 300, 100, 100, 50, 50, 3)
         print("You encountered a " + EST.job)
         combat()
     elif enemy_type == 2:
@@ -890,7 +892,6 @@ def player_controls(path):
             input("\nPress Enter to continue...")
         elif path == "3":
             STATS.heal()
-            print("\nYou healed hp.")
             input("\nPress Enter to continue...")
         elif path == "4":
             shop()
