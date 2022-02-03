@@ -11,6 +11,16 @@ from colorama import Fore, Style
 player_itm_inv = {"Potion": 0, "Ether": 0}
 
 
+class FontStyle():
+    """
+    used to bold and underline text
+    https://stackoverflow.com/questions/8924173/how-do-i-print-bold-text-in-python
+    """
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
+
 class EnemyType():
     """
     template for enemy types, object methods for attack
@@ -645,6 +655,9 @@ def story_arc_5_cave():
     """
     story_arc_5_cave; dictates what happens in the cave
     """
+
+    print(FontStyle().UNDERLINE + "STORY ARC 5 - CAVE\n" + FontStyle().END)
+
     print("""You're in the cave.""")
     input("Press Enter to continue...")
 
@@ -653,6 +666,9 @@ def story_arc_5_wood():
     """
     story_arc_5_wood; dictates what happens in the woods
     """
+
+    print(FontStyle().UNDERLINE + "STORY ARC 5 - WOOD\n" + FontStyle().END)
+
     print("""You're in the woods.""")
     input("Press Enter to continue...")
 
@@ -662,6 +678,8 @@ def story_arc_5():
     story_arc_5()
     """
     clear_console()
+
+    print(FontStyle().UNDERLINE + "STORY ARC 5\n" + FontStyle().END)
 
     print("""
     - - - STORY ARC 4 - - -
@@ -701,6 +719,8 @@ def story_arc_4():
     """
     clear_console()
 
+    print(FontStyle().UNDERLINE + "STORY ARC 4\n" + FontStyle().END)
+
     print("""
     - - - STORY ARC 3 - - -
     Focused and vigilant, you look in the direction you feel the stare.
@@ -727,6 +747,8 @@ def story_arc_3():
     """
 
     clear_console()
+
+    print(FontStyle().UNDERLINE + "STORY ARC 3\n" + FontStyle().END)
 
     print("""You keep moving along the path, but you know you're not alone.
     The fog is cool on your skin and you still feel the stare from before.
@@ -764,6 +786,8 @@ def story_arc_2():
     """
 
     clear_console()
+
+    print(FontStyle().UNDERLINE + "STORY ARC 2\n" + FontStyle().END)
 
     print("""
     You begin to progress on the dirt path.
@@ -828,6 +852,8 @@ def story_arc_1():
     """
 
     clear_console()
+
+    print(FontStyle().UNDERLINE + "STORY ARC 1\n" + FontStyle().END)
 
     print("Your mind is as clouded as the dense fog that surrounds you.")
     print("You hear the noises of the night, muffled by the thick fog.")
