@@ -75,7 +75,7 @@ class EnemyType():
 
     def attack(self):
         """
-        calculation for physical attack
+        calculation for attack
         """
         STATS.h_p -= self.atk - STATS.blk
         if STATS.h_p <= 0:
@@ -496,18 +496,15 @@ def enemy_action():
 
     if EST.h_p > 0 and STATS.h_p > 0:
 
-        enemy_choice = random.randint(1, 1)
+        EST.attack()
 
-        if enemy_choice == 1:
-            EST.attack()
+        combat_menu()
 
-            combat_menu()
-
-            print("The enemy performed a physical attack!")
-            time.sleep(1)
-            print("\nYou took " + str(round(EST.atk)) + " damage.")
-            time.sleep(2)
-            player_action()
+        print("The enemy performed a physical attack!")
+        time.sleep(1)
+        print("\nYou took " + str(round(EST.atk)) + " damage.")
+        time.sleep(2)
+        player_action()
 
     elif EST.h_p <= 0 and STATS.h_p > 0:
         print("\nYou defeated the enemy!")
@@ -529,7 +526,7 @@ def player_action():
 
     if STATS.h_p > 0 and EST.h_p > 0:
 
-        print("1 / 2 / 3 / 4")
+        print("1 / 2 / 3")
 
         player_choice = input("\nWhat will you do? \n\n")
 
@@ -545,7 +542,7 @@ def player_action():
             time.sleep(2)
             enemy_action()
 
-        elif player_choice == "3":
+        elif player_choice == "2":
 
             STATS.heal()
 
@@ -555,7 +552,7 @@ def player_action():
             time.sleep(2)
             enemy_action()
 
-        elif player_choice == "4":
+        elif player_choice == "3":
 
             display_inventory()
 
