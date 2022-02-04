@@ -21,6 +21,10 @@ class FontStyle():
     END = '\033[0m'
 
 
+UND_L = FontStyle().UNDERLINE
+END_S = FontStyle().END
+
+
 class EnemyType():
     """
     template for enemy types, object methods for attack
@@ -224,7 +228,7 @@ def shop():
 
         clear_console()
 
-        print(FontStyle().UNDERLINE + "STORE\n" + FontStyle().BOLD)
+        print(UND_L + "STORE\n" + FontStyle().BOLD)
         print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
@@ -285,7 +289,7 @@ def player_inventory_use():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "INVENTORY\n" + FontStyle().BOLD)
+    print(UND_L + "INVENTORY\n" + FontStyle().BOLD)
 
     print("""
           1. Potion
@@ -340,7 +344,7 @@ def display_inventory():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "INVENTORY\n" + FontStyle().BOLD)
+    print(UND_L + "INVENTORY\n" + FontStyle().BOLD)
 
     player_inv_tbl = PrettyTable(["Item", "Quantity"])
     player_inv_tbl.add_row(["Potion",  player_itm_inv.get("Potion")])
@@ -651,7 +655,7 @@ def story_arc_5_cave():
     story_arc_5_cave; dictates what happens in the cave
     """
 
-    print(FontStyle().UNDERLINE + "STORY ARC 5 - CAVE\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 5 - CAVE\n" + END_S)).center(80)
 
     print("""You're in the cave.""")
     input("Press Enter to continue...")
@@ -662,7 +666,7 @@ def story_arc_5_wood():
     story_arc_5_wood; dictates what happens in the woods
     """
 
-    print(FontStyle().UNDERLINE + "STORY ARC 5 - WOOD\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 5 - WOOD\n" + END_S)).center(80)
 
     print("""You're in the woods.""")
     input("Press Enter to continue...")
@@ -674,10 +678,9 @@ def story_arc_5():
     """
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 5\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 5\n" + END_S)).center(80)
 
     print("""
-    - - - STORY ARC 4 - - -
     That was a long battle and you're exhausted.
     Feeling tired, you continue down the path.
     The path splits in two and you have to decide which path to follow.
@@ -694,9 +697,11 @@ def story_arc_5():
     6. Path into the cave
     7. Path through the woods
 
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
     """)
 
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7: \n\n")
+    path = input()
 
     if path == "7":
         story_arc_5_cave()
@@ -714,10 +719,9 @@ def story_arc_4():
     """
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 4\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 4\n" + END_S)).center(80)
 
     print("""
-    - - - STORY ARC 3 - - -
     Focused and vigilant, you look in the direction you feel the stare.
 
     Through the thick fog, you catch the glare of a pair of glowing,
@@ -743,7 +747,7 @@ def story_arc_3():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 3\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 3\n" + END_S)).center(80)
 
     print("""You keep moving along the path, but you know you're not alone.
     The fog is cool on your skin and you still feel the stare from before.
@@ -753,9 +757,7 @@ def story_arc_3():
     see anywhere to take shelter.
 
     Knowing a battle is inevitable, you:
-    """)
 
-    print("""
     1. Hunt for enemies
     2. Scavenge
     3. Heal
@@ -764,9 +766,12 @@ def story_arc_3():
     6. View your inventory
     7. Look in the direction you feel the stare
     0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
     """)
 
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
+    path = input()
 
     if path == "7":
         story_arc_4()
@@ -782,7 +787,7 @@ def story_arc_2():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 2\n" + FontStyle().END)
+    print((UND_L + "STORY ARC 2\n" + END_S)).center(80)
 
     print("""
     You begin to progress on the dirt path.
@@ -797,9 +802,7 @@ def story_arc_2():
     Sword
     Axe
     Spear
-    """)
 
-    print("""
     1. Hunt for enemies
     2. Scavenge
     3. Heal
@@ -810,9 +813,12 @@ def story_arc_2():
     8. Select the Axe
     9. Select the Spear
     0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:
+
     """)
 
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:\n\n")
+    path = input()
 
     if path == "7":
         STATS.itm = "Sword"
@@ -848,7 +854,7 @@ def story_arc_1():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 1\n".center(80) + FontStyle().END)
+    print((UND_L + "STORY ARC 1\n" + END_S).center(80))
 
     print("""
     Your mind is as clouded as the dense fog that surrounds you.
@@ -865,9 +871,12 @@ def story_arc_1():
     0. Quit the game
 
     Please select an option...
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
     """)
 
-    path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
+    path = input()
 
     if path == "7":
         story_arc_2()
