@@ -224,7 +224,7 @@ def shop():
 
         clear_console()
 
-        print("----STORE----\n")
+        print(FontStyle().UNDERLINE + "STORE\n" + FontStyle().BOLD)
         print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
@@ -285,6 +285,8 @@ def player_inventory_use():
 
     clear_console()
 
+    print(FontStyle().UNDERLINE + "INVENTORY\n" + FontStyle().BOLD)
+
     print("""
           1. Potion
           2. Ether
@@ -294,7 +296,6 @@ def player_inventory_use():
 
     if decision == "1":
         if player_itm_inv["Potion"] > 0:
-            clear_console()
             print("\nYou used a potion, hp restored by 200.")
             player_itm_inv["Potion"] -= 1
             STATS.h_p += 200
@@ -303,14 +304,12 @@ def player_inventory_use():
             input("\nPress Enter to continue...")
             player_inventory_use()
         else:
-            clear_console()
             print("\nYou don't have any potions in stock!")
             input("\nPress Enter to continue...")
             player_inventory_use()
 
     elif decision == "2":
         if player_itm_inv["Ether"] > 0:
-            clear_console()
             print("\nYou used an ether, mp restored by 100.")
             player_itm_inv["Ether"] -= 1
             STATS.m_p += 100
@@ -319,7 +318,6 @@ def player_inventory_use():
             input("\nPress Enter to continue...")
             player_inventory_use()
         else:
-            clear_console()
             print("\nYou don't have any ether in stock!")
             input("\nPress Enter to continue...")
             player_inventory_use()
@@ -342,7 +340,7 @@ def display_inventory():
 
     clear_console()
 
-    print("----INVENTORY----\n\n")
+    print(FontStyle().UNDERLINE + "INVENTORY\n" + FontStyle().BOLD)
 
     player_inv_tbl = PrettyTable(["Item", "Quantity"])
     player_inv_tbl.add_row(["Potion",  player_itm_inv.get("Potion")])
@@ -421,8 +419,6 @@ def scavenge():
     1/4 chance of finding coin
     """
 
-    clear_console()
-
     chance = random.randint(0, 1)
 
     if chance == 0:
@@ -482,7 +478,7 @@ def combat_menu():
     combi_table()
 
     print("""
-    1 - Physical Attack
+    1 - Attack
     2 - Heal
     3 - Use Items
     """)
@@ -512,7 +508,7 @@ def enemy_action():
     elif EST.h_p <= 0 and STATS.h_p > 0:
         print("\nYou defeated the enemy!")
         time.sleep(2)
-        print("\nYou gained " + str(round(EST.exp)) + " exp.\n")
+        print("\nYou gained " + str(round(EST.exp)) + " exp.")
         STATS.levelup()
         item_money_drop()
         input("\nPress Enter to continue...")
@@ -852,13 +848,13 @@ def story_arc_1():
 
     clear_console()
 
-    print(FontStyle().UNDERLINE + "STORY ARC 1\n" + FontStyle().END)
-
-    print("Your mind is as clouded as the dense fog that surrounds you.")
-    print("You hear the noises of the night, muffled by the thick fog.")
-    print("You stand up, look around and decide the following: ")
+    print(FontStyle().UNDERLINE + "STORY ARC 1\n".center(80) + FontStyle().END)
 
     print("""
+    Your mind is as clouded as the dense fog that surrounds you.
+    You hear the noises of the night, muffled by the thick fog.
+    You stand up, look around and decide the following:
+
     1. Hunt for enemies
     2. Scavenge
     3. Heal
@@ -867,6 +863,8 @@ def story_arc_1():
     6. View your inventory
     7. Follow the dirt path into the thick fog
     0. Quit the game
+
+    Please select an option...
     """)
 
     path = input("1 / 2 / 3 / 4 / 5 / 6 / 7:\n\n")
@@ -898,7 +896,7 @@ def player_controls(path):
         elif path == "5":
             clear_console()
             STATS.full_stats()
-            input("\nPress Enter to continue...")
+            input("\nPress Enter to exit the stats menu...")
         elif path == "6":
             clear_console()
             print("\nYou viewed your inventory.\n")
@@ -982,21 +980,21 @@ def player_job_selection():
         confirm_choice()
 
     elif player_choice == "assassin":
-        pname = input("What is your name, assassin? ")
+        pname = input("\nWhat is your name, assassin? ")
         pjob = "Assassin"
         STATS = PlayerJob(pname, 1, 0, 1000, pjob, "None",
                           200, 200, 200, 200, 150, 150, 200)
         confirm_choice()
 
     elif player_choice == "mage":
-        pname = input("What is your name, mage? ")
+        pname = input("\nWhat is your name, mage? ")
         pjob = "Mage"
         STATS = PlayerJob(pname, 1, 0, 200, pjob, "None",
                           100, 100, 300, 300, 100, 200, 100)
         confirm_choice()
 
     else:
-        print("Please make a valid choice: \n")
+        print("\nPlease make a valid choice: \n")
         player_job_selection()
 
 
