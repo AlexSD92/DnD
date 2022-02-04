@@ -127,13 +127,14 @@ class PlayerJob():
         table.align["Attribute"] = "l"
         table.align["Value"] = "r"
 
+        print(UND_L + "PLAYER STATS\n" + END_S)
+
         print(table)
 
     def levelup(self):
         """
         calculation for the player to level up
         """
-
         self.exp += EST.exp
         experience_required = 500 * self.lvl
         current_experience = self.exp - experience_required
@@ -197,7 +198,6 @@ class PlayerJob():
         """
         calculation and condition for healing
         """
-
         if self.m_p > 24:
             self.m_p -= 25
             self.h_p += 200
@@ -214,7 +214,6 @@ def shop():
     """
     function determining store, stock and cost
     """
-
     while True:
 
         inv = {
@@ -228,7 +227,7 @@ def shop():
 
         clear_console()
 
-        print(UND_L + "STORE\n" + FontStyle().BOLD)
+        print(UND_L + "STORE\n" + END_S)
         print(store)
 
         print("\nWelcome to the store, what would you like to buy? ")
@@ -275,7 +274,6 @@ def player_inventory_add(choice):
     """
     pushes items bought from the shop in to a dictionery for the player
     """
-
     if choice == "1":
         player_itm_inv["Potion"] += 1
     elif choice == "2":
@@ -286,10 +284,9 @@ def player_inventory_use():
     """
     determines what happens when potions and ethers are used
     """
-
     clear_console()
 
-    print(UND_L + "INVENTORY\n" + FontStyle().BOLD)
+    print(UND_L + "INVENTORY\n" + END_S)
 
     print("""
           1. Potion
@@ -341,10 +338,9 @@ def display_inventory():
     """
     prints table information
     """
-
     clear_console()
 
-    print(UND_L + "INVENTORY\n" + FontStyle().BOLD)
+    print(UND_L + "INVENTORY\n" + END_S)
 
     player_inv_tbl = PrettyTable(["Item", "Quantity"])
     player_inv_tbl.add_row(["Potion",  player_itm_inv.get("Potion")])
@@ -371,7 +367,6 @@ def combi_table():
     """
     combined table for combat so player can compare user stats and enemy stats
     """
-
     c_s = PrettyTable(["Attribute", Fore.GREEN + "Player Value" +
                        Style.RESET_ALL, "  ", Fore.RED + "Enemy Value"
                        + Style.RESET_ALL])
@@ -422,7 +417,6 @@ def scavenge():
     """
     1/4 chance of finding coin
     """
-
     chance = random.randint(0, 1)
 
     if chance == 0:
@@ -448,7 +442,6 @@ def item_money_drop():
     """
     chance of an enemy dropping either an ether or potion
     """
-
     chance_item = random.randint(0, 1)
 
     if chance_item == 0:
@@ -476,7 +469,6 @@ def combat_menu():
     """
     prints the combat menu
     """
-
     clear_console()
 
     combi_table()
@@ -494,7 +486,6 @@ def enemy_action():
     """
     randomly selects enemy attack as object method
     """
-
     combat_menu()
 
     if EST.h_p > 0 and STATS.h_p > 0:
@@ -524,7 +515,6 @@ def player_action():
     """
     allows for user input during combat, calls object methods
     """
-
     combat_menu()
 
     if STATS.h_p > 0 and EST.h_p > 0:
@@ -592,7 +582,6 @@ def combat():
     """
     decides who takes the turn first based on the speed object
     """
-
     clear_console()
 
     combat_menu()
@@ -612,7 +601,6 @@ def enemy_approaches():
     """
     randomly generates 1, 2 or 3 and pushes forward an enemy type
     """
-
     global EST
 
     enemy_type = random.randint(1, 1)
@@ -640,7 +628,6 @@ def enemy_encounter():
     """
     randomly generates 1 or 2 as an integer; determines enemy encounter
     """
-
     encounter_true = random.randint(2, 2)
 
     if encounter_true == 2:
@@ -655,7 +642,7 @@ def story_arc_5_cave():
     story_arc_5_cave; dictates what happens in the cave
     """
 
-    print((UND_L + "STORY ARC 5 - CAVE\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 5 - CAVE\n" + END_S).center(80))
 
     print("""You're in the cave.""")
     input("Press Enter to continue...")
@@ -665,8 +652,7 @@ def story_arc_5_wood():
     """
     story_arc_5_wood; dictates what happens in the woods
     """
-
-    print((UND_L + "STORY ARC 5 - WOOD\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 5 - WOOD\n" + END_S).center(80))
 
     print("""You're in the woods.""")
     input("Press Enter to continue...")
@@ -678,7 +664,7 @@ def story_arc_5():
     """
     clear_console()
 
-    print((UND_L + "STORY ARC 5\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 5\n" + END_S).center(80))
 
     print("""
     That was a long battle and you're exhausted.
@@ -719,7 +705,7 @@ def story_arc_4():
     """
     clear_console()
 
-    print((UND_L + "STORY ARC 4\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 4\n" + END_S).center(80))
 
     print("""
     Focused and vigilant, you look in the direction you feel the stare.
@@ -744,10 +730,9 @@ def story_arc_3():
     """
     story arc 3
     """
-
     clear_console()
 
-    print((UND_L + "STORY ARC 3\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 3\n" + END_S).center(80))
 
     print("""You keep moving along the path, but you know you're not alone.
     The fog is cool on your skin and you still feel the stare from before.
@@ -784,10 +769,9 @@ def story_arc_2():
     """
     story arc 2
     """
-
     clear_console()
 
-    print((UND_L + "STORY ARC 2\n" + END_S)).center(80)
+    print((UND_L + "STORY ARC 2\n" + END_S).center(80))
 
     print("""
     You begin to progress on the dirt path.
@@ -851,7 +835,6 @@ def story_arc_1():
     """
     story arc 1
     """
-
     clear_console()
 
     print((UND_L + "STORY ARC 1\n" + END_S).center(80))
@@ -889,7 +872,6 @@ def player_controls(path):
     """
     player controls
     """
-
     if STATS.h_p > 0:
 
         if path == "1":
