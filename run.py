@@ -129,7 +129,9 @@ class PlayerJob():
 
         print(UND_L + "PLAYER STATS\n" + END_S)
 
-        print(table)
+        print(
+              str(table)
+        )
 
     def levelup(self):
         """
@@ -230,7 +232,7 @@ def shop():
         print(UND_L + "STORE\n" + END_S)
         print(store)
 
-        print("\nWelcome to the store, what would you like to buy? ")
+        print("\nYou came across a merchant, what would you like to buy? ")
         print("""
         1. Potion
         2. Ether
@@ -359,7 +361,7 @@ def display_inventory():
     else:
         clear_console()
         print("Please make a valid choice.")
-        input("Press Enter to continue...")
+        input("\nPress Enter to continue...")
         display_inventory()
 
 
@@ -368,8 +370,8 @@ def combi_table():
     combined table for combat so player can compare user stats and enemy stats
     """
     c_s = PrettyTable(["Attribute", Fore.GREEN + "Player Value" +
-                       Style.RESET_ALL, "  ", Fore.RED + "Enemy Value"
-                       + Style.RESET_ALL])
+                       Style.RESET_ALL, "  ", Fore.RED + "Enemy Value" +
+                       Style.RESET_ALL])
 
     c_s.add_row(["NAME", Fore.GREEN + STATS.name + Style.RESET_ALL,
                  "     ", Fore.RED + EST.job + Style.RESET_ALL])
@@ -380,13 +382,13 @@ def combi_table():
     c_s.add_row(['EXP', Fore.GREEN + str(round(STATS.exp)) + Style.RESET_ALL,
                  "     ", Fore.RED + str(round(EST.exp)) + Style.RESET_ALL])
     c_s.add_row(['HEALTH', Fore.GREEN + str(round(STATS.h_p)) +
-                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.h_p))
-                 + Style.RESET_ALL])
+                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.h_p)) +
+                 Style.RESET_ALL])
     c_s.add_row(['MAGIC', Fore.GREEN + str(round(STATS.m_p)) + Style.RESET_ALL,
                  "     ", Fore.RED + str(round(EST.m_p)) + Style.RESET_ALL])
     c_s.add_row(['ATTACK', Fore.GREEN + str(round(STATS.atk)) +
-                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.atk))
-                 + Style.RESET_ALL])
+                 Style.RESET_ALL, "     ", Fore.RED + str(round(EST.atk)) +
+                 Style.RESET_ALL])
     c_s.add_row(['BLOCK', Fore.GREEN + str(round(STATS.blk)) + Style.RESET_ALL,
                  "     ", Fore.RED + str(round(EST.blk)) + Style.RESET_ALL])
     c_s.add_row(['SPEED', Fore.GREEN + str(round(STATS.spd)) + Style.RESET_ALL,
@@ -421,7 +423,7 @@ def scavenge():
 
     if chance == 0:
 
-        coin = random.randint(0, 10)
+        coin = random.randint(0, 100)
 
         if coin == 0:
             print("\nYou found nothing.")
@@ -435,7 +437,7 @@ def scavenge():
             STATS.mny += coin
 
     else:
-        print("\nYou found nothing!")
+        print("\nYou found nothing.")
 
 
 def item_money_drop():
@@ -637,111 +639,71 @@ def enemy_encounter():
         print("\nYou did not encounter an enemy.")
 
 
-def story_arc_5_cave():
+def end_game():
     """
-    story_arc_5_cave; dictates what happens in the cave
+    determines what happens at the end of the game
     """
+    clear_console()
 
-    print((UND_L + "STORY ARC 5 - CAVE\n" + END_S).center(80))
+    print((UND_L + "END\n" + END_S).center(80))
 
-    print("""You're in the cave.""")
-    input("Press Enter to continue...")
+    print("""
+    Your journey was long and you're exhausted. 
+    Perhaps now would be a godo time to rest and recover.    
+
+    Would you like to play again? (Yes / No)
+    """)
+
+    play_again = input().lower()
+    if play_again == "yes":
+        player_job_selection()
+    elif play_again == "no":
+        clear_console()
+        print("Exiting program...")
+        time.sleep(2)
+        clear_console()
+        sys.exit()
+    else:
+        clear_console()
+        print("\nPlease make a valid choice.\n")
+        input("Press Enter to continue...")
+        end_game()
 
 
-def story_arc_5_wood():
+def story_arc_6():
     """
-    story_arc_5_wood; dictates what happens in the woods
+    story arc 6; boss battle
     """
-    print((UND_L + "STORY ARC 5 - WOOD\n" + END_S).center(80))
+    clear_console()
 
-    print("""You're in the woods.""")
-    input("Press Enter to continue...")
+    global EST
+    EST = EnemyType("Dire Wolf", 30, 10000, 1000, 1000, 300, 300, 20, 20, 10)
+    combat()
+
+    end_game()
 
 
 def story_arc_5():
     """
-    story_arc_5()
+    story arc 5
     """
     clear_console()
 
     print((UND_L + "STORY ARC 5\n" + END_S).center(80))
 
     print("""
-    That was a long battle and you're exhausted.
-    Feeling tired, you continue down the path.
-    The path splits in two and you have to decide which path to follow.
+    You break in to a sprint and make it to the exit.
+    The cool fog feels nice against your skin.
+    You continue to run ahead, hoping to escape whatever is following you.
 
-    The first path leads to a cave, the second into a forest.
+    Certain that, whatever it is, is now in full pursuit, you turn around
+    to look at it and you see a hungry-looking dire wolf in full stride.
 
-    Which way do you proceed?
+    You see a cliff that is easy enough to climb and buy yourself some time.
+    After climbing to safety, you look down to see the wolf impatiently
+    waiting for you.
 
-    1. Hunt for enemies
-    2. Scavenge
-    3. Heal
-    4. Shop
-    5. View your stats
-    6. Path into the cave
-    7. Path through the woods
-
-    1 / 2 / 3 / 4 / 5 / 6 / 7:
-
-    """)
-
-    path = input()
-
-    if path == "7":
-        story_arc_5_cave()
-        story_arc_5()
-    if path == "8":
-        story_arc_5_wood()
-        story_arc_5()
-    else:
-        player_controls(path)
-
-
-def story_arc_4():
-    """
-    story arc 3
-    """
-    clear_console()
-
-    print((UND_L + "STORY ARC 4\n" + END_S).center(80))
-
-    print("""
-    Focused and vigilant, you look in the direction you feel the stare.
-
-    Through the thick fog, you catch the glare of a pair of glowing,
-    yellow eyes.
-
-    Whatever it is, it knows you've discovered it and it decides to attack!
-    """)
-    input("\nYou Enter a defensive stance!")
-
-    global EST
-    EST = EnemyType("Goblin", 30, 10000, 1000, 1000, 300, 300, 20, 20, 10)
-    combat()
-
-    clear_console()
-
-    story_arc_5()
-
-
-def story_arc_3():
-    """
-    story arc 3
-    """
-    clear_console()
-
-    print((UND_L + "STORY ARC 3\n" + END_S).center(80))
-
-    print("""You keep moving along the path, but you know you're not alone.
-    The fog is cool on your skin and you still feel the stare from before.
-    You make to to the clearing. You sense you are being hunted.
-
-    If you stay out in the open, a battle is inevitable, but you don't
-    see anywhere to take shelter.
-
-    Knowing a battle is inevitable, you:
+    Knowing that battle is inevitable, you:
 
     1. Hunt for enemies
     2. Scavenge
@@ -749,20 +711,184 @@ def story_arc_3():
     4. Shop
     5. View your stats
     6. View your inventory
-    7. Look in the direction you feel the stare
+    7. Attack the wolf from above
     0. Quit the game
 
     1 / 2 / 3 / 4 / 5 / 6 / 7:
 
+    +-----------+--------------+-------+-------------+
     """)
 
     path = input()
 
     if path == "7":
-        story_arc_4()
+        print("You decided attack the wolf.")
+        input("\nPress Enter to continue...")
+        story_arc_6()
     else:
         player_controls(path)
-        story_arc_3()
+        story_arc_5()
+
+
+def story_arc_4_cave():
+    """
+    story_arc_4_cave; dictates what happens in the cave
+    """
+    clear_console()
+
+    print((UND_L + "STORY ARC 4 - CAVE\n" + END_S).center(80))
+
+    print("""
+    You continue on, breaking a sweat from manuvering the dark cave.
+    The feeling of being followed is now complemented by sounds
+    of something heavy scraping the cave floor.
+
+    You see an opening and decide...
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Exit the cave
+    0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
+    +-----------+--------------+-------+-------------+
+    """)
+
+    path = input()
+
+    if path == "7":
+        print("You decided to exit the cave.")
+        input("\nPress Enter to continue...")
+        story_arc_5()
+    else:
+        player_controls(path)
+        story_arc_4_cave()
+
+
+def story_arc_3_cave():
+    """
+    story_arc_3_cave; dictates what happens in the cave
+    """
+    clear_console()
+
+    print((UND_L + "STORY ARC 3 - CAVE\n" + END_S).center(80))
+
+    print("""
+    You make your way to the cave. At first, it is easy to traverse.
+    As you progress it becomes much darker and you regret your choice.
+    And still...you haven't escaped the feeling you are being followed.
+
+    Taking a moment to rest and gather yourself, you decide to...
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Continue through the cave
+    0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
+    +-----------+--------------+-------+-------------+
+    """)
+
+    path = input()
+
+    if path == "7":
+        print("You decided to continue through the cave.")
+        input("\nPress Enter to continue...")
+        story_arc_4_cave()
+    else:
+        player_controls(path)
+        story_arc_3_cave()
+
+
+def story_arc_4_wood():
+    """
+    story_arc_4_wood(); dictates what happens in the woods
+    """
+    clear_console()
+
+    print((UND_L + "STORY ARC 4 - WOODS\n" + END_S).center(80))
+
+    print("""
+    You continue on, breaking a sweat from manuvering the woods.
+    The feeling of being followed is now complemented by sounds
+    of something heavy breaking branches and rustling against the
+    forest floor.
+
+    You see an opening and decide...
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Exit the woods
+    0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
+    +-----------+--------------+-------+-------------+
+    """)
+
+    path = input()
+
+    if path == "7":
+        print("You decided to exit the woods.")
+        input("\nPress Enter to continue...")
+        story_arc_5()
+    else:
+        player_controls(path)
+        story_arc_4_wood()
+
+
+def story_arc_3_wood():
+    """
+    story_arc_3_wood; dictates what happens in the woods
+    """
+    clear_console()
+
+    print((UND_L + "STORY ARC 3 - WOODS\n" + END_S).center(80))
+
+    print("""
+    You make your way to the woods. At first, it is easy to traverse.
+    As you progress and the foliage thickens, you regret your choice.
+    And still...you haven't escaped the feeling you are being followed.
+
+    Taking a moment to rest and gather yourself, you decide to...
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Continue through the woods
+    0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
+    +-----------+--------------+-------+-------------+
+    """)
+
+    path = input()
+
+    if path == "7":
+        print("You decided to continue through the woods.")
+        input("\nPress Enter to continue...")
+        story_arc_4_wood()
+    else:
+        player_controls(path)
+        story_arc_3_wood()
 
 
 def story_arc_2():
@@ -779,13 +905,11 @@ def story_arc_2():
     You can't help but feel that through the thick fog...someone...
     ...or something...is watching you.
 
-    You trip on something in the dark and you can feel your heart skip.
-    You look to see what it was and you find human remains.
-    You pick through the remains and decide to take one of the following:
+    You arrive at a fork in the path.
+    If you go left, you will enter a cave.
+    If you go right, you will enter a forest.
 
-    Sword
-    Axe
-    Spear
+    Considering the feeling that you're being watched you decide to...
 
     1. Hunt for enemies
     2. Scavenge
@@ -793,39 +917,23 @@ def story_arc_2():
     4. Shop
     5. View your stats
     6. View your inventory
-    7. Select the Sword
-    8. Select the Axe
-    9. Select the Spear
+    7. Head into the cave
+    8. Head into the woods
     0. Quit the game
 
-    1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9:
+    1 / 2 / 3 / 4 / 5 / 6 / 7 / 8:
 
+    +-----------+--------------+-------+-------------+
     """)
 
     path = input()
 
     if path == "7":
-        STATS.itm = "Sword"
-        STATS.atk += 50
-        print("\nYou picked the sword, your attack improved by 50.")
-        input("\nPress Enter to move to the next area...")
-        story_arc_3()
+        input("\n...'enter' the cave.")
+        story_arc_3_cave()
     elif path == "8":
-        STATS.itm = "Axe"
-        STATS.atk += 100
-        STATS.spd -= 2
-        print("\nYou picked up the axe, your attack improves by 100.")
-        print("\nThe axe feels heavy and your speed decreases by 1.")
-        input("\nPress Enter to move to the next area...")
-        story_arc_3()
-    elif path == "9":
-        STATS.itm = "Spear"
-        STATS.atk += 25
-        STATS.spd += 2
-        print("\nYou picked up the speak, your attack improves by 25.")
-        print("\nThe spear is light and your speed improves by 2.")
-        input("\nPress Enter to move to the next area...")
-        story_arc_3()
+        input("\n...'enter' the woods.")
+        story_arc_3_wood()
     else:
         player_controls(path)
         story_arc_2()
@@ -857,6 +965,7 @@ def story_arc_1():
 
     1 / 2 / 3 / 4 / 5 / 6 / 7:
 
+    +-----------+--------------+-------+-------------+
     """)
 
     path = input()
@@ -929,27 +1038,83 @@ def confirm_choice():
     """
     clear_console()
 
-    print(STATS.name + ", you wake up next to a dying fire.")
-    time.sleep(1)
-    print("\nIt's cold and dark. You look around and can't see anything...")
-    time.sleep(1)
-    print("\n...or for that matter...remember anything...except...\n")
-    time.sleep(1)
+    print("With your " + (STATS.itm).lower() +
+          " in hand, you remember the following:\n")
 
-    while True:
+    STATS.full_stats()
+    confirm = input("\nIs this how your story begins? (Yes / No) ").lower()
 
-        STATS.full_stats()
-        confirm = input("\nIs this how your story begins? (Yes / No) ").lower()
+    if confirm == "yes":
+        story_arc_1()
+    elif confirm == "no":
+        player_job_selection()
+    else:
+        print("\nPlease make a valid choice.\n")
+        input("Press Enter to continue...")
+        confirm_choice()
 
-        if confirm == "yes":
-            story_arc_1()
-            break
-        elif confirm == "no":
-            player_job_selection()
-            break
-        else:
-            clear_console()
-            print("Please make a valid choice.")
+
+def weapon_choice():
+    """
+    allows the player to select a weapon, adds to player stats
+    """
+    clear_console()
+
+    print("""
+    It's cold and dark. You look around and can't see anything...
+
+    ...or for that matter...really remember anything...
+
+    After a few moments, the haze of sleep begins to clear.
+
+    You happen to remember you were carrying a...
+
+    Sword
+    Axe
+    Spear
+
+    1. Select the Sword
+    2. Select the Axe
+    3. Select the Spear
+    0. Quit the game
+
+    1 / 2 / 3 / 0 :
+    """)
+
+    path = input()
+
+    if path == "1":
+        STATS.itm = "Sword"
+        STATS.atk += 50
+        print("\nYou picked the sword, your attack improved by 50.")
+        input("\nPress Enter to continue...")
+        confirm_choice()
+    elif path == "2":
+        STATS.itm = "Axe"
+        STATS.atk += 100
+        STATS.spd -= 2
+        print("\nYou picked up the axe, your attack improves by 100.")
+        print("\nThe axe feels heavy and your speed decreases by 1.")
+        input("\nPress Enter to continue...")
+        confirm_choice()
+    elif path == "3":
+        STATS.itm = "Spear"
+        STATS.atk += 25
+        STATS.spd += 2
+        print("\nYou picked up the speak, your attack improves by 25.")
+        print("\nThe spear is light and your speed improves by 2.")
+        input("\nPress Enter to continue...")
+        confirm_choice()
+    elif path == "0":
+        clear_console()
+        print("Exiting program...")
+        time.sleep(2)
+        clear_console()
+        sys.exit()
+    else:
+        print("\nPlease make a valid choice.\n")
+        input("Press Enter to continue...")
+        weapon_choice()
 
 
 def player_job_selection():
@@ -961,6 +1126,13 @@ def player_job_selection():
     global STATS
 
     print("What class would you like to be?")
+    print("""
+    - Warriors have high HEALTH, low MAGIC, high ATTACK and medium SPEED.
+
+    - Assassins have medium HEALTH, MAGIC, and ATTACK, but high SPEED.
+
+    - Mages have low HEALTH, high MAGIC, low ATTACK and low SPEED.
+    """)
     player_choice = input("(warrior / assassin / mage) ").lower()
 
     if player_choice == "warrior":
@@ -968,27 +1140,24 @@ def player_job_selection():
         pjob = "Warrior"
         STATS = PlayerJob(pname, 1, 0, 600, pjob, "None",
                           300, 300, 100, 100, 200, 100, 150)
-        confirm_choice()
-
+        weapon_choice()
     elif player_choice == "assassin":
         pname = input("\nWhat is your name, assassin? ")
         pjob = "Assassin"
         STATS = PlayerJob(pname, 1, 0, 1000, pjob, "None",
                           200, 200, 200, 200, 150, 150, 200)
-        confirm_choice()
-
+        weapon_choice()
     elif player_choice == "mage":
         pname = input("\nWhat is your name, mage? ")
         pjob = "Mage"
         STATS = PlayerJob(pname, 1, 0, 200, pjob, "None",
                           100, 100, 300, 300, 100, 200, 100)
-        confirm_choice()
-
+        weapon_choice()
     else:
         print("\nPlease make a valid choice: \n")
+        input("Press Enter to continue...")
         player_job_selection()
 
 
 while True:
-
     player_job_selection()
