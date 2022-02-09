@@ -2,11 +2,9 @@ import random
 import time
 import sys
 import os
-# https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
-# https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
-# https://pypi.org/project/prettytable/
 from prettytable import PrettyTable
 from colorama import Fore, Style
+
 
 player_itm_inv = {"Potion": 0, "Ether": 0}
 
@@ -72,10 +70,8 @@ class EnemyType():
 
         remaining_hp = "¦" * current_unit
         empty_hp = " " * remaining_health
-        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
 
         print("\nEnemy HP:    {" + remaining_hp + empty_hp + "}")
-        # print("     " + percent)
 
     def attack(self):
         """
@@ -90,13 +86,14 @@ class PlayerJob():
     """
     template for player types, object methods for attack
     """
-    def __init__(self, name, lvl, exp, mny, job, itm,
+    def __init__(self, name, lvl, exp, exc, mny, job, itm,
                  h_p, mhp, m_p, mmp, atk, blk, spd):
         self.name = name
         self.job = job
         self.lvl = lvl
         self.exp = exp
         self.mny = mny
+        self.exc = exc
         self.itm = itm
         self.h_p = h_p
         self.mhp = mhp
@@ -137,24 +134,42 @@ class PlayerJob():
         """
         calculation for the player to level up
         """
-        self.exp += EST.exp
-        experience_required = 500 * self.lvl
-        current_experience = self.exp - experience_required
-        mult = (self.lvl - (self.lvl * .975)) + 1
+        def levelup_stats():
 
-        if self.exp > experience_required:
+            cur_exp = self.exp  # current experience
 
-            print("You leveled up!")
+            exp_req = self.exc * self.lvl  # experinece required to reach the next level
 
-            self.lvl += 1
-            self.exp = current_experience
-            self.h_p = self.h_p * mult
-            self.mhp = self.mhp * mult
-            self.m_p = self.m_p * mult
-            self.mmp = self.mmp * mult
-            self.atk = self.atk * mult
-            self.blk = self.blk * mult
-            self.spd = self.spd * mult
+            exp_gnd = EST.exp  # experience gained from battle
+
+            com_exp = cur_exp + exp_gnd  # current experience plus experience gained from battle
+
+            if com_exp >= exp_req:  # if experience remaining after single levelup is greater than or equal to 0
+
+                mult = (self.lvl - (self.lvl * .975)) + 1
+
+                self.lvl += 1
+                exp_bal = com_exp - exp_req  # remaining experience, combined experience minus experience required
+                self.exp = exp_bal
+                EST.exp = 0
+                self.h_p = self.h_p * mult
+                self.mhp = self.mhp * mult
+                self.m_p = self.m_p * mult
+                self.mmp = self.mmp * mult
+                self.atk = self.atk * mult
+                self.blk = self.blk * mult
+                self.spd = self.spd * mult
+
+                levelup_stats()
+
+            else:
+
+                exp_bal = com_exp
+                self.exp = exp_bal
+
+        levelup_stats()
+
+        print("You reached level " + str(STATS.lvl))
 
     def health_bar(self):
         """
@@ -167,10 +182,8 @@ class PlayerJob():
 
         remaining_hp = "¦" * current_unit
         empty_hp = " " * remaining_health
-        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
 
         print("\nYour HP:     {" + remaining_hp + empty_hp + "}")
-        # print("     " + percent)
 
     def magic_bar(self):
         """
@@ -183,10 +196,8 @@ class PlayerJob():
 
         remaining_mp = "¦" * current_unit
         empty_mp = " " * remaining_magic
-        # percent = str(int((self.h_p/self.mhp)*100)) + "%"
 
         print("\nYour MP:     {" + remaining_mp + empty_mp + "}")
-        # print("     " + percent)
 
     def attack(self):
         """
@@ -201,11 +212,13 @@ class PlayerJob():
         calculation and condition for healing
         """
         if self.m_p > 24:
+
             self.m_p -= 25
             self.h_p += 200
             print("\nYou used 25 MP to heal 200 HP.")
 
             if self.h_p > self.mhp:
+
                 self.h_p = self.mhp
 
         else:
@@ -244,29 +257,38 @@ def shop():
         choice = input("1 / 2:\n\n")
 
         if choice == "1":
+
             if STATS.mny >= 100:
                 print("\nYou bought a potion for 100 coins.")
                 STATS.mny -= 100
                 player_inventory_add(choice)
                 input("\nPress Enter to continue...")
+
             else:
                 print("\nYou don't have enough money!")
                 input("\nPress Enter to continue...")
 
         elif choice == "2":
+
             if STATS.mny >= 200:
+
                 print("\nYou bought an ether for 200 coins.")
                 STATS.mny -= 200
                 player_inventory_add(choice)
                 input("\nPress Enter to continue...")
+
             else:
+
                 print("\nYou don't have enough money!")
                 input("\nPress Enter to continue...")
+
         elif choice == "0":
+
             print("\nExiting the store...")
             input("\nPress Enter to continue...")
             player_controls("6")
             break
+
         else:
             print("\nPlease make a valid choice.")
             input("\nPress Enter to continue...")
@@ -278,6 +300,7 @@ def player_inventory_add(choice):
     """
     if choice == "1":
         player_itm_inv["Potion"] += 1
+
     elif choice == "2":
         player_itm_inv["Ether"] += 1
 
@@ -298,38 +321,54 @@ def player_inventory_use():
     decision = input("\nWhich item would you like to use? ")
 
     if decision == "1":
+
         if player_itm_inv["Potion"] > 0:
+
             print("\nYou used a potion, hp restored by 200.")
             player_itm_inv["Potion"] -= 1
             STATS.h_p += 200
+
             if STATS.h_p > STATS.mhp:
+
                 STATS.h_p = STATS.mhp
+
             input("\nPress Enter to continue...")
             player_inventory_use()
+
         else:
+
             print("\nYou don't have any potions in stock!")
             input("\nPress Enter to continue...")
             player_inventory_use()
 
     elif decision == "2":
+
         if player_itm_inv["Ether"] > 0:
+
             print("\nYou used an ether, mp restored by 100.")
             player_itm_inv["Ether"] -= 1
             STATS.m_p += 100
+
             if STATS.m_p > STATS.mmp:
+
                 STATS.m_p = STATS.mmp
+
             input("\nPress Enter to continue...")
             player_inventory_use()
+
         else:
+
             print("\nYou don't have any ether in stock!")
             input("\nPress Enter to continue...")
             player_inventory_use()
 
     elif decision == "0":
+
         clear_console()
         display_inventory()
 
     else:
+
         clear_console()
         print("\nPlease make a valid choice.")
         input("\nPress Enter to continue...")
@@ -354,11 +393,16 @@ def display_inventory():
     choice = input("(yes / no) ").lower()
 
     if choice == "yes":
+
         clear_console()
         player_inventory_use()
+
     elif choice == "no":
+
         clear_console()
+
     else:
+
         clear_console()
         print("Please make a valid choice.")
         input("\nPress Enter to continue...")
@@ -412,6 +456,7 @@ def clear_console():
     command = 'clear'
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
+
     os.system(command)
 
 
@@ -424,19 +469,22 @@ def scavenge():
     if chance == 0:
 
         coin = random.randint(0, 100)
-
         if coin == 0:
+
             print("\nYou found nothing.")
 
         elif coin == 1:
+
             print("\nYou found 1 coin!")
             STATS.mny += coin
 
         else:
+
             print("\nYou found " + str(coin) + " coins!")
             STATS.mny += coin
 
     else:
+
         print("\nYou found nothing.")
 
 
@@ -451,10 +499,12 @@ def item_money_drop():
         item_type = random.randint(0, 1)
 
         if item_type == 0:
+
             print("The enemy dropped a potion!")
             player_itm_inv["Potion"] += 1
 
         elif item_type == 1:
+
             print("\nThe enemy dropped an ether!")
             player_itm_inv["Ether"] += 1
 
@@ -493,9 +543,7 @@ def enemy_action():
     if EST.h_p > 0 and STATS.h_p > 0:
 
         EST.attack()
-
         combat_menu()
-
         print("The enemy performed a physical attack!")
         time.sleep(1)
         print("\nYou took " + str(round(EST.atk)) + " damage.")
@@ -503,6 +551,7 @@ def enemy_action():
         player_action()
 
     elif EST.h_p <= 0 and STATS.h_p > 0:
+
         print("\nYou defeated the enemy!")
         time.sleep(2)
         print("\nYou gained " + str(round(EST.exp)) + " exp.")
@@ -522,15 +571,12 @@ def player_action():
     if STATS.h_p > 0 and EST.h_p > 0:
 
         print("1 / 2 / 3")
-
         player_choice = input("\nWhat will you do? \n\n")
 
         if player_choice == "1":
 
             STATS.attack()
-
             combat_menu()
-
             print("You performed a physical attack!")
             time.sleep(1)
             print("\nThe enemy took " + str(round(STATS.atk)) + " damage.")
@@ -540,9 +586,7 @@ def player_action():
         elif player_choice == "2":
 
             STATS.heal()
-
             combat_menu()
-
             print("You healed 50 HP!")
             time.sleep(2)
             enemy_action()
@@ -550,7 +594,6 @@ def player_action():
         elif player_choice == "3":
 
             display_inventory()
-
             enemy_action()
 
         else:
@@ -561,21 +604,28 @@ def player_action():
             player_action()
 
     elif STATS.h_p <= 0:
+
         print("You were felled by the enemy!")
         print("\nGAME OVER")
 
         while True:
 
             play_again = input("\nPlay again? (Yes / No) ").lower()
+
             if play_again == "yes":
+
                 player_job_selection()
+
             elif play_again == "no":
+
                 clear_console()
                 print("Exiting program...")
                 time.sleep(2)
                 clear_console()
                 sys.exit()
+
             else:
+
                 clear_console()
                 print("\nPlease make a valid choice.")
 
@@ -589,11 +639,14 @@ def combat():
     combat_menu()
 
     if EST.spd < STATS.spd:
+
         print("You spotted the enemy before they spotted you!")
         print("You attack first!")
         input("\nPress Enter to continue...")
         player_action()
+
     else:
+
         print("The enemy attacks first!")
         input("\nPress Enter to continue...")
         enemy_action()
@@ -610,17 +663,22 @@ def enemy_approaches():
     mult = ((level - (level * .95)) + 1)
 
     if enemy_type == 1:
-        EST = EnemyType("Goblin", level, 458*mult, 300*mult, 300*mult,
+
+        EST = EnemyType("Goblin", level, 2500*mult, 300*mult, 300*mult,
                         100*mult, 100*mult, 50*mult, 5*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
+
     elif enemy_type == 2:
-        EST = EnemyType("Witch", level, 454*mult, 100*mult, 100*mult,
+
+        EST = EnemyType("Witch", level, 2500*mult, 100*mult, 100*mult,
                         300*mult, 300*mult, 50*mult, 1*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
+
     elif enemy_type == 3:
-        EST = EnemyType("Striga", level, 456*mult, 200*mult, 200*mult,
+
+        EST = EnemyType("Striga", level, 2500*mult, 200*mult, 200*mult,
                         200*mult, 200*mult, 50*mult, 3*mult, 3*mult)
         print("You encountered a " + EST.job)
         combat()
@@ -633,8 +691,11 @@ def enemy_encounter():
     encounter_true = random.randint(2, 2)
 
     if encounter_true == 2:
+
         enemy_approaches()
+
     elif encounter_true == 1:
+
         clear_console()
         print("\nYou did not encounter an enemy.")
 
@@ -648,22 +709,28 @@ def end_game():
     print((UND_L + "END\n" + END_S).center(80))
 
     print("""
-    Your journey was long and you're exhausted. 
-    Perhaps now would be a godo time to rest and recover.    
+    Your journey was long and you're exhausted.
+    Perhaps now would be a godo time to rest and recover.
 
     Would you like to play again? (Yes / No)
     """)
 
     play_again = input().lower()
+
     if play_again == "yes":
+
         player_job_selection()
+
     elif play_again == "no":
+
         clear_console()
         print("Exiting program...")
         time.sleep(2)
         clear_console()
         sys.exit()
+
     else:
+
         clear_console()
         print("\nPlease make a valid choice.\n")
         input("Press Enter to continue...")
@@ -722,10 +789,13 @@ def story_arc_5():
     path = input()
 
     if path == "7":
+
         print("You decided attack the wolf.")
         input("\nPress Enter to continue...")
         story_arc_6()
+
     else:
+
         player_controls(path)
         story_arc_5()
 
@@ -762,10 +832,13 @@ def story_arc_4_cave():
     path = input()
 
     if path == "7":
+
         print("You decided to exit the cave.")
         input("\nPress Enter to continue...")
         story_arc_5()
+
     else:
+
         player_controls(path)
         story_arc_4_cave()
 
@@ -802,10 +875,13 @@ def story_arc_3_cave():
     path = input()
 
     if path == "7":
+
         print("You decided to continue through the cave.")
         input("\nPress Enter to continue...")
         story_arc_4_cave()
+
     else:
+
         player_controls(path)
         story_arc_3_cave()
 
@@ -843,10 +919,13 @@ def story_arc_4_wood():
     path = input()
 
     if path == "7":
+
         print("You decided to exit the woods.")
         input("\nPress Enter to continue...")
         story_arc_5()
+
     else:
+
         player_controls(path)
         story_arc_4_wood()
 
@@ -883,10 +962,13 @@ def story_arc_3_wood():
     path = input()
 
     if path == "7":
+
         print("You decided to continue through the woods.")
         input("\nPress Enter to continue...")
         story_arc_4_wood()
+
     else:
+
         player_controls(path)
         story_arc_3_wood()
 
@@ -929,12 +1011,17 @@ def story_arc_2():
     path = input()
 
     if path == "7":
+
         input("\n...'enter' the cave.")
         story_arc_3_cave()
+
     elif path == "8":
+
         input("\n...'enter' the woods.")
         story_arc_3_wood()
+
     else:
+
         player_controls(path)
         story_arc_2()
 
@@ -971,8 +1058,11 @@ def story_arc_1():
     path = input()
 
     if path == "7":
+
         story_arc_2()
+
     else:
+
         player_controls(path)
         story_arc_1()
 
@@ -984,50 +1074,72 @@ def player_controls(path):
     if STATS.h_p > 0:
 
         if path == "1":
+
             enemy_encounter()
+
         elif path == "2":
+
             scavenge()
             input("\nPress Enter to continue...")
+
         elif path == "3":
+
             STATS.heal()
             input("\nPress Enter to continue...")
+
         elif path == "4":
+
             shop()
+
         elif path == "5":
+
             clear_console()
             STATS.full_stats()
             input("\nPress Enter to exit the stats menu...")
+
         elif path == "6":
+
             clear_console()
             print("\nYou viewed your inventory.\n")
             display_inventory()
+
         elif path == "0":
+
             clear_console()
             print("Exiting program...")
             time.sleep(2)
             clear_console()
             sys.exit()
+
         else:
+
             clear_console()
             print("\nPlease make a valid choice.")
             input("\nPress Enter to continue...")
 
     elif STATS.h_p < 0:
+
         print("\nYou were felled by the enemy!")
         print("\nGAME OVER")
 
         while True:
 
             play_again = input("\nPlay again? (Yes / No) ").lower()
+
             if play_again == "yes":
+
                 player_job_selection()
+
             elif play_again == "no":
+
                 clear_console()
                 print("Exiting program...")
                 time.sleep(2)
                 clear_console()
                 sys.exit()
+
             else:
+
                 clear_console()
                 print("\nPlease make a valid choice.")
 
@@ -1045,10 +1157,15 @@ def confirm_choice():
     confirm = input("\nIs this how your story begins? (Yes / No) ").lower()
 
     if confirm == "yes":
+
         story_arc_1()
+
     elif confirm == "no":
+
         player_job_selection()
+
     else:
+
         print("\nPlease make a valid choice.\n")
         input("Press Enter to continue...")
         confirm_choice()
@@ -1084,12 +1201,15 @@ def weapon_choice():
     path = input()
 
     if path == "1":
+
         STATS.itm = "Sword"
         STATS.atk += 50
         print("\nYou picked the sword, your attack improved by 50.")
         input("\nPress Enter to continue...")
         confirm_choice()
+
     elif path == "2":
+
         STATS.itm = "Axe"
         STATS.atk += 100
         STATS.spd -= 2
@@ -1097,7 +1217,9 @@ def weapon_choice():
         print("\nThe axe feels heavy and your speed decreases by 1.")
         input("\nPress Enter to continue...")
         confirm_choice()
+
     elif path == "3":
+
         STATS.itm = "Spear"
         STATS.atk += 25
         STATS.spd += 2
@@ -1105,13 +1227,17 @@ def weapon_choice():
         print("\nThe spear is light and your speed improves by 2.")
         input("\nPress Enter to continue...")
         confirm_choice()
+
     elif path == "0":
+
         clear_console()
         print("Exiting program...")
         time.sleep(2)
         clear_console()
         sys.exit()
+
     else:
+
         print("\nPlease make a valid choice.\n")
         input("Press Enter to continue...")
         weapon_choice()
@@ -1136,28 +1262,36 @@ def player_job_selection():
     player_choice = input("(warrior / assassin / mage) ").lower()
 
     if player_choice == "warrior":
+
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
-        STATS = PlayerJob(pname, 1, 0, 600, pjob, "None",
+        STATS = PlayerJob(pname, 1, 0, 500, 600, pjob, "None",
                           300, 300, 100, 100, 200, 100, 150)
         weapon_choice()
+
     elif player_choice == "assassin":
+
         pname = input("\nWhat is your name, assassin? ")
         pjob = "Assassin"
-        STATS = PlayerJob(pname, 1, 0, 1000, pjob, "None",
+        STATS = PlayerJob(pname, 1, 0, 500, 1000, pjob, "None",
                           200, 200, 200, 200, 150, 150, 200)
         weapon_choice()
+
     elif player_choice == "mage":
+
         pname = input("\nWhat is your name, mage? ")
         pjob = "Mage"
-        STATS = PlayerJob(pname, 1, 0, 200, pjob, "None",
+        STATS = PlayerJob(pname, 1, 0, 500, 200, pjob, "None",
                           100, 100, 300, 300, 100, 200, 100)
         weapon_choice()
+
     else:
+
         print("\nPlease make a valid choice: \n")
         input("Press Enter to continue...")
         player_job_selection()
 
 
 while True:
+
     player_job_selection()
