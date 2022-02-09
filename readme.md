@@ -16,7 +16,6 @@
     2. [User Stories](#user-stories)
     3. [Strategy](#strategy)
     4. [Scope](#scope)
-    5. [Structure](#structure)
 3. [Features](#features)
     1. [Current Features](#current-features)
     2. [Future Features](#future-features)
@@ -73,12 +72,6 @@ Create an engaging text-based role playing fantasy adventure game where a player
 7. Levelling up. 
 8. Ability to view stats. 
 
-
-## Structure 
-<!-- normally this would include header, footer etc., perhaps talk about the story structure or map structure/ -->
-
-<!-- The website was described with a structure in mind to focus on the gameplay elements, such as the Simon Game itself, high scores and instructions. There are no background images and the font style is kept consistent to not distract from the core elements of the website. -->
-
 # Features
 
 ## Current Features
@@ -101,6 +94,7 @@ Create an engaging text-based role playing fantasy adventure game where a player
 4. Status effects, such as poison, paralysis, etc. 
 5. More interactions with the environment, such as eating foods, uncovering items. 
 6. An in game map. 
+7. Incorporation of more class objects, such as magic, defense, etc.
 
 # Technologies
 
@@ -120,6 +114,23 @@ Create an engaging text-based role playing fantasy adventure game where a player
 
 ## Code Tests
 
+### PEP8 Online
+
+Code passes through [PEP8 Online](http://pep8online.com/) with no errors, warnings or issues.
+
+### Manual Testing
+
+- Invalid user input.
+    - At all stages of the program, various incorrect user inputs were tested against. For example, random strings, numbers or randomly pressing enter.
+    - All invalid user input is presented with 'please make a valid choice' and the program will no proceed until a valid choice is made. 
+
+- All game options work.
+    - Being an role playing game, there are several options to make at each stage in the story. Each of those options are mapped to different functions. 
+    - At each stage in the game, each game option was tested to determine that it would behave as expected / predicted. 
+
+- All functions work as expected. 
+    - There are many functions that manipulate various class objects and story decisions. All functions behave as expected. 
+
 ### Python Tests
 
 ## User Tests
@@ -135,6 +146,10 @@ Create an engaging text-based role playing fantasy adventure game where a player
 - 29/01/2022 (IDENTIFIED), 30/01/2022 (RESOLVED) - The player can heal over their original hp amount. There is no hp cap, so the player could give themselves infinit amounts of hp over the original hp level. Resolved by introducing a max hp and max mp variable to behave as a cap. The max variables level up with the other characters, but remain unaffected by potions, healing, etc. In this way, they were used as a reference as to what the max hp and mp should be per level. 
 
 - 29/01/2022 (IDENTIFIED & RESOLVED) - The player would gain a level after each battle. Resolved by setting the exp back to 0 at each level and adding the difference. 
+
+- 08/02/2022 (IDENTIFIED), 09/02/2022 (RESOLVED) - Regardless of how much experience the player earns, they will only go up one level. For example, if to reach level 4 required 4,000 experience and in a single encounter the player gains 4,000 experience, they will only go from level 1 to level 2. Resolved by introducing variables to manage the experience gained. For example, current experience, experience gained, combined experience, experience requirement and remaining experience after levelling up. The fucntion calculates how much experience is required for a single levelup, subtracts that from the total combined experience and loops it until the combined experience is less than the experience required. 
+
+- 09/02/2022, - While the program is running through the enemy's turn, the user can input, which can result in prompting the user to make a valid choice when they take their turn. While the incorrect input is handled, it can be confusing to the player. 
 
 # Deployment
 
@@ -165,16 +180,16 @@ In order to clone the repository, you must:
 To deploy your project locally using Gitpod, do the following:
 
 1. Follow the above steps to either clone or fork the repository. 
-2. Download the gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
+2. Download the Gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
 3. Once in your own copy of the repository, click the green gitpod button to launch the project. 
 4. Once loaded, install PrettyTable by typing 'pip install PrettyTable' in the terminal.
 4. Then, in the terminal, type 'python3 run.py' and press enter. 
 5. The programme will now run locally.
 
-## Remote Deployment via Heroku
+## Remote Deployment
 
 1. Follow the above steps to either clone or fork the repository.
-2. Download the gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
+2. Download the Gitpod [extension](https://www.gitpod.io/docs/browser-extension/).
 3. Once in your own copy of the repository, click the green gitpod button to launch the project. 
 4. If you add any dependencies to the project, make sure that you create a requirements file. 
     - For this particular project, PrettyTable and Colorama were used. 
