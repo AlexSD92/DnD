@@ -5,7 +5,6 @@ import os
 from prettytable import PrettyTable
 from colorama import Fore, Style
 
-
 player_itm_inv = {"Potion": 0, "Ether": 0}
 
 
@@ -136,20 +135,20 @@ class PlayerJob():
         """
         def levelup_stats():
 
-            cur_exp = self.exp  # current experience
+            cur_exp = self.exp
 
-            exp_req = self.exc * self.lvl  # experinece required to reach the next level
+            exp_req = self.exc * self.lvl
 
-            exp_gnd = EST.exp  # experience gained from battle
+            exp_gnd = EST.exp
 
-            com_exp = cur_exp + exp_gnd  # current experience plus experience gained from battle
+            com_exp = cur_exp + exp_gnd
 
-            if com_exp >= exp_req:  # if experience remaining after single levelup is greater than or equal to 0
+            if com_exp >= exp_req:
 
                 mult = (self.lvl - (self.lvl * .975)) + 1
 
                 self.lvl += 1
-                exp_bal = com_exp - exp_req  # remaining experience, combined experience minus experience required
+                exp_bal = com_exp - exp_req
                 self.exp = exp_bal
                 EST.exp = 0
                 self.h_p = self.h_p * mult
@@ -658,30 +657,33 @@ def enemy_approaches():
     """
     global EST
 
-    enemy_type = random.randint(1, 1)
-    level = STATS.lvl + random.randint(1, 5)
+    enemy_type = random.randint(1, 3)
+    level = STATS.lvl + random.randint(-5, 5)
+
+    if level <= 0:
+
+        level = 1
+
     mult = ((level - (level * .95)) + 1)
 
     if enemy_type == 1:
 
-        EST = EnemyType("Goblin", level, 2500*mult, 300*mult, 300*mult,
-                        100*mult, 100*mult, 50*mult, 5*mult, 3*mult)
+        EST = EnemyType("Goblin", level, 1000*mult, 600*mult, 300*mult,
+                        100*mult, 100*mult, 200*mult, 100*mult, 150*mult)
         print("You encountered a " + EST.job)
         combat()
 
     elif enemy_type == 2:
 
-        EST = EnemyType("Witch", level, 2500*mult, 100*mult, 100*mult,
-                        300*mult, 300*mult, 50*mult, 1*mult, 3*mult)
+        EST = EnemyType("Witch", level, 1000*mult, 300*mult, 100*mult,
+                        300*mult, 300*mult, 100*mult, 200*mult, 100*mult)
         print("You encountered a " + EST.job)
         combat()
 
     elif enemy_type == 3:
 
-        EST = EnemyType("Striga", level, 2500*mult, 200*mult, 200*mult,
-                        200*mult, 200*mult, 50*mult, 3*mult, 3*mult)
-        print("You encountered a " + EST.job)
-        combat()
+        EST = EnemyType("Striga", level, 1000*mult, 450*mult, 200*mult,
+                        200*mult, 200*mult, 150*mult, 150*mult, 200*mult)
 
 
 def enemy_encounter():
@@ -709,31 +711,37 @@ def end_game():
     print((UND_L + "END\n" + END_S).center(80))
 
     print("""
-    Your journey was long and you're exhausted.
-    Perhaps now would be a godo time to rest and recover.
+    That was a long battle. Although you're exhausted, you also feel energised
+    from you're victory. Though it might be a good time to rest, perhaps you
+    should make use of your energy.
 
-    Would you like to play again? (Yes / No)
+    You decide to...
+
+    1. Hunt for enemies
+    2. Scavenge
+    3. Heal
+    4. Shop
+    5. View your stats
+    6. View your inventory
+    7. Start a new game
+    0. Quit the game
+
+    1 / 2 / 3 / 4 / 5 / 6 / 7:
+
+    +-----------+--------------+-------+-------------+
     """)
 
-    play_again = input().lower()
+    path = input()
 
-    if play_again == "yes":
+    if path == "7":
 
-        player_job_selection()
-
-    elif play_again == "no":
-
-        clear_console()
-        print("Exiting program...")
+        print("New game starting...")
         time.sleep(2)
-        clear_console()
-        sys.exit()
+        player_job_selection()
 
     else:
 
-        clear_console()
-        print("\nPlease make a valid choice.\n")
-        input("Press Enter to continue...")
+        player_controls(path)
         end_game()
 
 
@@ -744,7 +752,7 @@ def story_arc_6():
     clear_console()
 
     global EST
-    EST = EnemyType("Dire Wolf", 30, 10000, 1000, 1000, 300, 300, 20, 20, 10)
+    EST = EnemyType("Dire Wolf", 30, 9000, 4000, 4000, 200, 200, 400, 400, 400)
     combat()
 
     end_game()
@@ -1266,7 +1274,7 @@ def player_job_selection():
         pname = input("\nWhat is your name, warrior? ")
         pjob = "Warrior"
         STATS = PlayerJob(pname, 1, 0, 500, 600, pjob, "None",
-                          300, 300, 100, 100, 200, 100, 150)
+                          600, 600, 100, 100, 200, 100, 150)
         weapon_choice()
 
     elif player_choice == "assassin":
@@ -1274,7 +1282,7 @@ def player_job_selection():
         pname = input("\nWhat is your name, assassin? ")
         pjob = "Assassin"
         STATS = PlayerJob(pname, 1, 0, 500, 1000, pjob, "None",
-                          200, 200, 200, 200, 150, 150, 200)
+                          600, 600, 200, 200, 150, 150, 200)
         weapon_choice()
 
     elif player_choice == "mage":
@@ -1282,7 +1290,7 @@ def player_job_selection():
         pname = input("\nWhat is your name, mage? ")
         pjob = "Mage"
         STATS = PlayerJob(pname, 1, 0, 500, 200, pjob, "None",
-                          100, 100, 300, 300, 100, 200, 100)
+                          600, 600, 300, 300, 100, 200, 100)
         weapon_choice()
 
     else:
