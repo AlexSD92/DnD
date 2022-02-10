@@ -62,15 +62,15 @@ Create an engaging text-based role playing fantasy adventure game where a player
 
 ## Scope
 
-1. Give the player a choice in character class when they begin the game (warrior, mage, etc.).
-2. Include elements where the player has to manage their characters stats, such as health, magic power, etc.
-3. A combat mechanic. 
-4. Inventory management.
-6. Currency & shopping.
-5. Ability to pick up items.
-6. Ability to use items. 
-7. Levelling up. 
-8. Ability to view stats. 
+- Give the player a choice in character class when they begin the game (warrior, mage, etc.).
+- Include elements where the player has to manage their characters stats, such as health, magic power, etc.
+- A combat mechanic. 
+- Inventory management.
+- Currency & shopping.
+- Ability to pick up items.
+- Ability to use items. 
+- Levelling up. 
+- Ability to view stats. 
 
 # Features
 
@@ -131,15 +131,58 @@ Code passes through [PEP8 Online](http://pep8online.com/) with no errors, warnin
 - All functions work as expected. 
     - There are many functions that manipulate various class objects and story decisions. All functions behave as expected. 
 
+| Function | Handles Valid User Input | Handles Invalid User Input | Behaves as Expected |
+| --- | :---: | :---: | :---: |
+| player_job_selection | yes | yes | yes |
+| weapon_choice | yes | yes | yes |
+| confirm_choice | yes | yes | yes |
+| player_controls | yes | yes | yes |
+| story_arc_1 | yes | yes | yes |
+| story_arc_2 | yes | yes | yes |
+| story_arc_3_wood | yes | yes | yes |
+| story_arc_4_wood | yes | yes | yes |
+| story_arc_3_cave | yes | yes | yes |
+| story_arc_4_cave | yes | yes | yes |
+| story_arc_5 | yes | yes | yes |
+| story_arc_6 | yes | yes | yes |
+| end_game | yes | yes | yes |
+| enemy_encounter | N/A | N/A | yes |
+| enemy_approaches | N/A | N/A | yes |
+| combat | N/A | N/A | yes |
+| player_action | yes | yes | yes |
+| enemy_action | N/A | N/A | yes |
+| combat_menu | yes | yes | yes |
+| item_money_drop | N/A | N/A | yes |
+| scavenge | N/A | N/A | yes |
+| clear_console | N/A | N/A | yes |
+| combi_table | N/A | N/A | yes |
+| display_inventory | N/A | N/A | yes |
+| player_inventory_use | yes | yes | yes |
+| player_inventory_add | N/A | N/A | yes |
+| shop | yes | yes | yes |
+
+| **Class** / Method | Handles Valid User Input | Handles Invalid User Input | Behaves as Expected |
+| --- | :---: | :---: | :---: |
+| **EnemyType** | yes | yes | yes |
+| attack | N/A | N/A | yes |
+| **PlayerJob** | yes | yes | yes |
+| full_stats | N/A | N/A | yes |
+| levelup | N/A | N/A | yes |
+| health_bar | N/A | N/A | yes |
+| magic_bar | N/A | N/A | yes |
+| attack | N/A | N/A | yes |
+| heal | N/A | N/A | yes |
+| **FontStyle** | N/A | N/A | yes |
+
 ### Python Tests
 
 ## User Tests
 
 - First time user:
-    - Player launches the application and selects what class they would like to be. They also enter their characters name and confirm that they would like to proceed what they have selected. They then arrive at the first story arc, which introduces the player controls, such as hunting for enemies, scavenging for coin, etc. The player progresses through the story by selecting the options that trigger the next phase in the story.
+    - Player launches the application and set the game up by entering their name, selecting what class they would like to be and what weapon they would like to begin with. They then arrive at the first story arc, which introduces the player controls, such as hunting for enemies, scavenging for coin, etc. The player progresses through the story by selecting the options that trigger the next phase in the story.
 
 - Returning User:
-    - Player returns to the game and launches the application. Player selects a different class than the one they selected for their first playthrough. Throughout the story the character is forced to play in a different style because the class they selected has different attributes. They also make different choices throughout the game that they didn't make previously.
+    - Player returns to the game and launches the application. Player selects a different class and / or weapon than the one they selected for their first playthrough. Throughout the story the character is forced to play in a different style because the class they selected has different attributes. They also make different choices throughout the game that they didn't make previously.
 
 ## Bugs and Fixes
 
@@ -149,7 +192,7 @@ Code passes through [PEP8 Online](http://pep8online.com/) with no errors, warnin
 
 - 08/02/2022 (IDENTIFIED), 09/02/2022 (RESOLVED) - Regardless of how much experience the player earns, they will only go up one level. For example, if to reach level 4 required 4,000 experience and in a single encounter the player gains 4,000 experience, they will only go from level 1 to level 2. Resolved by introducing variables to manage the experience gained. For example, current experience, experience gained, combined experience, experience requirement and remaining experience after levelling up. The fucntion calculates how much experience is required for a single levelup, subtracts that from the total combined experience and loops it until the combined experience is less than the experience required. 
 
-- 09/02/2022, - While the program is running through the enemy's turn, the user can input, which can result in prompting the user to make a valid choice when they take their turn. While the incorrect input is handled, it can be confusing to the player. 
+- 09/02/2022 (IDENTIFIED) - While the program is running through the enemy's turn, the user can input, which can result in prompting the user to make a valid choice when they take their turn. While the incorrect input is handled, it can be confusing to the player. 
 
 # Deployment
 
