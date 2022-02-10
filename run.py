@@ -38,40 +38,6 @@ class EnemyType():
         self.blk = blk
         self.spd = spd
 
-    def full_stats(self):
-        """
-        prints full enemy stats
-        """
-        table = PrettyTable(["Attribute", "Value"])
-
-        table.add_row(["JOB", round(self.job)])
-        table.add_row(['LEVEL', round(self.lvl)])
-        table.add_row(['EXP', round(self.exp)])
-        table.add_row(['HEALTH', round(self.h_p)])
-        table.add_row(['MAGIC', round(self.m_p)])
-        table.add_row(['ATTACK', round(self.atk)])
-        table.add_row(['BLOCK', round(self.blk)])
-        table.add_row(['SPEED', round(self.spd)])
-
-        table.align["Attribute"] = "l"
-        table.align["Value"] = "r"
-
-        print(table)
-
-    def health_bar(self):
-        """
-        prints health bar
-        https://stackoverflow.com/questions/48035367/python-text-game-health-bar
-        """
-        unit_convert = int(self.mhp/100)
-        current_unit = int(self.h_p/unit_convert)
-        remaining_health = 100 - current_unit
-
-        remaining_hp = "¦" * current_unit
-        empty_hp = " " * remaining_health
-
-        print("\nEnemy HP:    {" + remaining_hp + empty_hp + "}")
-
     def attack(self):
         """
         calculation for attack
