@@ -45,16 +45,22 @@
 
 ## User Stories
 
-- First time user:
-    1. I would like to play a text-based adventure game.
-    2. I would like to play a fantasy game.
-    3. I would like to play a role playing game.
+I would like...
 
-- Returning User:
-    1. I would like to play the game again.
-    2. I would like to play through different choices. 
-    3. I would like to reach an alternative ending.
-    4. I would like to play again using an alternative class.
+- ...to be able to select between different classes.
+- ...to be able to input my character name. 
+- ...to be able to select between different weapons. 
+- ...my in game choices affect my stats. 
+- ...to be able to level up.
+- ...to encounter a variety of enemies.
+- ...to experience the story in different ways. 
+- ...to be able to purchase items from a shop. 
+- ...to be able to use items I have found or purchased.
+- ...to be able to heal myself.
+- ...to view my stats at any point in the story. 
+- ...to encounter enemies at any point in the story.
+- ...to fight a boss at some point in the story.
+- ...to quit the game at any point in the story. 
 
 ## Strategy
 
@@ -178,11 +184,38 @@ Code passes through [PEP8 Online](http://pep8online.com/) with no errors, warnin
 
 ## User Tests
 
-- First time user:
-    - Player launches the application and set the game up by entering their name, selecting what class they would like to be and what weapon they would like to begin with. They then arrive at the first story arc, which introduces the player controls, such as hunting for enemies, scavenging for coin, etc. The player progresses through the story by selecting the options that trigger the next phase in the story.
+### User Stories
 
-- Returning User:
-    - Player returns to the game and launches the application. Player selects a different class and / or weapon than the one they selected for their first playthrough. Throughout the story the character is forced to play in a different style because the class they selected has different attributes. They also make different choices throughout the game that they didn't make previously.
+I would like...
+
+- ...to be able to select between different classes.
+    - When player_job_selection is called, the player is given a choice between a warrior, assassin or mage class.
+- ...to be able to input my character name. 
+    - Once the player selects a class, they are prompted to input their characters' name.
+- ...to be able to select between different weapons. 
+    - When weapon_choice is called, the player is given a choice between a sword, axe or spear, each of which contribute to their stats in a unique way.
+- ...my in game choices affect my stats. 
+    - Class selection and weapon selection are the earliest choices in the program that affect the characters' stats. Later in the game, the player can engage in combat, where they can level up their stats, and use items, where they can recover their stats.
+- ...to be able to level up.
+    - When players encounter an enemy, the enemy holds a certain amount of experience. Once the enemy is defeated, the player gains all of the experience the enemy held, allowing the player to level up automatically. Players can gain multiple levels at once.
+- ...to encounter a variety of enemies.
+    - When enemy_approaches is called, a random number is generated and produces 1 of 3 types of enemy. The player will randomly encounter a goblin, witch or striga when they hunt for enemies. 
+- ...to experience the story in different ways. 
+    - At story_arc_2, the player reaches a fork in the story where they can either explore a cave or the woods. The story converges again at story_arc_5
+- ...to be able to purchase items from a shop. 
+    - At any stage in the story, the player has access to player_controls where they can access the shop function. At the shop the player can purchase potions, which can be used to restore health, or ethers, which can be used to restore magic.
+- ...to be able to use items I have found or purchased.
+    - At any stage in the story, the player has access to player_controls where they can view their inventory through display_inventory and player_inventory_use. Here they can use the potions and / or ethers that were gained in combat or purchased form the shop.
+- ...to be able to heal myself.
+    - Either in combat or on the story menu, players can heal themselves by using their magic. 
+- ...to view my stats at any point in the story. 
+    - At any stage in the story, the player has access to player_controls where they can view their stats through STATS.full_stats.
+- ...to encounter enemies at any point in the story.
+    - At any stage in the story, the player has the option to hunt for enemies through player_controls. A random number dictates whether an ecounter occurs. If an encounter occurs, enemy_approaches is called and an enemy is pushed forward for combat.
+- ...to fight a boss at some point in the story.
+    - After story_arc_5, there is a boss fight. The boss fight behaves like a normal enemy encounter would, except the boss is much stronger than a normal enemy type. 
+- ...to quit the game at any point in the story. 
+    - At any point in the story, the player can decide to quit the game by selecting '0' from the player_controls menu.
 
 ## Bugs and Fixes
 
