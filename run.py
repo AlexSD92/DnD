@@ -95,6 +95,10 @@ class PlayerJob():
               str(table)
         )
 
+        STATS.health_bar()
+
+        STATS.magic_bar()
+
     def levelup(self):
         """
         calculation for the player to level up
@@ -111,7 +115,7 @@ class PlayerJob():
 
             if com_exp >= exp_req:
 
-                mult = (self.lvl - (self.lvl * .975)) + 1
+                mult = (self.lvl - (self.lvl * .975)) + 1.10
 
                 self.lvl += 1
                 exp_bal = com_exp - exp_req
@@ -134,7 +138,7 @@ class PlayerJob():
 
         levelup_stats()
 
-        print("You reached level " + str(STATS.lvl))
+        print("You are level " + str(STATS.lvl))
 
     def health_bar(self):
         """
@@ -148,7 +152,8 @@ class PlayerJob():
         remaining_hp = "¦" * current_unit
         empty_hp = " " * remaining_health
 
-        print("\nYour HP:     {" + remaining_hp + empty_hp + "}")
+        print("\nYour HP: {" + remaining_hp + empty_hp + "} " +
+              str(round(self.h_p)) + " / " + str(round(self.mhp)))
 
     def magic_bar(self):
         """
@@ -162,7 +167,8 @@ class PlayerJob():
         remaining_mp = "¦" * current_unit
         empty_mp = " " * remaining_magic
 
-        print("\nYour MP:     {" + remaining_mp + empty_mp + "}")
+        print("\nYour MP: {" + remaining_mp + empty_mp + "} " +
+              str(round(self.m_p)) + " / " + str(round(self.mmp)))
 
     def attack(self):
         """
@@ -186,8 +192,17 @@ class PlayerJob():
 
                 self.h_p = self.mhp
 
+            STATS.health_bar()
+
+            STATS.magic_bar()
+
         else:
+
             print("\nYou don't have enough MP!")
+
+            STATS.health_bar()
+
+            STATS.magic_bar()
 
 
 def shop():
@@ -217,9 +232,13 @@ def shop():
         0. Exit
         """)
 
-        print("Your Wallet: " + str(STATS.mny) + "\n")
+        print("Your Wallet: " + str(STATS.mny))
 
-        choice = input("1 / 2:\n\n")
+        STATS.health_bar()
+
+        STATS.magic_bar()
+
+        choice = input("\n1 / 2:\n\n")
 
         if choice == "1":
 
@@ -283,7 +302,12 @@ def player_inventory_use():
           2. Ether
           0. Exit
     """)
-    decision = input("\nWhich item would you like to use? ")
+
+    STATS.health_bar()
+
+    STATS.magic_bar()
+
+    decision = input("\n\nWhich item would you like to use? ")
 
     if decision == "1":
 
@@ -419,6 +443,7 @@ def clear_console():
     https://www.delftstack.com/howto/python/python-clear-console/
     """
     command = 'clear'
+
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
 
@@ -434,6 +459,7 @@ def scavenge():
     if chance == 0:
 
         coin = random.randint(0, 100)
+
         if coin == 0:
 
             print("\nYou found nothing.")
@@ -624,7 +650,8 @@ def enemy_approaches():
     global EST
 
     enemy_type = random.randint(1, 3)
-    level = STATS.lvl + random.randint(-5, 5)
+
+    level = STATS.lvl + random.randint(-5, 2)
 
     if level <= 0:
 
@@ -634,29 +661,29 @@ def enemy_approaches():
 
     if enemy_type == 1:
 
-        EST = EnemyType("Goblin", level, 1000*mult, 600*mult, 300*mult,
-                        100*mult, 100*mult, 200*mult, 100*mult, 150*mult)
+        EST = EnemyType("Goblin", level, 1500*mult, 600*mult, 300*mult,
+                        100*mult, 100*mult, 125*mult, 100*mult, 150*mult)
         print("You encountered a " + EST.job)
         combat()
 
     elif enemy_type == 2:
 
-        EST = EnemyType("Witch", level, 1000*mult, 300*mult, 100*mult,
-                        300*mult, 300*mult, 100*mult, 200*mult, 100*mult)
+        EST = EnemyType("Witch", level, 1500*mult, 300*mult, 100*mult,
+                        300*mult, 300*mult, 75*mult, 200*mult, 100*mult)
         print("You encountered a " + EST.job)
         combat()
 
     elif enemy_type == 3:
 
-        EST = EnemyType("Striga", level, 1000*mult, 450*mult, 200*mult,
-                        200*mult, 200*mult, 150*mult, 150*mult, 200*mult)
+        EST = EnemyType("Striga", level, 1500*mult, 450*mult, 200*mult,
+                        200*mult, 200*mult, 100*mult, 150*mult, 200*mult)
 
 
 def enemy_encounter():
     """
     randomly generates 1 or 2 as an integer; determines enemy encounter
     """
-    encounter_true = random.randint(2, 2)
+    encounter_true = random.randint(1, 2)
 
     if encounter_true == 2:
 
@@ -666,6 +693,7 @@ def enemy_encounter():
 
         clear_console()
         print("\nYou did not encounter an enemy.")
+        input("Press Enter to continue...")
 
 
 def end_game():
@@ -718,7 +746,7 @@ def story_arc_6():
     clear_console()
 
     global EST
-    EST = EnemyType("Dire Wolf", 30, 9000, 4000, 4000, 200, 200, 400, 400, 400)
+    EST = EnemyType("Dire Wolf", 30, 9000, 4000, 4000, 200, 200, 200, 200, 400)
     combat()
 
     end_game()
@@ -744,7 +772,7 @@ def story_arc_5():
     After climbing to safety, you look down to see the wolf impatiently
     waiting for you.
 
-    Knowing that battle is inevitable, you:
+    Knowing that battle is inevitable and this is a strong enemy, you:
 
     1. Hunt for enemies
     2. Scavenge
