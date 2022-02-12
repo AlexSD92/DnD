@@ -50,7 +50,7 @@ I would like...
 - ...to be able to select between different classes.
 - ...to be able to input my character name. 
 - ...to be able to select between different weapons. 
-- ...my in game choices affect my stats. 
+- ...my in-game choices affect my stats. 
 - ...to be able to level up.
 - ...to encounter a variety of enemies.
 - ...to experience the story in different ways. 
@@ -69,7 +69,7 @@ Create an engaging text-based role playing fantasy adventure game where a player
 ## Scope
 
 - Give the player a choice in character class when they begin the game (warrior, mage, etc.).
-- Include elements where the player has to manage their characters stats, such as health, magic power, etc.
+- Include elements where the player has to manage their character's stats, such as health, magic power, etc.
 - A combat mechanic. 
 - Inventory management.
 - Currency & shopping.
@@ -85,7 +85,7 @@ Create an engaging text-based role playing fantasy adventure game where a player
 1. Choice in character class. 
 2. Players gain experience in battle and level up. 
 3. Enemies drop items, such as potions and ethers after defeat. 
-4. Players can scavange to find money. 
+4. Players can scavenge to find money. 
 5. Players can shop to purchase potions and ethers with the money they have earned.
 6. Players can heal, either using magic, potions or ethers. 
 7. Players can view and use their inventory.
@@ -95,7 +95,7 @@ Create an engaging text-based role playing fantasy adventure game where a player
 ## Future Features
 
 1. Multiple party members. 
-2. Weilding multiple items.
+2. Weild multiple items.
 3. A strength and weakness system for both players and enemies. 
 4. Status effects, such as poison, paralysis, etc. 
 5. More interactions with the environment, such as eating foods, uncovering items. 
@@ -190,40 +190,53 @@ I would like...
 
 - ...to be able to select between different classes.
     - When player_job_selection is called, the player is given a choice between a warrior, assassin or mage class.
+
 - ...to be able to input my character name. 
     - Once the player selects a class, they are prompted to input their characters' name.
+
 - ...to be able to select between different weapons. 
     - When weapon_choice is called, the player is given a choice between a sword, axe or spear, each of which contribute to their stats in a unique way.
-- ...my in game choices affect my stats. 
+
+- ...my in-game choices affect my stats. 
     - Class selection and weapon selection are the earliest choices in the program that affect the characters' stats. Later in the game, the player can engage in combat, where they can level up their stats, and use items, where they can recover their stats.
+
 - ...to be able to level up.
     - When players encounter an enemy, the enemy holds a certain amount of experience. Once the enemy is defeated, the player gains all of the experience the enemy held, allowing the player to level up automatically. Players can gain multiple levels at once.
+
 - ...to encounter a variety of enemies.
     - When enemy_approaches is called, a random number is generated and produces 1 of 3 types of enemy. The player will randomly encounter a goblin, witch or striga when they hunt for enemies. 
+
 - ...to experience the story in different ways. 
     - At story_arc_2, the player reaches a fork in the story where they can either explore a cave or the woods. The story converges again at story_arc_5
+
 - ...to be able to purchase items from a shop. 
     - At any stage in the story, the player has access to player_controls where they can access the shop function. At the shop the player can purchase potions, which can be used to restore health, or ethers, which can be used to restore magic.
+
 - ...to be able to use items I have found or purchased.
     - At any stage in the story, the player has access to player_controls where they can view their inventory through display_inventory and player_inventory_use. Here they can use the potions and / or ethers that were gained in combat or purchased form the shop.
+
 - ...to be able to heal myself.
     - Either in combat or on the story menu, players can heal themselves by using their magic. 
+
 - ...to view my stats at any point in the story. 
     - At any stage in the story, the player has access to player_controls where they can view their stats through STATS.full_stats.
+
 - ...to encounter enemies at any point in the story.
-    - At any stage in the story, the player has the option to hunt for enemies through player_controls. A random number dictates whether an ecounter occurs. If an encounter occurs, enemy_approaches is called and an enemy is pushed forward for combat.
+    - At any stage in the story, the player has the option to hunt for enemies through player_controls. A random number dictates whether an encounter occurs. If an encounter occurs, enemy_approaches is called and an enemy is pushed forward for combat.
+
 - ...to fight a boss at some point in the story.
     - After story_arc_5, there is a boss fight. The boss fight behaves like a normal enemy encounter would, except the boss is much stronger than a normal enemy type. 
+
 - ...to quit the game at any point in the story. 
     - At any point in the story, the player can decide to quit the game by selecting '0' from the player_controls menu.
 
 ## Bugs and Fixes
 
-- 29/01/2022 (IDENTIFIED), 30/01/2022 (RESOLVED) - The player can heal over their original hp amount. There is no hp cap, so the player could give themselves infinit amounts of hp over the original hp level. Resolved by introducing a max hp and max mp variable to behave as a cap. The max variables level up with the other characters, but remain unaffected by potions, healing, etc. In this way, they were used as a reference as to what the max hp and mp should be per level. 
+- 29/01/2022 (IDENTIFIED), 30/01/2022 (RESOLVED) - The player can heal over their original hp amount. There is no hp cap, so the player could give themselves infinite amounts of hp over the original hp level. Resolved by introducing a max hp and max mp variable to behave as a cap. The max variables level up with the other stats, but remain unaffected by potions, healing, etc. In this way, they were used as a reference as to what the max hp and mp should be per level. 
 
 - 29/01/2022 (IDENTIFIED & RESOLVED) - The player would gain a level after each battle. Resolved by setting the exp back to 0 at each level and adding the difference. 
 
-- 08/02/2022 (IDENTIFIED), 09/02/2022 (RESOLVED) - Regardless of how much experience the player earns, they will only go up one level. For example, if to reach level 4 required 4,000 experience and in a single encounter the player gains 4,000 experience, they will only go from level 1 to level 2. Resolved by introducing variables to manage the experience gained. For example, current experience, experience gained, combined experience, experience requirement and remaining experience after levelling up. The fucntion calculates how much experience is required for a single levelup, subtracts that from the total combined experience and loops it until the combined experience is less than the experience required. 
+- 08/02/2022 (IDENTIFIED), 09/02/2022 (RESOLVED) - Regardless of how much experience the player earns, they will only go up one level. For example, if to reach level 4 required 4,000 experience and in a single encounter the player gains 4,000 experience, they will only go from level 1 to level 2. Resolved by introducing variables to manage the experience gained. For example, current experience, experience gained, combined experience, experience requirement and remaining experience after levelling up. The function calculates how much experience is required for a single levelup, subtracts that from the total combined experience and loops it until the combined experience is less than the experience required. 
 
 - 09/02/2022 (IDENTIFIED) - While the program is running through the enemy's turn, the user can input, which can result in prompting the user to make a valid choice when they take their turn. While the incorrect input is handled, it can be confusing to the player. 
 
