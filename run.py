@@ -185,8 +185,8 @@ class PlayerJob():
         if self.m_p > 24:
 
             self.m_p -= 25
-            self.h_p += 200
-            print("\nYou used 25 MP to heal 200 HP.")
+            self.h_p += 300
+            print("\nYou used 25 MP to heal 300 HP.")
 
             if self.h_p > self.mhp:
 
@@ -578,7 +578,7 @@ def player_action():
 
             STATS.heal()
             combat_menu()
-            print("You healed 50 HP!")
+            print("You healed 300 HP!")
             time.sleep(2)
             enemy_action()
 
